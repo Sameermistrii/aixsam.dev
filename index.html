@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>aixsam.dev · Free AI tools that replace the apps you pay for</title>
+<meta name="description" content="Every free AI tool and open-source GitHub repo from @aixsam.dev reels, with direct links. Find the tool by its comment keyword.">
+<meta property="og:title" content="aixsam.dev · Free AI tools & GitHub repos">
+<meta property="og:description" content="Every tool from the reels, with direct links.">
+<meta property="og:image" content="https://aixsam.dev/img/icon.png">
+<link rel="icon" href="img/icon.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0d10;--card:#161b22;--line:#30363d;--tx:#e6edf3;--mute:#8b949e;--gold:#e7b95a;--green:#3fb950}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--tx);font-family:Poppins,system-ui,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+body:before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse 900px 600px at 50% 0%,rgba(212,162,76,.18),transparent 70%)}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600}
+.brand img{width:38px;height:38px;border-radius:50%;border:2px solid var(--line)}
+.navlinks{display:flex;gap:8px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;border:1.5px solid var(--line);background:#0d1117;font-weight:600;font-size:15px;transition:border-color .15s,transform .15s}
+.btn:hover{border-color:var(--gold);transform:translateY(-1px)}
+.btn.gold{background:var(--gold);color:#111;border-color:var(--gold)}
+.btn svg{width:18px;height:18px}
+.hero{display:grid;grid-template-columns:1.3fr 1fr;align-items:center;gap:20px;padding:40px 0 20px}
+.kick{color:var(--gold);font-weight:600;letter-spacing:4px;font-size:13px}
+h1{font-size:clamp(36px,6vw,62px);line-height:1.05;letter-spacing:-1.5px;margin:12px 0 16px}
+h1 em,h2 em{font-family:'Instrument Serif',serif;font-weight:400;letter-spacing:0;background:linear-gradient(180deg,#fff 10%,var(--gold) 95%);-webkit-background-clip:text;background-clip:text;color:transparent;padding-right:4px}
+.lead{color:var(--mute);font-size:18px;max-width:520px}
+.cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.hero img{width:100%;max-width:420px;justify-self:center;filter:drop-shadow(0 0 50px rgba(231,185,90,.3))}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:30px 0 60px}
+.step{background:var(--card);border:1.5px solid var(--line);border-radius:18px;padding:18px 20px}
+.step b{color:var(--gold);font-size:13px;letter-spacing:2px}
+.step p{margin-top:4px;font-weight:500}
+h2{font-size:clamp(28px,4vw,40px);letter-spacing:-.5px}
+.toolbar{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.search{flex:0 1 340px;display:flex;align-items:center;gap:10px;background:#0d1117;border:1.5px solid var(--line);border-radius:999px;padding:10px 18px}
+.search:focus-within{border-color:var(--gold)}
+.search input{all:unset;flex:1;font-size:15px;color:var(--tx)}
+.search input::placeholder{color:var(--mute)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.tool{background:var(--card);border:1.5px solid var(--line);border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:10px;transition:border-color .15s,transform .15s}
+.tool:hover{border-color:var(--gold);transform:translateY(-2px)}
+.top{display:flex;justify-content:space-between;align-items:center}
+.key{font-family:ui-monospace,Menlo,monospace;font-size:13px;font-weight:700;letter-spacing:1px;color:#111;background:var(--gold);padding:4px 10px;border-radius:8px}
+.new{font-size:12px;font-weight:600;color:var(--green);border:1.5px solid var(--green);border-radius:999px;padding:2px 10px}
+.tool h3{font-size:22px}
+.tool p{color:var(--mute);font-size:15px;flex:1}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tags span{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:2px 10px;color:var(--mute)}
+.tool .btn{align-self:flex-start;margin-top:4px}
+.empty{color:var(--mute);padding:30px 0;display:none}
+.follow{margin:80px 0 40px;background:var(--card);border:1.5px solid var(--line);border-radius:24px;padding:34px;display:flex;align-items:center;gap:24px}
+.follow img{width:160px;flex:none}
+footer{color:var(--mute);font-size:13px;text-align:center;padding:30px 0 40px}
+@media (max-width:720px){
+ .hero{grid-template-columns:1fr;text-align:center;padding-top:16px}.lead{margin:0 auto}.cta{justify-content:center}.hero img{max-width:210px;order:-1}
+ .steps{grid-template-columns:1fr}.navlinks .btn span{display:none}
+ .follow{flex-direction:column;text-align:center}.follow .cta{justify-content:center}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <nav>
+  <a class="brand" href="#"><img src="img/icon.png" alt="">aixsam.dev</a>
+  <div class="navlinks">
+   <a class="btn" href="https://instagram.com/aixsam.dev" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg><span>Instagram</span></a>
+   <a class="btn" href="https://youtube.com/@aixsam.dev" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8zM9.8 15.1V8.9l5.8 3.1-5.8 3.1z"/></svg><span>YouTube</span></a>
+  </div>
+ </nav>
+
+ <section class="hero">
+  <div>
+   <div class="kick">FREE AI TOOLS · GITHUB REPOS</div>
+   <h1>Free AI tools that <em>replace</em> the apps you pay for</h1>
+   <p class="lead">Every tool from my reels, in one place. Saw a reel? Find the tool by its comment keyword below.</p>
+   <div class="cta"><a class="btn gold" href="#tools">Browse the tools ↓</a><a class="btn" href="https://instagram.com/aixsam.dev" target="_blank" rel="noopener">Follow @aixsam.dev</a></div>
+  </div>
+  <img src="img/sam.webp" alt="Sam, the aixsam.dev mascot" width="420" height="420">
+ </section>
+
+ <div class="steps">
+  <div class="step"><b>01</b><p>Watch a reel about a free tool</p></div>
+  <div class="step"><b>02</b><p>Comment the keyword, I DM you the link</p></div>
+  <div class="step"><b>03</b><p>Or grab it right here, no waiting</p></div>
+ </div>
+
+ <section id="tools">
+  <div class="toolbar">
+   <h2>The <em>tools</em></h2>
+   <label class="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8b949e" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+    <input id="q" type="search" placeholder="Search a keyword, e.g. CLONE" aria-label="Search tools"></label>
+  </div>
+  <div class="grid" id="grid"></div>
+  <p class="empty" id="empty">No tool matches that. Check the keyword in the reel, or DM me on Instagram.</p>
+ </section>
+
+ <section class="follow">
+  <img src="img/sam-point.webp" alt="">
+  <div>
+   <h2>New free tool <em>every day</em></h2>
+   <p class="lead">Short reels, one tool each, with the setup explained in under a minute.</p>
+   <div class="cta"><a class="btn gold" href="https://instagram.com/aixsam.dev" target="_blank" rel="noopener">Instagram</a><a class="btn" href="https://youtube.com/@aixsam.dev" target="_blank" rel="noopener">YouTube</a></div>
+  </div>
+ </section>
+ <footer>© <span id="yr"></span> aixsam.dev · Tools are made by their own authors; I just find them.</footer>
+</div>
+
+<script>
+// Add new tools at the TOP of this list. key = the comment keyword from the reel.
+const TOOLS = [
+  {key:"CLONE", name:"Replica skill", url:"https://github.com/jakeschincariol/replica-skill",
+   desc:"11 free Claude skills that reverse-engineer an app, rebuild it, test it, read its real reviews and fix what users hate, then ship your own version.",
+   tags:["Claude","Open source","MIT"]},
+  {key:"REPO", name:"Voicebox", url:"https://github.com/jamiepine/voicebox",
+   desc:"Free, open-source AI voice studio. Clone a voice from a few seconds of audio, generate speech in 23 languages and dictate into any app, all running locally.",
+   tags:["Voice AI","Runs locally","MIT"]},
+];
+const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const grid = document.getElementById('grid'), empty = document.getElementById('empty');
+function render(q = '') {
+  q = q.trim().toLowerCase();
+  const exact = TOOLS.filter(t => t.key.toLowerCase() === q); // a reel keyword shows just that tool
+  const list = exact.length ? exact : TOOLS.filter(t => !q || (t.key + ' ' + t.name + ' ' + t.desc + ' ' + t.tags.join(' ')).toLowerCase().includes(q));
+  grid.innerHTML = list.map(t => `<article class="tool">
+    <div class="top"><span class="key">${esc(t.key)}</span>${t === TOOLS[0] ? '<span class="new">Latest</span>' : ''}</div>
+    <h3>${esc(t.name)}</h3><p>${esc(t.desc)}</p>
+    <div class="tags">${t.tags.map(x => `<span>${esc(x)}</span>`).join('')}</div>
+    <a class="btn gold" href="${esc(t.url)}" target="_blank" rel="noopener">Get the link →</a></article>`).join('');
+  empty.style.display = list.length ? 'none' : 'block';
+}
+document.getElementById('q').addEventListener('input', e => render(e.target.value));
+const k = new URLSearchParams(location.search).get('k'); // aixsam.dev/?k=CLONE opens filtered
+if (k) document.getElementById('q').value = k;
+render(k || '');
+document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
