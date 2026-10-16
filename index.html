@@ -4,160 +4,500 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>aixsam.dev · Free AI tools that replace the apps you pay for</title>
-<meta name="description" content="Every free AI tool and open-source GitHub repo from @aixsam.dev reels, with direct links. Find the tool by its comment keyword.">
-<meta property="og:title" content="aixsam.dev · Free AI tools & GitHub repos">
-<meta property="og:description" content="Every tool from the reels, with direct links.">
+<meta name="description" content="Walk through the aixsam tool gallery: every free AI tool and open-source GitHub repo from @aixsam.dev reels. Comment the keyword on a reel and get the link in your DMs.">
+<meta name="theme-color" content="#e7b95a">
+<meta property="og:title" content="aixsam.dev · Free AI tool gallery">
+<meta property="og:description" content="Every free AI tool from the reels, in one gallery.">
 <meta property="og:image" content="https://aixsam.dev/img/icon.png">
 <link rel="icon" href="img/icon.png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Fraunces:opsz,wght@9..144,400;9..144,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0b0d10;--card:#161b22;--line:#30363d;--tx:#e6edf3;--mute:#8b949e;--gold:#e7b95a;--green:#3fb950}
+:root{--bg:#0b0d10;--card:#161b22;--line:#30363d;--tx:#e6edf3;--mute:#8b949e;--gold:#e7b95a;--green:#3fb950;--paper:#f3ead6;--ink:#14110c;--blue:#4c7dff;
+ --head:Montserrat,'Arial Black',Arial,sans-serif;--body:Fraunces,Georgia,serif;--mono:'DM Mono',ui-monospace,Consolas,monospace}
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--tx);font-family:Poppins,system-ui,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
-body:before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse 900px 600px at 50% 0%,rgba(212,162,76,.18),transparent 70%)}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:var(--body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
-.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
-nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
-.brand{display:flex;align-items:center;gap:10px;font-weight:600}
-.brand img{width:38px;height:38px;border-radius:50%;border:2px solid var(--line)}
-.navlinks{display:flex;gap:8px}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;border:1.5px solid var(--line);background:#0d1117;font-weight:600;font-size:15px;transition:border-color .15s,transform .15s}
-.btn:hover{border-color:var(--gold);transform:translateY(-1px)}
-.btn.gold{background:var(--gold);color:#111;border-color:var(--gold)}
+.skip{position:absolute;left:-999px;top:8px;z-index:50;background:var(--gold);color:var(--ink);padding:8px 14px;border-radius:10px;font-family:var(--head);font-weight:800}
+.skip:focus{left:8px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+/* sticker + tape vocabulary */
+.tape{position:relative;display:inline-block;background:var(--paper);color:var(--ink);font-family:var(--head);font-weight:900;text-transform:uppercase;letter-spacing:-.5px;line-height:1;padding:.32em .5em;box-shadow:0 10px 30px rgba(0,0,0,.45)}
+.tape:before,.tape:after{content:"";position:absolute;top:-14px;width:70px;height:26px;background:rgba(233,214,160,.72);box-shadow:0 1px 2px rgba(0,0,0,.2)}
+.tape:before{left:-18px;transform:rotate(-24deg)}.tape:after{right:-18px;transform:rotate(22deg)}
+.tape.dark{background:#2a2d33;color:#fff}
+.tape.solo:after{display:none}
+.burst{display:grid;place-items:center;text-align:center;background:var(--gold);color:var(--ink);font-family:var(--head);font-weight:900;line-height:.95;
+ clip-path:polygon(100.0% 50.0%,89.5% 56.3%,97.6% 65.5%,85.6% 68.2%,90.5% 79.4%,78.3% 78.3%,79.4% 90.5%,68.2% 85.6%,65.5% 97.6%,56.3% 89.5%,50.0% 100.0%,43.7% 89.5%,34.5% 97.6%,31.8% 85.6%,20.6% 90.5%,21.7% 78.3%,9.5% 79.4%,14.4% 68.2%,2.4% 65.5%,10.5% 56.3%,0.0% 50.0%,10.5% 43.7%,2.4% 34.5%,14.4% 31.8%,9.5% 20.6%,21.7% 21.7%,20.6% 9.5%,31.8% 14.4%,34.5% 2.4%,43.7% 10.5%,50.0% 0.0%,56.3% 10.5%,65.5% 2.4%,68.2% 14.4%,79.4% 9.5%,78.3% 21.7%,90.5% 20.6%,85.6% 31.8%,97.6% 34.5%,89.5% 43.7%)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:12px;border:2px solid var(--ink);background:var(--paper);color:var(--ink);font-family:var(--head);font-weight:800;font-size:15px;box-shadow:0 4px 0 var(--ink);transition:transform .12s,box-shadow .12s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 0 var(--ink)}
+.btn:active{transform:translateY(2px);box-shadow:0 2px 0 var(--ink)}
+.btn.gold{background:var(--gold)}
+.btn.ghost{background:rgba(13,17,23,.7);color:var(--tx);border-color:var(--line);box-shadow:0 4px 0 #000}
 .btn svg{width:18px;height:18px}
-.hero{display:grid;grid-template-columns:1.3fr 1fr;align-items:center;gap:20px;padding:40px 0 20px}
-.kick{color:var(--gold);font-weight:600;letter-spacing:4px;font-size:13px}
-h1{font-size:clamp(36px,6vw,62px);line-height:1.05;letter-spacing:-1.5px;margin:12px 0 16px}
-h1 em,h2 em{font-family:'Instrument Serif',serif;font-weight:400;letter-spacing:0;background:linear-gradient(180deg,#fff 10%,var(--gold) 95%);-webkit-background-clip:text;background-clip:text;color:transparent;padding-right:4px}
-.lead{color:var(--mute);font-size:18px;max-width:520px}
-.cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
-.hero img{width:100%;max-width:420px;justify-self:center;filter:drop-shadow(0 0 50px rgba(231,185,90,.3))}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:30px 0 60px}
-.step{background:var(--card);border:1.5px solid var(--line);border-radius:18px;padding:18px 20px}
-.step b{color:var(--gold);font-size:13px;letter-spacing:2px}
-.step p{margin-top:4px;font-weight:500}
-h2{font-size:clamp(28px,4vw,40px);letter-spacing:-.5px}
-.toolbar{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
-.search{flex:0 1 340px;display:flex;align-items:center;gap:10px;background:#0d1117;border:1.5px solid var(--line);border-radius:999px;padding:10px 18px}
+.mono{font-family:var(--mono)}
+
+/* top bar */
+.top{position:fixed;inset:0 0 auto;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:16px 20px;pointer-events:none}
+.top>*{pointer-events:auto}
+.brand{display:flex;align-items:center;gap:10px}
+.brand img{width:40px;height:40px;border-radius:50%;border:2px solid var(--paper)}
+.brand .tape{font-size:15px;padding:6px 10px;transform:rotate(-2deg)}
+.brand .tape:before{width:40px;height:16px;top:-8px;left:-10px}
+.navr{display:flex;gap:8px}
+.navr .btn{padding:9px 14px;font-size:14px}
+
+/* 3D walk-in */
+#walk{position:relative;height:560vh}
+.stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:radial-gradient(ellipse 80% 60% at 60% 40%,#3a2a12,transparent 70%),#07080c}
+#gl{position:absolute;inset:0;width:100%;height:100%;display:block}
+.vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 55%,rgba(0,0,0,.55))}
+.hero{position:absolute;left:max(20px,calc(50vw - 540px));top:50%;transform:translateY(-46%);max-width:560px;will-change:opacity,transform}
+.hero h1{display:flex;flex-direction:column;align-items:flex-start;gap:18px;font-size:clamp(38px,5.2vw,62px)}
+.hero h1 .tape:first-child{transform:rotate(-2deg)}
+.hero h1 .tape.dark{transform:rotate(1.5deg);margin-left:28px}
+.hero .burst{position:absolute;width:132px;height:132px;right:-30px;top:40px;transform:rotate(12deg);font-size:15px}
+.hero .burst b{display:block;font-size:34px}
+.hero p{margin:26px 0 22px;font-size:19px;max-width:500px;text-shadow:0 2px 12px #000}
+.hero p b{color:var(--gold)}
+.note{display:inline-block;background:var(--paper);color:var(--ink);padding:12px 16px;border:2px dashed #9c8b66;border-radius:6px;font-size:15px;transform:rotate(-1deg);margin-bottom:20px;max-width:440px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.hint{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);font-family:var(--mono);font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--paper);opacity:.85;animation:bob 1.6s ease-in-out infinite}
+@keyframes bob{50%{transform:translate(-50%,6px)}}
+.hero-sam{display:none}
+
+/* ribbon */
+.ribbon{position:relative;z-index:2;background:var(--gold);color:var(--ink);transform:rotate(-1.6deg);margin:-28px -20px 0;padding:12px 0;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.5);border-top:3px solid var(--ink);border-bottom:3px solid var(--ink)}
+.track{display:flex;gap:28px;width:max-content;font-family:var(--head);font-weight:900;font-size:20px;text-transform:uppercase;animation:slide 26s linear infinite;white-space:nowrap}
+.track i{font-style:normal;color:#a3401d}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* sections */
+.sec{position:relative;padding:110px 0 90px}
+.sec h2{font-size:clamp(30px,5vw,48px);transform:rotate(-1.5deg);margin-bottom:12px}
+.sub{color:var(--mute);margin:18px 0 34px;font-size:18px}
+.toolbar{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.search{flex:0 1 340px;display:flex;align-items:center;gap:10px;background:#0d1117;border:2px solid var(--line);border-radius:12px;padding:11px 16px}
 .search:focus-within{border-color:var(--gold)}
-.search input{all:unset;flex:1;font-size:15px;color:var(--tx)}
+.search input{all:unset;flex:1;font-family:var(--mono);font-size:15px;color:var(--tx)}
 .search input::placeholder{color:var(--mute)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
-.tool{background:var(--card);border:1.5px solid var(--line);border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:10px;transition:border-color .15s,transform .15s}
-.tool:hover{border-color:var(--gold);transform:translateY(-2px)}
-.top{display:flex;justify-content:space-between;align-items:center}
-.key{font-family:ui-monospace,Menlo,monospace;font-size:13px;font-weight:700;letter-spacing:1px;color:#111;background:var(--gold);padding:4px 10px;border-radius:8px}
-.lock{align-self:flex-start;font-size:12px;font-weight:600;color:var(--gold);border:1.5px solid var(--gold);border-radius:999px;padding:2px 10px}
-.hint{font-size:13px;color:var(--mute)}
-.new{font-size:12px;font-weight:600;color:var(--green);border:1.5px solid var(--green);border-radius:999px;padding:2px 10px}
-.tool h3{font-size:22px}
-.tool p{color:var(--mute);font-size:15px;flex:1}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:26px;margin-top:10px}
+.tool{position:relative;display:flex;gap:18px;background:var(--card);border:2px solid var(--line);border-radius:14px;padding:22px;box-shadow:0 14px 34px rgba(0,0,0,.35);transition:transform .2s,border-color .2s}
+.tool:nth-child(odd){transform:rotate(-.8deg)}.tool:nth-child(even){transform:rotate(.7deg)}
+.tool:hover,.tool.flash{transform:rotate(0) translateY(-3px);border-color:var(--gold)}
+.tool:before{content:"";position:absolute;top:-12px;left:50%;width:84px;height:24px;margin-left:-42px;background:rgba(233,214,160,.6);transform:rotate(-3deg)}
+.cover{flex:none;width:96px;aspect-ratio:9/16;border-radius:8px;overflow:hidden;border:2px solid var(--gold);background:#000}
+.cover img{width:100%;height:100%;object-fit:cover;display:block}
+.tbody{display:flex;flex-direction:column;gap:9px;min-width:0}
+.trow{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.key{font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:1px;color:var(--ink);background:var(--gold);padding:3px 9px;border-radius:6px}
+.new{font-family:var(--mono);font-size:12px;color:var(--green);border:1.5px solid var(--green);border-radius:999px;padding:1px 9px}
+.tool h3{font-family:var(--head);font-weight:900;font-size:22px;line-height:1.1}
+.tool p{color:#b4bcc6;font-size:15px}
 .tags{display:flex;gap:6px;flex-wrap:wrap}
-.tags span{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:2px 10px;color:var(--mute)}
-.tool .btn{align-self:flex-start;margin-top:4px}
+.tags span{font-family:var(--mono);font-size:11.5px;border:1px solid var(--line);border-radius:999px;padding:2px 9px;color:var(--mute)}
+.tool .btn{align-self:flex-start;margin-top:4px;padding:10px 16px;font-size:14px}
+.lock{align-self:flex-start;font-family:var(--mono);font-size:12px;color:var(--gold);border:1.5px solid var(--gold);border-radius:999px;padding:2px 10px}
+.hint2{font-size:13px;color:var(--mute)}
 .empty{color:var(--mute);padding:30px 0;display:none}
-.follow{margin:80px 0 40px;background:var(--card);border:1.5px solid var(--line);border-radius:24px;padding:34px;display:flex;align-items:center;gap:24px}
-.follow img{width:160px;flex:none}
-footer{color:var(--mute);font-size:13px;text-align:center;padding:30px 0 40px}
-@media (max-width:720px){
- .hero{grid-template-columns:1fr;text-align:center;padding-top:16px}.lead{margin:0 auto}.cta{justify-content:center}.hero img{max-width:210px;order:-1}
- .steps{grid-template-columns:1fr}.navlinks .btn span{display:none}
- .follow{flex-direction:column;text-align:center}.follow .cta{justify-content:center}
+
+.wallbg{background:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px) 0 0/48px 48px,linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px) 0 0/48px 48px,radial-gradient(ellipse at 50% 0%,#1d2a55,#0b0f1c 70%)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:40px}
+.step{position:relative;background:var(--paper);color:var(--ink);padding:24px 24px 18px;box-shadow:0 14px 30px rgba(0,0,0,.4)}
+.step:nth-child(1){transform:rotate(-1deg)}.step:nth-child(2){transform:rotate(.8deg) translateY(10px)}.step:nth-child(3){transform:rotate(-.5deg)}
+.step b{display:block;font-family:var(--head);font-weight:900;font-size:46px;line-height:1;color:#c2461d}
+.step h3{font-family:var(--head);font-weight:900;font-size:19px;text-transform:uppercase;margin:8px 0 6px}
+.step p{font-size:15.5px}
+.step small{display:block;margin-top:14px;padding-top:10px;border-top:1.5px dashed #b5a582;font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:1px;color:#5b5240}
+
+.faq{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:36px;align-items:start}
+details{background:var(--card);border:2px solid var(--line);border-radius:12px;transition:border-color .2s}
+details[open]{border-color:var(--gold)}
+summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 18px;font-family:var(--head);font-weight:800;font-size:15.5px}
+summary::-webkit-details-marker{display:none}
+summary:after{content:"+";flex:none;width:26px;height:26px;display:grid;place-items:center;border-radius:50%;background:var(--paper);color:var(--ink);font-weight:900}
+details[open] summary:after{content:"−"}
+details p{padding:0 18px 16px;color:#b4bcc6;font-size:15.5px}
+
+footer{background:repeating-linear-gradient(90deg,#2b1a10 0 110px,#331f13 110px 220px);border-top:4px solid #120a05;padding:40px 0 110px;font-family:var(--mono);font-size:13px;color:#d7c6ad}
+.foot{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:flex-start}
+.foot .tape{font-size:14px;padding:6px 10px;margin-bottom:12px}
+.foot nav{display:flex;gap:18px;flex-wrap:wrap}
+.foot nav a{text-decoration:underline;text-underline-offset:4px;text-transform:uppercase;font-weight:500}
+.sticky{position:fixed;left:50%;bottom:14px;z-index:30;display:flex;align-items:center;gap:14px;background:var(--paper);color:var(--ink);border:2px solid var(--ink);border-radius:14px;padding:8px 8px 8px 16px;box-shadow:0 5px 0 var(--ink),0 18px 40px rgba(0,0,0,.5);transform:translate(-50%,140%);transition:transform .35s;max-width:calc(100vw - 24px)}
+.sticky.on{transform:translate(-50%,0)}
+.sticky span{font-family:var(--head);font-weight:800;font-size:14px;line-height:1.2}
+.sticky small{display:block;font-family:var(--mono);font-weight:400;font-size:11.5px;color:#5b5240}
+.sticky .btn{padding:9px 14px;font-size:14px;box-shadow:0 3px 0 var(--ink)}
+
+/* no WebGL or reduced motion: static hero instead of the walk */
+.no3d #walk{height:auto}
+.no3d .stage{position:relative;height:auto;min-height:100svh;padding:120px 0 80px}
+.no3d #gl,.no3d .hint{display:none}
+.no3d .hero{position:relative;top:auto;left:auto;transform:none;margin:0 auto;padding:0 20px;max-width:1080px}
+.no3d .hero-sam{display:block;position:absolute;right:20px;bottom:-40px;width:min(380px,40vw);filter:drop-shadow(0 0 40px rgba(231,185,90,.35))}
+
+@media (max-width:760px){
+ body{font-size:16px}
+ .navr .btn span{display:none}
+ .hero{left:16px;right:16px;top:86px;transform:none}
+ .hero h1{gap:12px;font-size:clamp(30px,9.4vw,44px)}
+ .hero h1 .tape.dark{margin-left:14px}
+ .hero .burst{width:92px;height:92px;right:-4px;top:-14px;font-size:11px}.hero .burst b{font-size:24px}
+ .hero p{font-size:16px;margin:18px 0 14px}
+ .note{font-size:13.5px;margin-bottom:14px}
+ .grid{grid-template-columns:1fr}
+ .steps{grid-template-columns:1fr}.step:nth-child(2){transform:rotate(.8deg)}
+ .faq{grid-template-columns:1fr}
+ .sticky{left:12px;right:12px;justify-content:space-between;transform:translateY(140%)}.sticky.on{transform:none}
+ .sticky .btn{white-space:nowrap}
+ .no3d .hero-sam{position:relative;right:auto;bottom:auto;width:200px;margin:20px auto 0}
 }
+@media (prefers-reduced-motion:reduce){.track,.hint{animation:none}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
-<div class="wrap">
- <nav>
-  <a class="brand" href="#"><img src="img/icon.png" alt="">aixsam.dev</a>
-  <div class="navlinks">
-   <a class="btn" href="https://instagram.com/aixsam.dev" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg><span>Instagram</span></a>
-   <a class="btn" href="https://youtube.com/@aixsamdev" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8zM9.8 15.1V8.9l5.8 3.1-5.8 3.1z"/></svg><span>YouTube</span></a>
-  </div>
- </nav>
+<a class="skip" href="#tools">Skip to the tools</a>
 
- <section class="hero">
-  <div>
-   <div class="kick">FREE AI TOOLS · GITHUB REPOS</div>
-   <h1>Free AI tools that <em>replace</em> the apps you pay for</h1>
-   <p class="lead">Every tool from my reels, in one place. Saw a reel? Find the tool by its comment keyword below.</p>
-   <div class="cta"><a class="btn gold" href="#tools">Browse the tools ↓</a><a class="btn" href="https://instagram.com/aixsam.dev" target="_blank" rel="noopener">Follow @aixsam.dev</a></div>
-  </div>
-  <img src="img/sam.webp" alt="Sam, the aixsam.dev mascot" width="420" height="420">
- </section>
-
- <div class="steps">
-  <div class="step"><b>01</b><p>Watch a reel about a free tool</p></div>
-  <div class="step"><b>02</b><p>Comment the keyword, I DM you the link</p></div>
-  <div class="step"><b>03</b><p>Links unlock here 7 days after the reel</p></div>
+<header class="top">
+ <a class="brand" href="#"><img src="img/icon.png" alt=""><span class="tape solo">aixsam.dev</span></a>
+ <div class="navr">
+  <a class="btn ghost" href="https://youtube.com/@aixsamdev" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8zM9.8 15.1V8.9l5.8 3.1-5.8 3.1z"/></svg><span>YouTube</span></a>
+  <a class="btn gold" href="https://instagram.com/aixsam.dev" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg>Follow</a>
  </div>
+</header>
 
- <section id="tools">
+<div id="walk">
+ <div class="stage">
+  <canvas id="gl" aria-label="A 3D gallery of free AI tools you walk through as you scroll"></canvas>
+  <div class="vig"></div>
+  <section class="hero" id="hero">
+   <h1><span class="tape">I find free AI tools.</span><span class="tape dark">You get the link.</span></h1>
+   <div class="burst" aria-hidden="true"><div><b>100%</b>FREE</div></div>
+   <p>Every tool from my reels: <b>free</b>, open source, and most of them run on your own computer. Walk the gallery, or jump straight to the tools.</p>
+   <div class="note"><b>How to get a link:</b> comment the keyword on the reel and I'll DM it to you. Links unlock here 7 days later.</div>
+   <div class="cta"><a class="btn gold" href="#tools">See the tools →</a><a class="btn ghost" href="#how">How it works</a></div>
+   <img class="hero-sam" src="img/sam.webp" alt="Sam, the aixsam.dev mascot">
+  </section>
+  <div class="hint">Scroll to walk in ↓</div>
+ </div>
+</div>
+
+<div class="ribbon" aria-hidden="true"><div class="track" id="track"></div></div>
+
+<section class="sec" id="tools">
+ <div class="wrap">
   <div class="toolbar">
-   <h2>The <em>tools</em></h2>
+   <div><h2><span class="tape">The tools</span></h2><p class="sub">Saw a reel? Search its comment keyword.</p></div>
    <label class="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8b949e" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-    <input id="q" type="search" placeholder="Search a keyword, e.g. CLONE" aria-label="Search tools"></label>
+    <input id="q" type="search" placeholder="Keyword, e.g. GRAPH" aria-label="Search tools"></label>
   </div>
   <div class="grid" id="grid"></div>
   <p class="empty" id="empty">No tool matches that. Check the keyword in the reel, or DM me on Instagram.</p>
- </section>
+ </div>
+</section>
 
- <section class="follow">
-  <img src="img/sam-point.webp" alt="">
-  <div>
-   <h2>New free tool <em>every day</em></h2>
-   <p class="lead">Short reels, one tool each, with the setup explained in under a minute.</p>
-   <div class="cta"><a class="btn gold" href="https://instagram.com/aixsam.dev" target="_blank" rel="noopener">Instagram</a><a class="btn" href="https://youtube.com/@aixsamdev" target="_blank" rel="noopener">YouTube</a></div>
+<section class="sec wallbg" id="how">
+ <div class="wrap">
+  <h2><span class="tape">How it works</span></h2>
+  <div class="steps">
+   <div class="step"><b>1</b><h3>Watch the reel</h3><p>One free tool per reel: what it does, why it's worth it, and the catch if there is one.</p><small>under a minute</small></div>
+   <div class="step"><b>2</b><h3>Comment the keyword</h3><p>Each reel ends with a keyword like GRAPH. Comment it and the link lands in your DMs automatically.</p><small>instant DM</small></div>
+   <div class="step"><b>3</b><h3>Or grab it here</h3><p>Seven days after the reel, the link unlocks on this page for everyone. No sign-up, ever.</p><small>no account · no email</small></div>
   </div>
- </section>
- <footer>© <span id="yr"></span> aixsam.dev · Tools are made by their own authors; I just find them.</footer>
-</div>
+ </div>
+</section>
+
+<section class="sec" id="faq">
+ <div class="wrap">
+  <h2><span class="tape">Good questions</span></h2>
+  <div class="faq">
+   <div>
+    <details><summary>Are these tools really free?</summary><p>Yes. I only cover tools that are free or open source. If a tool has a paid tier or a catch, I say so in the reel.</p></details>
+    <details><summary>Why is the link locked for 7 days?</summary><p>Commenting on the reel helps it reach more people, which keeps these videos coming. Comment the keyword and you get the link right away.</p></details>
+    <details><summary>Do I need to know how to code?</summary><p>Some tools are one-click apps, others are for developers. Each card and reel says which.</p></details>
+   </div>
+   <div>
+    <details><summary>Who makes these tools?</summary><p>Their own authors. I find them, test them and explain them. I'm not paid by any of them.</p></details>
+    <details><summary>Is it safe to run them?</summary><p>I link only to the official repo. Open source means anyone can read the code, but check the repo yourself before installing anything.</p></details>
+    <details><summary>Can I suggest a tool?</summary><p>Yes, DM me on Instagram @aixsam.dev with the link.</p></details>
+   </div>
+  </div>
+ </div>
+</section>
+
+<footer>
+ <div class="wrap foot">
+  <div><span class="tape solo">aixsam.dev</span><p>No ads. No tracking. No sign-up.</p><p>Tools are made by their own authors; I just find them. © <span id="yr"></span></p></div>
+  <nav><a href="https://instagram.com/aixsam.dev" target="_blank" rel="noopener">@aixsam.dev</a><a href="https://youtube.com/@aixsamdev" target="_blank" rel="noopener">YouTube</a><a href="#tools">The tools</a></nav>
+ </div>
+</footer>
+
+<div class="sticky" id="sticky"><span id="stickyTxt"></span><a class="btn gold" id="stickyBtn" target="_blank" rel="noopener">Get it →</a></div>
 
 <script>
 // Add new tools at the TOP of this list. key = the comment keyword from the reel.
-// posted = when the reel went live (link stays locked for 7 days after), reel = the reel URL to send people to meanwhile.
-const TOOLS = [
-  {key:"GRAPH", name:"Graphify", url:"https://github.com/Graphify-Labs/graphify", posted:"2026-10-16T10:30:00+05:30", reel:"https://www.instagram.com/reel/DeivnmwTSTG/",
+// posted = when the reel went live (link stays locked for 7 days after), reel = the reel URL to send people to meanwhile,
+// cover = 540x960 reel cover in img/covers/ (also hung on the 3D gallery wall).
+const TOOLS = window.TOOLS = [
+  {key:"GRAPH", name:"Graphify", url:"https://github.com/Graphify-Labs/graphify", posted:"2026-10-16T10:30:00+05:30", reel:"https://www.instagram.com/reel/DeivnmwTSTG/", cover:"img/covers/graph.webp",
    desc:"Turns your whole codebase into a knowledge graph, so Claude Code, Cursor or Codex query the graph instead of re-reading your files. Free, open source, runs locally.",
    tags:["Claude Code","Open source","Runs locally"]},
-  {key:"CLONE", name:"Replica skill", url:"https://github.com/jakeschincariol/replica-skill", posted:"2026-10-15T17:30:00+05:30", reel:"https://www.instagram.com/reel/Deg1itXTSUr/",
+  {key:"CLONE", name:"Replica skill", url:"https://github.com/jakeschincariol/replica-skill", posted:"2026-10-15T17:30:00+05:30", reel:"https://www.instagram.com/reel/Deg1itXTSUr/", cover:"img/covers/clone.webp",
    desc:"11 free Claude skills that reverse-engineer an app, rebuild it, test it, read its real reviews and fix what users hate, then ship your own version.",
    tags:["Claude","Open source","MIT"]},
-  {key:"REPO", name:"Voicebox", url:"https://github.com/jamiepine/voicebox",
+  {key:"REPO", name:"Voicebox", url:"https://github.com/jamiepine/voicebox", cover:"img/covers/repo.webp",
    desc:"Free, open-source AI voice studio. Clone a voice from a few seconds of audio, generate speech in 23 languages and dictate into any app, all running locally.",
    tags:["Voice AI","Runs locally","MIT"]},
 ];
 const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const LOCK = 7 * 864e5, IG = 'https://instagram.com/aixsam.dev';
 // shortcut: soft lock, the URL is still in the page source; fine since it only nudges people to the reel
+const left = t => t.posted ? Date.parse(t.posted) + LOCK - Date.now() : 0;
+const until = ms => { const d = Math.floor(ms / 864e5), h = Math.floor(ms / 36e5) % 24, m = Math.floor(ms / 6e4) % 60; return d ? d + 'd ' + h + 'h' : h + 'h ' + m + 'm'; };
+window.lockText = t => left(t) > 0 ? '🔒 unlocks in ' + until(left(t)) : '✓ link unlocked';
 function link(t) {
-  const left = t.posted ? Date.parse(t.posted) + LOCK - Date.now() : 0;
-  if (left <= 0) return `<a class="btn gold" href="${esc(t.url)}" target="_blank" rel="noopener">Get the link →</a>`;
-  const d = Math.floor(left / 864e5), h = Math.floor(left / 36e5) % 24, m = Math.floor(left / 6e4) % 60;
-  return `<span class="lock">🔒 Unlocks in ${d ? d + 'd ' + h + 'h' : h + 'h ' + m + 'm'}</span>
+  if (left(t) <= 0) return `<a class="btn gold" href="${esc(t.url)}" target="_blank" rel="noopener">Get the link →</a>`;
+  return `<span class="lock">🔒 Unlocks in ${until(left(t))}</span>
     <a class="btn gold" href="${esc(t.reel || IG)}" target="_blank" rel="noopener">Comment "${esc(t.key)}" →</a>
-    <span class="hint">Comment it on the reel and I'll DM you the link right now.</span>`;
+    <span class="hint2">Comment it on the reel and I'll DM you the link right now.</span>`;
 }
-const grid = document.getElementById('grid'), empty = document.getElementById('empty');
-function render(q = '') {
-  q = q.trim().toLowerCase();
-  const exact = TOOLS.filter(t => t.key.toLowerCase() === q); // a reel keyword shows just that tool
-  const list = exact.length ? exact : TOOLS.filter(t => !q || (t.key + ' ' + t.name + ' ' + t.desc + ' ' + t.tags.join(' ')).toLowerCase().includes(q));
-  grid.innerHTML = list.map(t => `<article class="tool">
-    <div class="top"><span class="key">${esc(t.key)}</span>${t === TOOLS[0] ? '<span class="new">Latest</span>' : ''}</div>
+const grid = document.getElementById('grid'), empty = document.getElementById('empty'), q = document.getElementById('q');
+function render(s = '') {
+  s = s.trim().toLowerCase();
+  const exact = TOOLS.filter(t => t.key.toLowerCase() === s); // a reel keyword shows just that tool
+  const list = exact.length ? exact : TOOLS.filter(t => !s || (t.key + ' ' + t.name + ' ' + t.desc + ' ' + t.tags.join(' ')).toLowerCase().includes(s));
+  grid.innerHTML = list.map(t => `<article class="tool" id="t-${esc(t.key)}">
+    ${t.cover ? `<a class="cover" href="${esc(t.reel || IG)}" target="_blank" rel="noopener" aria-label="Watch the ${esc(t.name)} reel"><img src="${esc(t.cover)}" alt="" loading="lazy"></a>` : ''}
+    <div class="tbody"><div class="trow"><span class="key">${esc(t.key)}</span>${t === TOOLS[0] ? '<span class="new">Latest</span>' : ''}</div>
     <h3>${esc(t.name)}</h3><p>${esc(t.desc)}</p>
     <div class="tags">${t.tags.map(x => `<span>${esc(x)}</span>`).join('')}</div>
-    ${link(t)}</article>`).join('');
+    ${link(t)}</div></article>`).join('');
   empty.style.display = list.length ? 'none' : 'block';
 }
-document.getElementById('q').addEventListener('input', e => render(e.target.value));
-setInterval(() => render(document.getElementById('q').value), 60000); // keep countdowns ticking
+q.addEventListener('input', e => render(e.target.value));
+setInterval(() => render(q.value), 60000); // keep countdowns ticking
 const k = new URLSearchParams(location.search).get('k'); // aixsam.dev/?k=CLONE opens filtered
-if (k) document.getElementById('q').value = k;
+if (k) q.value = k;
 render(k || '');
+if (k) addEventListener('load', () => document.getElementById('tools').scrollIntoView());
 document.getElementById('yr').textContent = new Date().getFullYear();
+
+const words = ['Free AI tools', 'Open source', 'Runs locally', 'GitHub repos', 'Claude Code', 'No sign-up', 'New tool every day'];
+document.getElementById('track').innerHTML = [...words, ...words, ...words, ...words].map(w => `<span>${w}</span><i>✦</i>`).join('');
+
+// sticky bar: latest tool, shown once the visitor is past the hero
+const L = TOOLS[0], sticky = document.getElementById('sticky'), sb = document.getElementById('stickyBtn');
+document.getElementById('stickyTxt').innerHTML = `Latest: ${esc(L.name)}<small>comment "${esc(L.key)}" on the reel</small>`;
+sb.href = left(L) > 0 ? (L.reel || IG) : L.url;
+addEventListener('scroll', () => sticky.classList.toggle('on', scrollY > innerHeight * .8 && scrollY < document.body.scrollHeight - innerHeight * 1.3), {passive: true});
+
+const no3d = () => document.documentElement.classList.add('no3d');
+if (matchMedia('(prefers-reduced-motion: reduce)').matches) no3d();
+</script>
+
+<script type="importmap">{"imports":{"three":"./js/three.module.min.js"}}</script>
+<script type="module">
+import * as THREE from 'three';
+const root = document.documentElement;
+if (root.classList.contains('no3d')) throw 0;
+
+const cv = document.getElementById('gl'), walk = document.getElementById('walk'), hero = document.getElementById('hero'), hint = document.querySelector('.hint');
+const mobile = matchMedia('(max-width:760px)').matches;
+let R;
+try { R = new THREE.WebGLRenderer({canvas: cv, antialias: !mobile, powerPreference: 'high-performance'}); }
+catch (e) { root.classList.add('no3d'); throw e; }
+R.setPixelRatio(Math.min(devicePixelRatio, mobile ? 1.25 : 1.6));
+R.toneMapping = THREE.ACESFilmicToneMapping; R.toneMappingExposure = 1;
+
+const S = new THREE.Scene();
+S.background = new THREE.Color(0x07080c);
+S.fog = new THREE.Fog(0x07080c, 14, 52);
+const cam = new THREE.PerspectiveCamera(60, 1, .1, 120);
+
+await document.fonts.ready;
+const tex = (w, h, draw, rep) => {
+  const c = document.createElement('canvas'); c.width = w; c.height = h; draw(c.getContext('2d'), w, h);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = R.capabilities.getMaxAnisotropy();
+  if (rep) { t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(...rep); }
+  return t;
+};
+const font = (px, w = 900, f = 'Montserrat, Arial Black, sans-serif') => `${w} ${px}px ${f}`;
+// glowing window grid: warm inside the gallery, blue on the facade (SAM's two rim-light colours)
+const panels = (inner, outer, rows, cols, rep) => tex(256, 512, (g, w, h) => {
+  g.fillStyle = '#100a05'; g.fillRect(0, 0, w, h);
+  const cw = (w - 20) / cols, ch = (h - 20) / rows;
+  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+    const x = 10 + c * cw + 6, y = 10 + r * ch + 6, gw = cw - 12, gh = ch - 12;
+    const gr = g.createRadialGradient(x + gw / 2, y + gh / 2, 4, x + gw / 2, y + gh / 2, Math.max(gw, gh) * .75);
+    gr.addColorStop(0, inner); gr.addColorStop(1, outer); g.fillStyle = gr; g.fillRect(x, y, gw, gh);
+  }
+}, rep);
+
+const W = 7, H = 4.8, LEN = 60, half = W / 2;
+const add = (geo, mat, x = 0, y = 0, z = 0, ry = 0, rx = 0) => { const m = new THREE.Mesh(geo, mat); m.position.set(x, y, z); m.rotation.set(rx, ry, 0); S.add(m); return m; };
+const std = o => new THREE.MeshStandardMaterial(o);
+
+// floor: dark polished wood
+const wood = tex(512, 512, (g, w, h) => {
+  for (let i = 0; i < 8; i++) { const l = 18 + (i * 37 % 9); g.fillStyle = `hsl(24,${38 + i % 3 * 6}%,${l}%)`; g.fillRect(0, i * 64, w, 64);
+    for (let k = 0; k < 40; k++) { g.fillStyle = `rgba(0,0,0,${Math.random() * .12})`; g.fillRect(0, i * 64 + Math.random() * 64, w, 1); }
+    g.fillStyle = 'rgba(0,0,0,.6)'; g.fillRect(0, i * 64, w, 2); g.fillRect((i * 173) % w, i * 64, 2, 64); }
+}, [W / 2.2, LEN / 2.2]);
+add(new THREE.PlaneGeometry(W, LEN + 30), std({map: wood, roughness: .32, metalness: .05}), 0, 0, -LEN / 2 + 15, 0, -Math.PI / 2);
+// carpet: navy with gold circuit traces
+const carpet = tex(256, 512, (g, w, h) => {
+  g.fillStyle = '#16205a'; g.fillRect(0, 0, w, h);
+  g.fillStyle = '#e7b95a'; g.fillRect(10, 0, 6, h); g.fillRect(w - 16, 0, 6, h);
+  g.strokeStyle = 'rgba(231,185,90,.85)'; g.lineWidth = 4; g.lineCap = 'round';
+  for (let i = 0; i < 9; i++) { let x = 40 + (i * 61) % 170, y = (i * 97) % h; g.beginPath(); g.moveTo(x, y);
+    for (let s = 0; s < 4; s++) { s % 2 ? (x += (i % 2 ? 30 : -30)) : (y += 50); x = Math.min(w - 40, Math.max(40, x)); g.lineTo(x, y); }
+    g.stroke(); g.beginPath(); g.arc(x, y, 7, 0, 7); g.fillStyle = '#e7b95a'; g.fill(); }
+}, [1, LEN / 4]);
+add(new THREE.PlaneGeometry(2.4, LEN + 14), std({map: carpet, roughness: .95}), 0, .006, -LEN / 2 + 7, 0, -Math.PI / 2);
+
+// walls + ceiling of the corridor (z 0 .. -LEN)
+const warm = panels('#ffc978', '#8a3f0c', 4, 2, [LEN / 2.6, 1]);
+const wallMat = std({map: warm, emissiveMap: warm, emissive: 0xffffff, emissiveIntensity: .3, roughness: .7});
+add(new THREE.PlaneGeometry(LEN, H), wallMat, -half, H / 2, -LEN / 2, Math.PI / 2);
+add(new THREE.PlaneGeometry(LEN, H), wallMat, half, H / 2, -LEN / 2, -Math.PI / 2);
+add(new THREE.PlaneGeometry(W, LEN), std({color: 0x0b0c12, roughness: 1}), 0, H, -LEN / 2, 0, Math.PI / 2);
+const spot = new THREE.MeshBasicMaterial({color: 0xfff1d6});
+for (let z = -2; z > -LEN; z -= 4) for (const x of [-1.7, 1.7]) add(new THREE.CircleGeometry(.14, 20), spot, x, H - .01, z, 0, Math.PI / 2);
+// baseboards: dark wood columns between window panels
+const colMat = std({color: 0x2a160b, roughness: .6});
+for (let z = -1; z > -LEN; z -= 5.2) for (const s of [-1, 1]) add(new THREE.BoxGeometry(.3, H, .5), colMat, s * (half - .12), H / 2, z);
+
+// facade at the entrance (z = 0) with a doorway
+const cool = panels('#8fb4ff', '#1c2f8c', 2, 2, null);
+const facade = std({map: cool, emissiveMap: cool, emissive: 0xffffff, emissiveIntensity: .55, roughness: .8});
+const fw = 26, dw = 3.4, dh = 3.8, FH = 12;
+const side = (fw - dw) / 2;
+for (const s of [-1, 1]) { const t2 = cool.clone(); t2.wrapS = t2.wrapT = THREE.RepeatWrapping; t2.repeat.set(side / 1.6, FH / 1.6); t2.needsUpdate = true;
+  add(new THREE.PlaneGeometry(side, FH), std({map: t2, emissiveMap: t2, emissive: 0xffffff, emissiveIntensity: .32, roughness: .8}), s * (dw / 2 + side / 2), FH / 2, 0); }
+add(new THREE.PlaneGeometry(dw, FH - dh), std({color: 0x140d07, roughness: .8}), 0, dh + (FH - dh) / 2, 0);
+const frameWood = std({color: 0x3b2112, roughness: .5});
+add(new THREE.BoxGeometry(.28, dh + .3, .4), frameWood, -dw / 2 - .1, (dh + .3) / 2, .05);
+add(new THREE.BoxGeometry(.28, dh + .3, .4), frameWood, dw / 2 + .1, (dh + .3) / 2, .05);
+add(new THREE.BoxGeometry(dw + .5, .3, .4), frameWood, 0, dh + .15, .05);
+// neon sign above the door
+const sign = (txt, sub, w = 1024, h = 300) => tex(w, h, (g) => {
+  g.fillStyle = '#0d1020'; g.fillRect(0, 0, w, h); g.strokeStyle = '#e7b95a'; g.lineWidth = 10; g.strokeRect(14, 14, w - 28, h - 28);
+  g.textAlign = 'center'; g.textBaseline = 'middle'; g.shadowColor = '#ffb84d'; g.shadowBlur = 28; g.fillStyle = '#ffe2a0';
+  g.font = font(sub ? 104 : 120); g.fillText(txt, w / 2, sub ? h * .42 : h / 2);
+  if (sub) { g.shadowBlur = 12; g.font = font(40, 500, 'DM Mono, monospace'); g.fillStyle = '#9fc4ff'; g.shadowColor = '#4c7dff'; g.fillText(sub, w / 2, h * .76); }
+});
+add(new THREE.PlaneGeometry(4.6, 1.35), new THREE.MeshBasicMaterial({map: sign('THE TOOL GALLERY', 'free · open source · by aixsam')}), 0, dh + 1.35, .12);
+const glow = (color, size) => { const t = tex(128, 128, (g) => { const r = g.createRadialGradient(64, 64, 0, 64, 64, 64); r.addColorStop(0, color); r.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = r; g.fillRect(0, 0, 128, 128); });
+  const s = new THREE.Sprite(new THREE.SpriteMaterial({map: t, blending: THREE.AdditiveBlending, depthWrite: false, transparent: true})); s.scale.set(size, size, 1); S.add(s); return s; };
+glow('rgba(255,190,90,.55)', 7).position.set(0, dh + 1.35, .6);
+
+// lights
+S.add(new THREE.HemisphereLight(0x8aa0ff, 0x2a1406, .7));
+for (let z = -4; z > -LEN; z -= 10) { const p = new THREE.PointLight(0xffb366, 16, 14, 1.6); p.position.set(0, H - .6, z); S.add(p); }
+const outside = new THREE.PointLight(0x7da2ff, 40, 20, 1.5); outside.position.set(0, 4, 6); S.add(outside);
+
+// framed reel covers along the walls; the last frame teases the next tool
+const loader = new THREE.TextureLoader(), clickable = [];
+const plaque = (t) => tex(512, 150, (g, w, h) => {
+  g.fillStyle = '#f3ead6'; g.fillRect(0, 0, w, h); g.fillStyle = '#e7b95a'; g.fillRect(22, 24, 30 + t.key.length * 25, 46);
+  g.fillStyle = '#14110c'; g.font = font(30, 500, 'DM Mono, monospace'); g.textBaseline = 'middle'; g.fillText(t.key, 36, 48);
+  g.font = font(44); g.fillText(t.name, 22, 104);
+  g.font = font(24, 500, 'DM Mono, monospace'); g.fillStyle = '#5b5240'; g.textAlign = 'right'; g.fillText(t.status, w - 22, 48);
+});
+const gold = std({color: 0xd9a441, metalness: .85, roughness: .32});
+const board = std({color: 0x0e0f15, roughness: .9});
+const spinners = [];
+const items = [...TOOLS.map(t => ({...t, status: lockText(t)})), {key: 'NEXT', name: 'Coming soon', status: 'follow to catch it'}];
+items.forEach((t, i) => {
+  const s = i % 2 ? 1 : -1, z = -9 - i * 10;
+  const g = new THREE.Group(); g.position.set(s * (half - .3), 0, z); g.rotation.y = -s * Math.PI / 2; S.add(g);
+  const m = (geo, mat, y, d) => { const o = new THREE.Mesh(geo, mat); o.position.set(0, y, d); g.add(o); return o; };
+  m(new THREE.BoxGeometry(2.3, 3.7, .08), board, 2.25, 0);
+  m(new THREE.BoxGeometry(1.66, 2.86, .1), gold, 2.4, .06);
+  const map = t.cover ? loader.load(t.cover, x => (x.colorSpace = THREE.SRGBColorSpace)) : tex(540, 960, (c, w, h) => {
+    c.fillStyle = '#12151c'; c.fillRect(0, 0, w, h); c.fillStyle = '#e7b95a'; c.textAlign = 'center'; c.textBaseline = 'middle';
+    c.font = font(420); c.fillText('?', w / 2, h * .44); c.font = font(44, 800); c.fillStyle = '#e6edf3'; c.fillText('NEXT FREE TOOL', w / 2, h * .74); });
+  const pic = m(new THREE.PlaneGeometry(1.5, 2.66), new THREE.MeshBasicMaterial({map}), 2.4, .12);
+  pic.userData = t; if (t.cover) clickable.push(pic);
+  m(new THREE.PlaneGeometry(1.5, .44), new THREE.MeshBasicMaterial({map: plaque(t)}), .62, .06);
+  m(new THREE.BoxGeometry(.9, .08, .2), gold, 4.0, .12);
+  const gl = glow('rgba(255,215,150,.35)', 3.2); g.add(gl); gl.position.set(0, 3.6, .5);
+  // a pedestal opposite each frame, holding a slowly turning gold shape
+  const ped = add(new THREE.BoxGeometry(.7, 1, .7), std({color: 0xe9e2d2, roughness: .5}), -s * (half - 1), .5, z - 4);
+  const shapes = [new THREE.IcosahedronGeometry(.28), new THREE.TorusKnotGeometry(.18, .06, 80, 10), new THREE.OctahedronGeometry(.3), new THREE.TorusGeometry(.22, .07, 12, 40)];
+  const sh = add(shapes[i % 4], std({color: i % 2 ? 0x62c4a2 : 0xe7b95a, metalness: .7, roughness: .25, emissive: i % 2 ? 0x0b3326 : 0x3a2405}), ped.position.x, 1.42, ped.position.z);
+  sh.userData.spin = .6 + i * .15; spinners.push(sh);
+});
+
+// end wall: the tools are this way
+add(new THREE.PlaneGeometry(W, H), std({color: 0x0d0f16, roughness: .9}), 0, H / 2, -LEN);
+add(new THREE.PlaneGeometry(4.4, 1.3), new THREE.MeshBasicMaterial({map: sign('THE TOOLS ↓', 'keep scrolling')}), 0, 2.3, -LEN + .05);
+glow('rgba(255,190,90,.45)', 6).position.set(0, 2.3, -LEN + .6);
+
+// plants in pots near the walls
+const leafMat = std({color: 0x2f9a4a, roughness: .7, flatShading: true}), potMat = std({color: 0x1a1a1f, roughness: .6});
+const plant = (x, z) => { add(new THREE.CylinderGeometry(.3, .24, .5, 10), potMat, x, .25, z);
+  for (let k = 0; k < 7; k++) { const l = add(new THREE.ConeGeometry(.07, 1.2 + (k % 3) * .3, 4), leafMat, x, 1, z); l.rotation.set(Math.sin(k * 2.4) * .6, k, Math.cos(k * 2.4) * .6); } };
+[[-2.5, 3.5], [2.5, 3.5], [-2.9, -5], [2.9, -15], [-2.9, -25], [2.9, -35], [-2.9, -45]].forEach(([x, z]) => plant(x, z));
+
+// SAM floats ahead as the guide
+const samTex = loader.load('img/sam.webp', x => (x.colorSpace = THREE.SRGBColorSpace));
+const sam = add(new THREE.PlaneGeometry(1.25, 1.25), new THREE.MeshBasicMaterial({map: samTex, transparent: true, alphaTest: .05}), 1.3, 1.1, 3);
+const shadow = glow('rgba(0,0,0,.8)', 1.2); shadow.material.blending = THREE.NormalBlending; shadow.scale.set(1.1, .3, 1);
+const halo = glow('rgba(231,185,90,.25)', 2.4);
+
+// dust motes
+const N = mobile ? 250 : 600, pos = new Float32Array(N * 3);
+for (let i = 0; i < N; i++) { pos[i * 3] = (Math.random() - .5) * W; pos[i * 3 + 1] = Math.random() * H; pos[i * 3 + 2] = 8 - Math.random() * (LEN + 8); }
+const dg = new THREE.BufferGeometry(); dg.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+const dust = new THREE.Points(dg, new THREE.PointsMaterial({color: 0xffd28a, size: .035, transparent: true, opacity: .7, blending: THREE.AdditiveBlending, depthWrite: false})); S.add(dust);
+
+// scroll-driven walk
+const Z0 = 12, Z1 = -LEN + 9;
+let cz = Z0, cx = mobile ? 0 : -2.7, p = 0, mx = 0, my = 0, last = performance.now(), visible = true;
+const clamp = v => Math.min(1, Math.max(0, v)), ease = v => v * v * (3 - 2 * v);
+function size() { const w = innerWidth, h = innerHeight; R.setSize(w, h, false); cam.aspect = w / h; cam.fov = w < h ? 74 : 58; cam.updateProjectionMatrix(); }
+addEventListener('resize', size); size();
+function progress() { const r = walk.getBoundingClientRect(); visible = r.bottom > 0; return clamp(-r.top / (walk.offsetHeight - innerHeight)); }
+addEventListener('scroll', () => (p = progress()), {passive: true}); p = progress();
+addEventListener('pointermove', e => { mx = e.clientX / innerWidth - .5; my = e.clientY / innerHeight - .5; });
+// click a framed cover -> jump to that tool's card
+const ray = new THREE.Raycaster(), v2 = new THREE.Vector2();
+const hit = e => { v2.set(e.clientX / innerWidth * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); ray.setFromCamera(v2, cam); return ray.intersectObjects(clickable)[0]; };
+cv.addEventListener('pointermove', e => (cv.style.cursor = hit(e) ? 'pointer' : ''));
+cv.addEventListener('click', e => { const h = hit(e); if (!h) return; const card = document.getElementById('t-' + h.object.userData.key);
+  if (card) { card.scrollIntoView({behavior: 'smooth', block: 'center'}); card.classList.add('flash'); setTimeout(() => card.classList.remove('flash'), 1600); } });
+
+function frame(now) {
+  requestAnimationFrame(frame);
+  const dt = Math.min(.05, (now - last) / 1000); last = now;
+  if (!visible) return;
+  const tz = Z0 + (Z1 - Z0) * ease(p), tx = mobile ? 0 : -2.7 * (1 - clamp(p / .14));
+  const moving = Math.abs(tz - cz) > .02;
+  cz += (tz - cz) * Math.min(1, dt * 3.2); cx += (tx - cx) * Math.min(1, dt * 3.2);
+  const sway = Math.sin(cz * .35) * .12;
+  cam.position.set(cx + sway + mx * .25, 1.65 + Math.sin(cz * 1.1) * .02 - my * .12, cz);
+  // turn toward each framed cover as you walk past it
+  let look = 0; for (let i = 0; i < items.length; i++) { const d = cz - (-9 - i * 10 + 5.5); look += (i % 2 ? 1 : -1) * Math.exp(-d * d / 10); }
+  cam.lookAt(cx + sway * .5 + mx * .8 + look * (mobile ? 5.5 : 3), 1.75 - my * .4, cz - 10);
+  const t = now / 1000;
+  const sz = Math.max(cz - 4.4, -LEN + 3.2), sx = mobile ? .8 : 1.5 + cx * .6;
+  sam.position.set(sx, .98 + Math.sin(t * (moving ? 7 : 2)) * (moving ? .05 : .03), sz);
+  sam.rotation.z = moving ? Math.sin(t * 7) * .03 : 0;
+  shadow.position.set(sx, .02, sz + .1); halo.position.set(sx, .98, sz - .1);
+  for (const s of spinners) s.rotation.y += dt * s.userData.spin;
+  dust.rotation.y = Math.sin(t * .05) * .02; dust.position.y = Math.sin(t * .3) * .05;
+  const fade = clamp(1 - p / .09);
+  hero.style.opacity = fade; hero.style.pointerEvents = fade < .2 ? 'none' : '';
+  hero.style.translate = `0 ${-(1 - fade) * 40}px`;
+  hint.style.opacity = clamp(1 - p / .03) * .85;
+  R.render(S, cam);
+}
+requestAnimationFrame(frame);
 </script>
 </body>
 </html>
