@@ -466,10 +466,84 @@ const neon = (txt, sub, w = 1024, h = 300) => tex(w, h, g => {
 });
 add(new THREE.PlaneGeometry(4.6, 1.35), basic({map: neon('THE TOOL GALLERY', 'free · open source · by aixsam')}), 0, dh + 1.35, .12);
 glow('rgba(255,190,90,.5)', 7).position.set(0, dh + 1.35, .6);
-const leafMat = std({color: 0x2f9a4a, roughness: .7, flatShading: true}), potMat = std({color: 0xece6da, roughness: .5});
-const plant = (x, z) => { add(new THREE.BoxGeometry(.55, .55, .55), potMat, x, .28, z);
-  for (let k = 0; k < 9; k++) { const l = add(new THREE.BoxGeometry(.06, 1.1 + (k % 3) * .35, .14), leafMat, x, .9, z); l.rotation.set(Math.sin(k * 2.4) * .7, k * .7, Math.cos(k * 2.4) * .7); } };
-plant(-2.4, 2.4); plant(2.4, 2.4);
+const potMat = std({color: 0xece6da, roughness: .5});
+// ---------- plants: curved, creased leaves growing out of the soil, several species ----------
+const plants = [];
+function leafGeo(len, wid, bend, shape = 'blade', segs = 10) { // a bent ribbon with a centre crease, base at the origin, growing up then out along +z
+  const p = [], c = [], idx = []; let y = 0, z = 0;
+  for (let i = 0; i <= segs; i++) {
+    const t = i / segs, a = bend * t * t + .08, w = wid * (shape === 'blade' ? (1 - t) ** .8 : Math.sin(Math.PI * Math.min(1, t * 1.05)) ** .7) + .002;
+    const ny = -Math.sin(a), nz = Math.cos(a), fold = w * .35; // normal of the leaf surface, for the crease
+    p.push(-w, y, z, 0, y + ny * fold, z + nz * fold, w, y, z);
+    const shade = .55 + .45 * t; c.push(shade * .85, shade, shade * .85, shade, shade * 1.08, shade, shade * .85, shade, shade * .85);
+    if (i < segs) { const b = i * 3; idx.push(b, b + 3, b + 1, b + 1, b + 3, b + 4, b + 1, b + 4, b + 2, b + 2, b + 4, b + 5); }
+    y += Math.cos(a) * len / segs; z += Math.sin(a) * len / segs;
+  }
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(p, 3)); g.setAttribute('color', new THREE.Float32BufferAttribute(c, 3));
+  g.setIndex(idx); g.computeVertexNormals(); return g;
+}
+const leafMats = [0x2f8f45, 0x3fa356, 0x2a7a3c, 0x4fae5a, 0x6f9e3a].map(col => std({color: col, roughness: .55, side: THREE.DoubleSide, vertexColors: true, emissive: 0x0e2a12}));
+const potStyles = [
+  {mat: std({color: 0xf0ebe0, roughness: .45}), square: true},           // white ceramic block, like the facade planters
+  {mat: std({color: 0xb8582f, roughness: .8})},                          // terracotta
+  {mat: std({color: 0x1d1d22, roughness: .35, metalness: .3})},          // black glaze
+  {mat: std({color: 0xd9a441, roughness: .3, metalness: .8})},           // brass
+];
+const soilMat = std({color: 0x2b1a10, roughness: 1});
+const rand = (a, b) => a + Math.random() * (b - a);
+function pot(g, st, r, h) {
+  if (st.square) add(new THREE.BoxGeometry(r * 2, h, r * 2), st.mat, 0, h / 2, 0, 0, 0, g);
+  else { add(new THREE.CylinderGeometry(r, r * .72, h, 20), st.mat, 0, h / 2, 0, 0, 0, g); add(new THREE.TorusGeometry(r * .98, .025, 8, 24), st.mat, 0, h, 0, 0, Math.PI / 2, g); }
+  add(st.square ? new THREE.PlaneGeometry(r * 1.85, r * 1.85) : new THREE.CircleGeometry(r * .93, 20), soilMat, 0, h - .03, 0, 0, -Math.PI / 2, g);
+}
+function rosette(g, y, n, len, wid, bend, shape, spread = .5) { // leaves fanned around the stem, each tilted outward
+  for (let i = 0; i < n; i++) {
+    const L = new THREE.Mesh(leafGeo(len * rand(.75, 1.15), wid * rand(.85, 1.1), bend * rand(.7, 1.25), shape), leafMats[(i * 7) % leafMats.length]);
+    L.position.y = y; L.rotation.order = 'YXZ'; L.rotation.y = i / n * Math.PI * 2 + rand(-.25, .25); L.rotation.x = rand(-.1, spread * .6);
+    g.add(L);
+  }
+}
+function flower(g, x, y, z, color, petals = 6, size = .07, cup = false) {
+  const f = new THREE.Group(); f.position.set(x, y, z); g.add(f);
+  const pm = std({color, roughness: .55, side: THREE.DoubleSide, emissive: color, emissiveIntensity: .12});
+  if (cup) { // tulip: a lathe-turned cup
+    const pts = [[0, 0], [.04, .01], [.055, .05], [.05, .1], [.035, .13]].map(([a, b]) => new THREE.Vector2(a * size / .07, b * size / .07));
+    add(new THREE.LatheGeometry(pts, 14), pm, 0, 0, 0, 0, 0, f);
+  } else {
+    for (let i = 0; i < petals; i++) { const p = add(new THREE.CircleGeometry(size, 10), pm, 0, 0, 0, 0, 0, f);
+      p.scale.set(.55, 1, 1); p.geometry.translate(0, size * .9, 0); p.rotation.order = 'YXZ'; p.rotation.y = i / petals * Math.PI * 2; p.rotation.x = -1.1; }
+    add(new THREE.SphereGeometry(size * .35, 10, 8), std({color: 0xf5c542, roughness: .6, emissive: 0x553300}), 0, size * .08, 0, 0, 0, f);
+  }
+  return f;
+}
+const stemMat = std({color: 0x3f7f35, roughness: .7});
+const KINDS = ['agave', 'flowers', 'palm', 'tulips', 'monstera', 'lavender'];
+function plant(x, z, kind = KINDS[plants.length % KINDS.length], scale = 1.3) {
+  const g = new THREE.Group(); g.position.set(x, 0, z); g.scale.setScalar(scale); g.rotation.y = rand(0, 6.3); S.add(g);
+  const st = potStyles[(plants.length + (kind === 'agave' ? 0 : 1)) % potStyles.length], r = kind === 'palm' ? .32 : .27, h = kind === 'palm' ? .55 : .45;
+  pot(g, kind === 'agave' ? potStyles[0] : st, r, h);
+  const top = new THREE.Group(); top.position.y = h - .03; g.add(top);
+  if (kind === 'agave') { rosette(top, 0, 18, 1.0, .12, 1.0, 'blade', .45); rosette(top, 0, 10, .75, .11, .45, 'blade', .15); }
+  if (kind === 'palm') { const trunk = add(new THREE.CylinderGeometry(.04, .06, .7, 8), std({color: 0x6b4a2b, roughness: .9}), 0, .35, 0, 0, 0, top); rosette(top, .7, 11, 1.1, .15, 2.2, 'leaf', .1); rosette(top, .05, 5, .45, .09, 1.2, 'leaf'); }
+  if (kind === 'monstera') { for (let i = 0; i < 7; i++) { const s = new THREE.Group(); s.rotation.set(rand(.25, .6), i / 7 * 6.28, 0, 'YXZ'); top.add(s);
+      const len = rand(.5, .8); add(new THREE.CylinderGeometry(.012, .016, len, 6), stemMat, 0, len / 2, 0, 0, 0, s);
+      const L = new THREE.Mesh(leafGeo(.45, .3, 1.0, 'leaf', 8), leafMats[i % 3 + 1]); L.position.y = len; L.rotation.x = .3; s.add(L); } }
+  if (kind === 'flowers' || kind === 'tulips' || kind === 'lavender') {
+    rosette(top, 0, kind === 'tulips' ? 7 : 11, kind === 'tulips' ? .5 : .38, kind === 'tulips' ? .07 : .09, kind === 'tulips' ? .5 : 1.3, kind === 'tulips' ? 'blade' : 'leaf', .6);
+    const cols = kind === 'lavender' ? [0x9d7bff, 0xb79cff, 0x8466e8] : kind === 'tulips' ? [0xe8364a, 0xff7a9c, 0xf5c542, 0xff9f43] : [0xff6f91, 0xffd166, 0xf05252, 0xffffff, 0xc77dff];
+    const n = kind === 'lavender' ? 9 : 6;
+    for (let i = 0; i < n; i++) { const a = i / n * 6.28 + rand(-.3, .3), rr = rand(.03, .14), hh = rand(.45, .8) * (kind === 'lavender' ? 1.15 : 1);
+      const sx = Math.cos(a) * rr, sz = Math.sin(a) * rr;
+      const stem = add(new THREE.CylinderGeometry(.008, .01, hh, 5), stemMat, sx / 2, hh / 2, sz / 2, 0, 0, top); stem.rotation.set(sz * 1.2, 0, -sx * 1.2);
+      if (kind === 'lavender') for (let k = 0; k < 6; k++) add(new THREE.SphereGeometry(.022, 6, 5), std({color: cols[k % 3], roughness: .6, emissive: cols[k % 3], emissiveIntensity: .15}), sx, hh - k * .035, sz, 0, 0, top);
+      else flower(top, sx, hh, sz, cols[i % cols.length], 7, kind === 'tulips' ? .08 : .1, kind === 'tulips');
+    }
+  }
+  plants.push({top, ph: rand(0, 6.3)});
+}
+// facade planters: two big agaves in white blocks (like the entrance in the reference), then a mix through the gallery
+plant(-2.5, 2.4, 'agave', 1.6); plant(2.5, 2.4, 'agave', 1.6);
+
 
 // lights
 S.add(new THREE.HemisphereLight(0x8aa0ff, 0x2a1406, .7));
@@ -538,7 +612,9 @@ function propVoice(g) { // microphone with sound rings
 }
 items.forEach(exhibit);
 for (let i = 0; i < items.length; i++) { const z = stZ(i) - GAP / 2; if (z > ZEND + 6) { const l = new THREE.PointLight(0xffb366, mobile ? 8 : 12, 12, 1.6); l.position.set(0, H - .6, z); S.add(l); } }
-[[-2.9, -4.5], ...items.map((t, i) => [stS(i) * -2.9, stZ(i) - 5]), [-2.4, ZEND + 1.2], [2.4, ZEND + 1.2]].forEach(([x, z]) => plant(x, z));
+[[-2.9, -4.5, 'palm'], ...items.map((t, i) => [stS(i) * -2.85, stZ(i) - 5, ['flowers', 'monstera', 'tulips', 'lavender', 'palm', 'flowers'][i % 6]]),
+ ...items.map((t, i) => [stS(i) * 2.85, stZ(i) - 2.4, ['lavender', 'tulips', 'monstera', 'flowers'][i % 4]]),
+ [-2.4, ZEND + 1.2, 'flowers'], [2.4, ZEND + 1.2, 'tulips'], [-2.9, ZEND + 3.4, 'palm'], [2.9, ZEND + 3.4, 'agave']].forEach(([x, z, k]) => plant(x, z, k));
 
 // finale: the next tool
 add(new THREE.PlaneGeometry(W, H), std({color: 0x18244f, roughness: .9}), 0, H / 2, ZEND);
@@ -749,6 +825,7 @@ function frame(now) {
   [...dotsEl.children].forEach((d, i) => { d.classList.toggle('on', su >= holdU[i] - .01); d.classList.toggle('now', i === now_i); });
   for (const {v, z} of videos) { const near = Math.abs(P.z - z) < 9; if (near && v.paused) { v.preload = 'auto'; v.play().catch(() => {}); } else if (!near && !v.paused) v.pause(); }
   snowSmall(t, dt); snowBig(t, dt);
+  for (const p of plants) { p.top.rotation.z = Math.sin(t * .7 + p.ph) * .03; p.top.rotation.x = Math.cos(t * .5 + p.ph) * .02; } // gentle sway
   for (const s of spinners) { s.rotation.y += dt * (s.userData.spin || 0); s.userData.tick?.(t); }
   const fin = su > holdU[stations.length - 1] - .08; conf.visible = fin;
   if (fin) { cd.forEach((c, i) => { c.y -= dt * c.v; if (c.y < 0) c.y = 4.6; dummy.position.set(c.x + Math.sin(t + i) * .1, c.y, c.z); dummy.rotation.set(t * c.v * 3 + c.r, t + c.r, 0); dummy.updateMatrix(); conf.setMatrixAt(i, dummy.matrix); }); conf.instanceMatrix.needsUpdate = true; }
