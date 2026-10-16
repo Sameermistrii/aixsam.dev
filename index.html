@@ -683,9 +683,9 @@ function frame(now) {
   cam.position.set(P.x + mx * .15, P.y - my * .08 + Math.sin(P.z * 1.3) * .015, P.z);
   cam.rotation.set(P.pitch - my * .05, P.yaw - mx * .08, 0);
   // guide follows his keyframed spot with a little lag, faces where he walks
-  gpos.lerp(P.g, window.gallerySnap ? 1 : 1 - Math.exp(-dt * 6));
+  gpos.lerp(P.g, window.gallerySnap ? 1 : 1 - Math.exp(-dt * 14)); // tight follow so the camera never overtakes him
   const mv = gpos.distanceTo(prevG) / Math.max(dt, 1e-3); prevG.copy(gpos); speed += (mv - speed) * Math.min(1, dt * 8);
-  gface = lerpA(gface, P.f, window.gallerySnap ? 1 : 1 - Math.exp(-dt * 7));
+  gface = lerpA(gface, P.f, window.gallerySnap ? 1 : 1 - Math.exp(-dt * 9));
   guide.position.copy(gpos); if (MODE === '3d') guide.rotation.y = gface;
   gshadow.position.set(gpos.x, .02, gpos.z);
   setLook(P.look); animate(t, dt, speed, P.hold);
