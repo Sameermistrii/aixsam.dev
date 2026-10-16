@@ -395,7 +395,7 @@ const ZEND = stZ(items.length - 1) - 13, LEN = -ZEND;
 
 // floor: real reflection on desktop, glossy wood on top of it
 const wood = tex(512, 512, (g, w) => {
-  for (let i = 0; i < 8; i++) { g.fillStyle = `hsl(24,${40 + i % 3 * 6}%,${17 + (i * 37 % 9)}%)`; g.fillRect(0, i * 64, w, 64);
+  for (let i = 0; i < 8; i++) { g.fillStyle = `hsl(28,${46 + i % 3 * 6}%,${30 + (i * 37 % 9)}%)`; g.fillRect(0, i * 64, w, 64);
     for (let k = 0; k < 40; k++) { g.fillStyle = `rgba(0,0,0,${Math.random() * .12})`; g.fillRect(0, i * 64 + Math.random() * 64, w, 1); }
     g.fillStyle = 'rgba(0,0,0,.6)'; g.fillRect(0, i * 64, w, 2); g.fillRect((i * 173) % w, i * 64, 2, 64); }
 }, [W / 2.2, (LEN + 30) / 2.2]);
@@ -419,11 +419,25 @@ const warm = panels('#ffc978', '#8a3f0c', 4, 2, [LEN / 2.6, 1]);
 const wallMat = std({map: warm, emissiveMap: warm, emissive: 0xffffff, emissiveIntensity: .3, roughness: .7});
 add(new THREE.PlaneGeometry(LEN, H), wallMat, -half, H / 2, -LEN / 2, Math.PI / 2);
 add(new THREE.PlaneGeometry(LEN, H), wallMat, half, H / 2, -LEN / 2, -Math.PI / 2);
-add(new THREE.PlaneGeometry(W, LEN), std({color: 0x0b0c12, roughness: 1}), 0, H, -LEN / 2, 0, Math.PI / 2);
-const spotMat = basic({color: 0xfff1d6});
-for (let z = -2; z > -LEN; z -= 4) for (const x of [-1.7, 1.7]) add(new THREE.CircleGeometry(.13, 20), spotMat, x, H - .01, z, 0, Math.PI / 2);
+add(new THREE.PlaneGeometry(W, LEN), std({color: 0x161c40, roughness: 1}), 0, H, -LEN / 2, 0, Math.PI / 2);
+// ceiling can lights: black cans, a hot bulb underneath and a warm pool on the ceiling around each
+const canMat = std({color: 0x111114, roughness: .4, metalness: .5}), bulbMat = basic({color: 0xfff3dc, toneMapped: false});
+for (let z = -2; z > -LEN; z -= 4) for (const x of [-1.7, 1.7]) {
+  add(new THREE.CylinderGeometry(.11, .13, .22, 16), canMat, x, H - .13, z);
+  add(new THREE.CircleGeometry(.085, 16), bulbMat, x, H - .245, z, 0, Math.PI / 2);
+  glow('rgba(255,214,160,.42)', 1.1).position.set(x, H - .04, z);
+  glow('rgba(255,224,180,.35)', .5).position.set(x, H - .3, z);
+}
+const capMat = std({color: 0xe7b95a, metalness: .6, roughness: .35}), sconceMat = basic({color: 0xfff6e4, toneMapped: false});
+// wall sconces: glowing white box with gold caps and a warm halo on the wall
+const sconce = (x, y, z, ry) => { const g = new THREE.Group(); g.position.set(x, y, z); g.rotation.y = ry; S.add(g);
+  add(new THREE.BoxGeometry(.2, .46, .1), sconceMat, 0, 0, .05, 0, 0, g);
+  add(new THREE.BoxGeometry(.27, .06, .15), capMat, 0, .26, .05, 0, 0, g); add(new THREE.BoxGeometry(.27, .06, .15), capMat, 0, -.26, .05, 0, 0, g);
+  glow('rgba(255,196,120,.6)', 1.9, g).position.set(0, 0, .22); };
 const colMat = std({color: 0x2a160b, roughness: .6});
-for (let z = -1; z > -LEN; z -= 5.75) for (const s of [-1, 1]) add(new THREE.BoxGeometry(.3, H, .5), colMat, s * (half - .12), H / 2, z);
+for (let z = -1; z > -LEN; z -= 5.75) for (const s of [-1, 1]) { add(new THREE.BoxGeometry(.3, H, .5), colMat, s * (half - .12), H / 2, z); if (z < -2) sconce(s * (half - .28), 1.75, z, -s * Math.PI / 2); }
+// warm haze down the middle of the corridor, brighter in the distance like light through dust
+for (let z = -4; z > -LEN + 4; z -= 7) glow('rgba(255,186,110,.09)', 8).position.set(0, 2.2, z);
 
 // entrance facade + doorway + neon sign
 const cool = panels('#8fb4ff', '#1c2f8c', 2, 2, null);
@@ -435,6 +449,12 @@ const frameWood = std({color: 0x3b2112, roughness: .5});
 add(new THREE.BoxGeometry(.28, dh + .3, .4), frameWood, -dw / 2 - .1, (dh + .3) / 2, .05);
 add(new THREE.BoxGeometry(.28, dh + .3, .4), frameWood, dw / 2 + .1, (dh + .3) / 2, .05);
 add(new THREE.BoxGeometry(dw + .5, .3, .4), frameWood, 0, dh + .15, .05);
+// glowing gold edge around the doorway, sconces either side, and light spilling out of the gallery
+const edge = basic({color: 0xffd98a, toneMapped: false});
+add(new THREE.BoxGeometry(.05, dh, .06), edge, -dw / 2 + .04, dh / 2, .27); add(new THREE.BoxGeometry(.05, dh, .06), edge, dw / 2 - .04, dh / 2, .27);
+add(new THREE.BoxGeometry(dw, .05, .06), edge, 0, dh - .02, .27);
+for (const sx of [-1, 1]) sconce(sx * (dw / 2 + .78), 2.25, .02, 0);
+glow('rgba(255,200,130,.35)', 5.5).position.set(0, 1.9, -1.5);
 const neon = (txt, sub, w = 1024, h = 300) => tex(w, h, g => {
   g.fillStyle = '#0d1020'; g.fillRect(0, 0, w, h); g.strokeStyle = '#e7b95a'; g.lineWidth = 10; g.strokeRect(14, 14, w - 28, h - 28);
   g.textAlign = 'center'; g.textBaseline = 'middle'; g.shadowColor = '#ffb84d'; g.shadowBlur = 28; g.fillStyle = '#ffe2a0';
@@ -455,11 +475,13 @@ const outside = new THREE.PointLight(0x7da2ff, 40, 20, 1.5); outside.position.se
 // ---------- exhibits: one stop per tool ----------
 const loader = new THREE.TextureLoader(), clickable = [], spinners = [], videos = [];
 const gold = std({color: 0xd9a441, metalness: .85, roughness: .3});
-const navy = std({color: 0x18244f, roughness: .85});
+const navy = std({color: 0x0f1a44, roughness: .9});
 const bezelGeo = (() => { const w = 1.3, h = 2.3, r = .16, s = new THREE.Shape();
   s.moveTo(-w / 2 + r, -h / 2); s.lineTo(w / 2 - r, -h / 2); s.quadraticCurveTo(w / 2, -h / 2, w / 2, -h / 2 + r); s.lineTo(w / 2, h / 2 - r);
   s.quadraticCurveTo(w / 2, h / 2, w / 2 - r, h / 2); s.lineTo(-w / 2 + r, h / 2); s.quadraticCurveTo(-w / 2, h / 2, -w / 2, h / 2 - r); s.lineTo(-w / 2, -h / 2 + r); s.quadraticCurveTo(-w / 2, -h / 2, -w / 2 + r, -h / 2);
   return new THREE.ExtrudeGeometry(s, {depth: .07, bevelEnabled: false}); })();
+const spotPool = basic({map: tex(256, 512, c => { const r = c.createRadialGradient(128, -20, 10, 128, -20, 470); r.addColorStop(0, 'rgba(255,232,180,.4)'); r.addColorStop(.45, 'rgba(255,214,150,.09)'); r.addColorStop(1, 'rgba(0,0,0,0)'); c.fillStyle = r; c.fillRect(0, 0, 256, 512); }),
+  transparent: true, blending: THREE.AdditiveBlending, depthWrite: false});
 const plaque = t => tex(512, 128, g => { g.fillStyle = '#e7b95a'; g.fillRect(0, 0, 512, 128); g.fillStyle = '#14110c'; g.font = font(64, 500, 'DM Mono, monospace'); g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(t, 256, 68); });
 function exhibit(t, i) {
   const s = stS(i), z = stZ(i);
@@ -468,6 +490,7 @@ function exhibit(t, i) {
   add(new THREE.BoxGeometry(3.05, 3.8, .1), navy, 0, 2.3, .02, 0, 0, g);
   add(new THREE.PlaneGeometry(2.3, .5), basic({map: label(t.name.toUpperCase(), 1024, 220, t.name.length > 10 ? 96 : 120), transparent: true}), 0, 4.08, .12, 0, 0, g).rotation.z = s * .02;
   glow('rgba(255,214,150,.55)', 3.6, g).position.set(0, 2.45, .05);
+  add(new THREE.PlaneGeometry(3.05, 3.8), spotPool, 0, 2.3, .075, 0, 0, g); // picture light washing down the board
   add(bezelGeo, basic({color: 0x07070a}), 0, 2.45, .08, 0, 0, g);
   const poster = loader.load(t.cover, x => (x.colorSpace = THREE.SRGBColorSpace));
   const scr = add(new THREE.PlaneGeometry(1.16, 2.06), basic({map: poster, toneMapped: false}), 0, 2.45, .16, 0, 0, g);
