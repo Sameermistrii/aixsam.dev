@@ -49,6 +49,8 @@ h2{font-size:clamp(28px,4vw,40px);letter-spacing:-.5px}
 .tool:hover{border-color:var(--gold);transform:translateY(-2px)}
 .top{display:flex;justify-content:space-between;align-items:center}
 .key{font-family:ui-monospace,Menlo,monospace;font-size:13px;font-weight:700;letter-spacing:1px;color:#111;background:var(--gold);padding:4px 10px;border-radius:8px}
+.lock{align-self:flex-start;font-size:12px;font-weight:600;color:var(--gold);border:1.5px solid var(--gold);border-radius:999px;padding:2px 10px}
+.hint{font-size:13px;color:var(--mute)}
 .new{font-size:12px;font-weight:600;color:var(--green);border:1.5px solid var(--green);border-radius:999px;padding:2px 10px}
 .tool h3{font-size:22px}
 .tool p{color:var(--mute);font-size:15px;flex:1}
@@ -89,7 +91,7 @@ footer{color:var(--mute);font-size:13px;text-align:center;padding:30px 0 40px}
  <div class="steps">
   <div class="step"><b>01</b><p>Watch a reel about a free tool</p></div>
   <div class="step"><b>02</b><p>Comment the keyword, I DM you the link</p></div>
-  <div class="step"><b>03</b><p>Or grab it right here, no waiting</p></div>
+  <div class="step"><b>03</b><p>Links unlock here 7 days after the reel</p></div>
  </div>
 
  <section id="tools">
@@ -115,11 +117,12 @@ footer{color:var(--mute);font-size:13px;text-align:center;padding:30px 0 40px}
 
 <script>
 // Add new tools at the TOP of this list. key = the comment keyword from the reel.
+// posted = when the reel went live (link stays locked for 7 days after), reel = the reel URL to send people to meanwhile.
 const TOOLS = [
-  {key:"GRAPH", name:"Graphify", url:"https://github.com/Graphify-Labs/graphify",
+  {key:"GRAPH", name:"Graphify", url:"https://github.com/Graphify-Labs/graphify", posted:"2026-10-16T10:30:00+05:30", reel:"",
    desc:"Turns your whole codebase into a knowledge graph, so Claude Code, Cursor or Codex query the graph instead of re-reading your files. Free, open source, runs locally.",
    tags:["Claude Code","Open source","Runs locally"]},
-  {key:"CLONE", name:"Replica skill", url:"https://github.com/jakeschincariol/replica-skill",
+  {key:"CLONE", name:"Replica skill", url:"https://github.com/jakeschincariol/replica-skill", posted:"2026-10-15T17:30:00+05:30", reel:"",
    desc:"11 free Claude skills that reverse-engineer an app, rebuild it, test it, read its real reviews and fix what users hate, then ship your own version.",
    tags:["Claude","Open source","MIT"]},
   {key:"REPO", name:"Voicebox", url:"https://github.com/jamiepine/voicebox",
@@ -127,6 +130,16 @@ const TOOLS = [
    tags:["Voice AI","Runs locally","MIT"]},
 ];
 const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const LOCK = 7 * 864e5, IG = 'https://instagram.com/aixsam.dev';
+// shortcut: soft lock, the URL is still in the page source; fine since it only nudges people to the reel
+function link(t) {
+  const left = t.posted ? Date.parse(t.posted) + LOCK - Date.now() : 0;
+  if (left <= 0) return `<a class="btn gold" href="${esc(t.url)}" target="_blank" rel="noopener">Get the link →</a>`;
+  const d = Math.floor(left / 864e5), h = Math.floor(left / 36e5) % 24, m = Math.floor(left / 6e4) % 60;
+  return `<span class="lock">🔒 Unlocks in ${d ? d + 'd ' + h + 'h' : h + 'h ' + m + 'm'}</span>
+    <a class="btn gold" href="${esc(t.reel || IG)}" target="_blank" rel="noopener">Comment "${esc(t.key)}" →</a>
+    <span class="hint">Comment it on the reel and I'll DM you the link right now.</span>`;
+}
 const grid = document.getElementById('grid'), empty = document.getElementById('empty');
 function render(q = '') {
   q = q.trim().toLowerCase();
@@ -136,10 +149,11 @@ function render(q = '') {
     <div class="top"><span class="key">${esc(t.key)}</span>${t === TOOLS[0] ? '<span class="new">Latest</span>' : ''}</div>
     <h3>${esc(t.name)}</h3><p>${esc(t.desc)}</p>
     <div class="tags">${t.tags.map(x => `<span>${esc(x)}</span>`).join('')}</div>
-    <a class="btn gold" href="${esc(t.url)}" target="_blank" rel="noopener">Get the link →</a></article>`).join('');
+    ${link(t)}</article>`).join('');
   empty.style.display = list.length ? 'none' : 'block';
 }
 document.getElementById('q').addEventListener('input', e => render(e.target.value));
+setInterval(() => render(document.getElementById('q').value), 60000); // keep countdowns ticking
 const k = new URLSearchParams(location.search).get('k'); // aixsam.dev/?k=CLONE opens filtered
 if (k) document.getElementById('q').value = k;
 render(k || '');
