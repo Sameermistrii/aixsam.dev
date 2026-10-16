@@ -603,6 +603,33 @@ if (MODE === '2d') {
   setLook('wave');
 }
 
+
+// ---------- falling light motes (like snow), small sparks plus a few big soft bokeh ----------
+const dotTex = tex(64, 64, g => { const r = g.createRadialGradient(32, 32, 0, 32, 32, 32); r.addColorStop(0, 'rgba(255,255,255,1)'); r.addColorStop(.25, 'rgba(255,240,210,.85)'); r.addColorStop(1, 'rgba(255,220,170,0)'); g.fillStyle = r; g.fillRect(0, 0, 64, 64); });
+function motes(n, size, opacity, speed) {
+  const pos = new Float32Array(n * 3), col = new Float32Array(n * 3), meta = [];
+  for (let i = 0; i < n; i++) {
+    const out = i % 3 === 0; // a third fall outside in front of the facade, the rest inside the gallery
+    pos[i * 3] = out ? (Math.random() - .5) * 12 : (Math.random() - .5) * (W - .4);
+    pos[i * 3 + 1] = Math.random() * (out ? 8 : H);
+    pos[i * 3 + 2] = out ? Math.random() * 11 : -Math.random() * LEN;
+    meta.push({v: speed * (.5 + Math.random()), ph: Math.random() * 6.3, tw: 1 + Math.random() * 2.5, top: out ? 8 : H, warm: Math.random()});
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3)); geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
+  const pts = new THREE.Points(geo, new THREE.PointsMaterial({map: dotTex, size, vertexColors: true, transparent: true, opacity, depthWrite: false, blending: THREE.AdditiveBlending, toneMapped: false}));
+  pts.frustumCulled = false; S.add(pts);
+  return (t, dt) => {
+    for (let i = 0; i < n; i++) { const m = meta[i], k = i * 3;
+      pos[k + 1] -= m.v * dt; pos[k] += Math.sin(t * .6 + m.ph) * .12 * dt; pos[k + 2] += Math.cos(t * .4 + m.ph) * .05 * dt;
+      if (pos[k + 1] < 0) pos[k + 1] = m.top;
+      const b = .55 + .45 * Math.sin(t * m.tw + m.ph); // twinkle
+      col[k] = b; col[k + 1] = b * (.86 + m.warm * .1); col[k + 2] = b * (.62 + m.warm * .3); }
+    geo.attributes.position.needsUpdate = geo.attributes.color.needsUpdate = true;
+  };
+}
+const snowSmall = motes(mobile ? 420 : 1000, .1, 1, .2), snowBig = motes(mobile ? 36 : 80, .4, .5, .08);
+
 // ---------- the scroll path ----------
 // keyframes: camera pose + where the guide stands, which way he faces, and his look
 const camPose = (x, z, yaw, pitch = 0, y = 1.65) => ({x, y, z, yaw, pitch});
@@ -695,6 +722,7 @@ function frame(now) {
   showCard(now_i);
   [...dotsEl.children].forEach((d, i) => { d.classList.toggle('on', su >= holdU[i] - .01); d.classList.toggle('now', i === now_i); });
   for (const {v, z} of videos) { const near = Math.abs(P.z - z) < 9; if (near && v.paused) { v.preload = 'auto'; v.play().catch(() => {}); } else if (!near && !v.paused) v.pause(); }
+  snowSmall(t, dt); snowBig(t, dt);
   for (const s of spinners) { s.rotation.y += dt * (s.userData.spin || 0); s.userData.tick?.(t); }
   const fin = su > holdU[stations.length - 1] - .08; conf.visible = fin;
   if (fin) { cd.forEach((c, i) => { c.y -= dt * c.v; if (c.y < 0) c.y = 4.6; dummy.position.set(c.x + Math.sin(t + i) * .1, c.y, c.z); dummy.rotation.set(t * c.v * 3 + c.r, t + c.r, 0); dummy.updateMatrix(); conf.setMatrixAt(i, dummy.matrix); }); conf.instanceMatrix.needsUpdate = true; }
