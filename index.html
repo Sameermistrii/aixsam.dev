@@ -589,7 +589,7 @@ function exhibit(t, i) {
   add(new THREE.BoxGeometry(.72, 1.05, .72), potMat, px, .525, pz);
   add(new THREE.BoxGeometry(.32, .06, .02), gold, px - s * .37, .75, pz, Math.PI / 2 * s);
   const prop = new THREE.Group(); prop.position.set(px, 1.35, pz); S.add(prop); spinners.push(prop);
-  ({GRAPH: propGraph, CLONE: propClone, REPO: propVoice}[t.key] || propGraph)(prop);
+  ({GRAPH: propGraph, CLONE: propClone, REPO: propVoice, TEAM: propTeam}[t.key] || propGraph)(prop);
 }
 function propGraph(g) { // a little knowledge graph
   const cols = [0x62c4a2, 0xe7b95a, 0xff7b54, 0x9d7bff, 0x4c7dff], pts = [];
@@ -605,6 +605,48 @@ function propClone(g) { // an app icon copying itself
     return m; };
   const a = icon(0xe7b95a), b = icon(0x62c4a2); b.material.transparent = true;
   g.userData.tick = t => { const k = (t * .5) % 1; b.position.set(Math.sin(k * Math.PI) * .38, Math.sin(k * Math.PI) * .12, 0); b.material.opacity = .35 + .65 * Math.sin(k * Math.PI); a.rotation.y = Math.sin(t) * .3; };
+}
+function propTeam(g) { // three little agent bots: planner (blueprint), tdd (checkmark), reviewer (magnifier)
+  g.scale.setScalar(1.3);
+  const dark = std({color: 0x0d1117, roughness: .3}), eyeMat = basic({color: 0x9ff7dc, toneMapped: false});
+  const bots = [[-.25, 0xe7b95a, 'plan'], [0, 0x62c4a2, 'tdd'], [.25, 0x9d7bff, 'review']].map(([x, col, kind], i) => {
+    const b = new THREE.Group(); b.position.set(x, -.3 / 1.3, i === 1 ? .08 : -.04); g.add(b);
+    const body = std({color: col, roughness: .35, metalness: .35});
+    add(new THREE.CylinderGeometry(.08, .08, .012, 24), basic({color: col, transparent: true, opacity: .55, toneMapped: false}), 0, .006, 0, 0, 0, b); // hover pad
+    const bob = new THREE.Group(); b.add(bob);
+    add(new THREE.CapsuleGeometry(.06, .08, 6, 16), body, 0, .16, 0, 0, 0, bob);
+    const head = new THREE.Group(); head.position.y = .31; bob.add(head);
+    add(new THREE.SphereGeometry(.08, 24, 18), body, 0, 0, 0, 0, 0, head);
+    add(new THREE.BoxGeometry(.12, .055, .04), dark, 0, 0, .064, 0, 0, head); // visor
+    const eyes = [-.028, .028].map(ex => add(new THREE.BoxGeometry(.018, .022, .01), eyeMat, ex, 0, .086, 0, 0, head));
+    add(new THREE.CylinderGeometry(.005, .005, .06, 6), dark, 0, .1, 0, 0, 0, head);
+    const tip = add(new THREE.SphereGeometry(.016, 10, 8), basic({color: col, toneMapped: false}), 0, .135, 0, 0, 0, head);
+    const arm = new THREE.Group(); arm.position.set(.075, .2, 0); bob.add(arm); // right arm holds the tool
+    add(new THREE.CapsuleGeometry(.014, .06, 4, 8), body, 0, -.04, 0, 0, 0, arm);
+    add(new THREE.CapsuleGeometry(.014, .06, 4, 8), body, -.075, .16, 0, 0, 0, bob).rotation.z = -.25;
+    const tool = new THREE.Group(); tool.position.set(0, -.08, .05); arm.add(tool);
+    if (kind === 'plan') add(new THREE.PlaneGeometry(.13, .09), basic({side: THREE.DoubleSide, map: tex(128, 88, c => { c.fillStyle = '#2f5ad6'; c.fillRect(0, 0, 128, 88);
+      c.strokeStyle = 'rgba(255,255,255,.35)'; for (let k = 8; k < 128; k += 12) { c.beginPath(); c.moveTo(k, 0); c.lineTo(k, 88); c.moveTo(0, k); c.lineTo(128, k); c.stroke(); }
+      c.strokeStyle = '#fff'; c.lineWidth = 3; c.strokeRect(18, 16, 40, 28); c.strokeRect(70, 40, 40, 30); c.beginPath(); c.moveTo(58, 30); c.lineTo(90, 40); c.stroke(); })}), -.03, 0, .02, 0, -.35, tool);
+    if (kind === 'tdd') add(new THREE.CircleGeometry(.05, 24), basic({side: THREE.DoubleSide, toneMapped: false, map: tex(96, 96, c => { c.fillStyle = '#3fb950'; c.beginPath(); c.arc(48, 48, 46, 0, 7); c.fill();
+      c.strokeStyle = '#fff'; c.lineWidth = 12; c.lineCap = 'round'; c.beginPath(); c.moveTo(26, 50); c.lineTo(42, 66); c.lineTo(72, 32); c.stroke(); })}), 0, .01, .02, 0, 0, tool);
+    if (kind === 'review') { add(new THREE.TorusGeometry(.04, .009, 8, 24), std({color: 0xd9a441, metalness: .9, roughness: .3}), 0, .03, .02, 0, 0, tool);
+      add(new THREE.CircleGeometry(.036, 20), basic({color: 0xbfe8ff, transparent: true, opacity: .35}), 0, .03, .02, 0, 0, tool);
+      add(new THREE.CylinderGeometry(.007, .007, .06, 6), dark, 0, -.035, .02, 0, 0, tool); }
+    return {kind, bob, head, eyes, arm, tool, tip, ph: i * 2.1};
+  });
+  g.userData.tick = t => {
+    g.lookAt(cam.position.x, g.position.y, cam.position.z); // the team always faces the visitor
+    for (const b of bots) { const k = t + b.ph;
+      b.bob.position.y = .015 + Math.sin(k * 2.4) * .012;
+      const blink = (k % 3.7) < .12 ? .15 : 1; b.eyes.forEach(e => (e.scale.y = blink));
+      b.tip.scale.setScalar(.8 + .3 * Math.abs(Math.sin(k * 3)));
+      if (b.kind === 'plan') { b.head.rotation.x = .25 + Math.sin(k * .8) * .08; b.arm.rotation.x = -.9; } // reading the blueprint
+      if (b.kind === 'tdd') { const c = (k * .5) % 1; b.arm.rotation.x = -1.2 - (c < .15 ? Math.sin(c / .15 * Math.PI) * .7 : 0); // raises the check every 2s
+        b.tool.scale.setScalar(1 + (c < .15 ? Math.sin(c / .15 * Math.PI) * .35 : 0)); b.head.rotation.z = Math.sin(k * 1.3) * .08; }
+      if (b.kind === 'review') { b.arm.rotation.x = -1.3; b.arm.rotation.z = Math.sin(k * 1.1) * .45; b.head.rotation.y = Math.sin(k * 1.1) * .4; } // sweeping the magnifier
+    }
+  };
 }
 function propVoice(g) { // microphone with sound rings
   const m = gold.clone(); add(new THREE.CylinderGeometry(.035, .045, .32, 12), m, 0, -.12, 0, 0, 0, g);
