@@ -458,7 +458,7 @@ const dust = new THREE.Points(dg, new THREE.PointsMaterial({color: 0xffd28a, siz
 
 // scroll-driven walk
 const Z0 = 12, Z1 = -LEN + 9;
-let cz = Z0, cx = mobile ? 0 : -2.7, p = 0, mx = 0, my = 0, last = performance.now(), visible = true;
+let cz = Z0, cx = mobile ? 0 : -3.4, p = 0, mx = 0, my = 0, last = performance.now(), visible = true;
 const clamp = v => Math.min(1, Math.max(0, v)), ease = v => v * v * (3 - 2 * v);
 function size() { const w = innerWidth, h = innerHeight; R.setSize(w, h, false); cam.aspect = w / h; cam.fov = w < h ? 74 : 58; cam.updateProjectionMatrix(); }
 addEventListener('resize', size); size();
@@ -476,7 +476,7 @@ function frame(now) {
   requestAnimationFrame(frame);
   const dt = Math.min(.05, (now - last) / 1000); last = now;
   if (!visible) return;
-  const tz = Z0 + (Z1 - Z0) * ease(p), tx = mobile ? 0 : -2.7 * (1 - clamp(p / .14));
+  const tz = Z0 + (Z1 - Z0) * ease(p), tx = mobile ? 0 : -3.4 * (1 - clamp(p / .14));
   const moving = Math.abs(tz - cz) > .02;
   cz += (tz - cz) * Math.min(1, dt * 3.2); cx += (tx - cx) * Math.min(1, dt * 3.2);
   const sway = Math.sin(cz * .35) * .12;
