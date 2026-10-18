@@ -10,6 +10,7 @@
 <meta property="og:description" content="Every free AI tool from the reels, in one gallery.">
 <meta property="og:image" content="https://aixsam.dev/img/icon.png">
 <link rel="canonical" href="https://aixsam.dev/">
+<script data-goatcounter="https://aixsamdev.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 <link rel="icon" href="img/icon.png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -123,6 +124,9 @@ a{color:inherit;text-decoration:none}
 .tags span{font-family:var(--mono);font-size:11.5px;border:1px solid var(--line);border-radius:999px;padding:2px 9px;color:var(--mute)}
 .tool .btn{align-self:flex-start;margin-top:4px;padding:10px 16px;font-size:14px}
 .lock{align-self:flex-start;font-family:var(--mono);font-size:12px;color:var(--gold);border:1.5px solid var(--gold);border-radius:999px;padding:2px 10px}
+.wing{grid-column:1/-1;display:flex;align-items:center;gap:14px;margin:18px 0 -4px}
+.wing .tape{font-size:18px;padding:7px 12px;transform:rotate(-1deg)}
+.wing small{font-family:var(--mono);font-size:13px;color:var(--mute)}
 .hint2{font-size:13px;color:var(--mute)}
 .empty{color:var(--mute);padding:30px 0;display:none}
 
@@ -263,7 +267,7 @@ footer{position:relative;z-index:2;background:repeating-linear-gradient(90deg,#2
 
 <footer>
  <div class="wrap foot">
-  <div><span class="tape solo">aixsam.dev</span><p>No ads. No tracking. No sign-up.</p><p>Tools are made by their own authors; I just find them. © <span id="yr"></span></p></div>
+  <div><span class="tape solo">aixsam.dev</span><p>No ads. No cookies. No sign-up. Just anonymous visit counts.</p><p>Tools are made by their own authors; I just find them. © <span id="yr"></span></p></div>
   <nav><a href="https://instagram.com/aixsam.dev" target="_blank" rel="noopener">@aixsam.dev</a><a href="https://youtube.com/@aixsamdev" target="_blank" rel="noopener">YouTube</a><a href="#tools">The tools</a></nav>
  </div>
 </footer>
@@ -275,22 +279,33 @@ footer{position:relative;z-index:2;background:repeating-linear-gradient(90deg,#2
 // posted = when the reel went live (link stays locked for 3 days after), reel = the reel URL to send people to meanwhile,
 // cover = 540x960 reel cover in img/covers/ (also hung on the 3D gallery wall).
 const TOOLS = window.TOOLS = [
-  {key:"LINKEDIN", name:"LinkedIn Skills", url:"https://github.com/sergebulaev/linkedin-skills", posted:"2026-10-18T18:30:00+05:30", cover:"img/covers/linkedin.webp",
+  {key:"LINKEDIN", wing:"Claude Code & Skills", name:"LinkedIn Skills", url:"https://github.com/sergebulaev/linkedin-skills", posted:"2026-10-18T18:30:00+05:30", cover:"img/covers/linkedin.webp",
    desc:"12 free Claude skills that run your LinkedIn: write posts with 20 proven hook formulas, draft comments and replies, rewrite your profile and plan your week. A humanizer strips AI patterns and tests drafts against 5 AI detectors. Nothing posts without your approval. Free, open source, MIT.",
    tags:["Claude","Open source","MIT"]},
-  {key:"TEAM", name:"ECC", url:"https://github.com/affaan-m/ECC", posted:"2026-10-17T18:30:00+05:30", cover:"img/covers/team.webp",
+  {key:"TEAM", wing:"Claude Code & Skills", name:"ECC", url:"https://github.com/affaan-m/ECC", posted:"2026-10-17T18:30:00+05:30", cover:"img/covers/team.webp",
    desc:"Everything Claude Code: turns Claude Code into a whole engineering team: 71 agents (planner, TDD guide, code reviewer…), 311 skills and 97 commands, installed with one command. Also works with Codex and Cursor. Free, open source, MIT.",
    tags:["Claude Code","Open source","MIT"]},
-  {key:"GRAPH", name:"Graphify", url:"https://github.com/Graphify-Labs/graphify", posted:"2026-10-16T10:30:00+05:30", reel:"https://www.instagram.com/reel/DeivnmwTSTG/", cover:"img/covers/graph.webp",
+  {key:"GRAPH", wing:"Claude Code & Skills", name:"Graphify", url:"https://github.com/Graphify-Labs/graphify", posted:"2026-10-16T10:30:00+05:30", reel:"https://www.instagram.com/reel/DeivnmwTSTG/", cover:"img/covers/graph.webp",
    desc:"Turns your whole codebase into a knowledge graph, so Claude Code, Cursor or Codex query the graph instead of re-reading your files. Free, open source, runs locally.",
    tags:["Claude Code","Open source","Runs locally"]},
-  {key:"CLONE", name:"Replica skill", url:"https://github.com/jakeschincariol/replica-skill", posted:"2026-10-15T17:30:00+05:30", reel:"https://www.instagram.com/reel/Deg1itXTSUr/", cover:"img/covers/clone.webp",
+  {key:"CLONE", wing:"Claude Code & Skills", name:"Replica skill", url:"https://github.com/jakeschincariol/replica-skill", posted:"2026-10-15T17:30:00+05:30", reel:"https://www.instagram.com/reel/Deg1itXTSUr/", cover:"img/covers/clone.webp",
    desc:"11 free Claude skills that reverse-engineer an app, rebuild it, test it, read its real reviews and fix what users hate, then ship your own version.",
    tags:["Claude","Open source","MIT"]},
-  {key:"REPO", name:"Voicebox", url:"https://github.com/jamiepine/voicebox", cover:"img/covers/repo.webp",
+  {key:"REPO", wing:"Voice AI", name:"Voicebox", url:"https://github.com/jamiepine/voicebox", cover:"img/covers/repo.webp",
    desc:"Free, open-source AI voice studio. Clone a voice from a few seconds of audio, generate speech in 23 languages and dictate into any app, all running locally.",
    tags:["Voice AI","Runs locally","MIT"]},
 ];
+// museum wings: tools grouped by category. TOOLS is newest-first, so wings (and tools inside them) come out newest-first too
+const wingOf = t => t.wing || 'More tools';
+const WINGS = [...new Set(TOOLS.map(wingOf))];
+const ORDER = window.ORDER = WINGS.flatMap(w => TOOLS.filter(t => wingOf(t) === w));
+document.getElementById('walklen').style.height = (40 + 120 * (ORDER.length + 1)) + 'vh'; // longer walk for more exhibits
+// anonymous, cookie-free counts (GoatCounter) so we can show brands real numbers later
+const track = (path) => { try { window.goatcounter && goatcounter.count && goatcounter.count({path, title: path, event: true}); } catch (e) {} };
+const seen = new Set(), trackOnce = p => { if (!seen.has(p)) { seen.add(p); track(p); } };
+document.addEventListener('click', e => { const a = e.target.closest('a[target=_blank]'); if (!a) return;
+  const key = a.closest('.tool')?.id.slice(2) || a.closest('#card')?.dataset.key || 'site', h = a.href;
+  track('click/' + key + '/' + (/instagram\.com\/reel/.test(h) ? 'reel' : /instagram/.test(h) ? 'instagram' : /youtube/.test(h) ? 'youtube' : /github/.test(h) ? 'github' : 'other')); });
 const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const LOCK = 3 * 864e5, IG = 'https://instagram.com/aixsam.dev';
 // shortcut: soft lock, the URL is still in the page source; fine since it only nudges people to the reel
@@ -308,18 +323,20 @@ function render(s = '') {
   s = s.trim().toLowerCase();
   const exact = TOOLS.filter(t => t.key.toLowerCase() === s); // a reel keyword shows just that tool
   const list = exact.length ? exact : TOOLS.filter(t => !s || (t.key + ' ' + t.name + ' ' + t.desc + ' ' + t.tags.join(' ')).toLowerCase().includes(s));
-  grid.innerHTML = list.map(t => `<article class="tool" id="t-${esc(t.key)}">
+  const card = t => `<article class="tool" id="t-${esc(t.key)}">
     ${t.cover ? `<a class="cover" href="${esc(t.reel || IG)}" target="_blank" rel="noopener" aria-label="Watch the ${esc(t.name)} reel"><img src="${esc(t.cover)}" alt="" loading="lazy"></a>` : ''}
     <div class="tbody"><div class="trow"><span class="key">${esc(t.key)}</span>${t === TOOLS[0] ? '<span class="new">Latest</span>' : ''}</div>
     <h3>${esc(t.name)}</h3><p>${esc(t.desc)}</p>
     <div class="tags">${t.tags.map(x => `<span>${esc(x)}</span>`).join('')}</div>
-    ${link(t)}</div></article>`).join('');
+    ${link(t)}</div></article>`;
+  grid.innerHTML = s ? list.map(card).join('') : WINGS.map(w => { const ts = ORDER.filter(t => wingOf(t) === w);
+    return `<h3 class="wing"><span class="tape solo">${esc(w)} wing</span><small>${ts.length} tool${ts.length > 1 ? 's' : ''}</small></h3>` + ts.map(card).join(''); }).join('');
   empty.style.display = list.length ? 'none' : 'block';
 }
 q.addEventListener('input', e => render(e.target.value));
 setInterval(() => render(q.value), 60000); // keep countdowns ticking
 const k = new URLSearchParams(location.search).get('k'); // aixsam.dev/?k=CLONE opens filtered
-if (k) q.value = k;
+if (k) { q.value = k; track('keyword/' + k.toUpperCase()); }
 render(k || '');
 if (k) addEventListener('load', () => document.getElementById('tools').scrollIntoView());
 document.getElementById('yr').textContent = new Date().getFullYear();
@@ -399,7 +416,7 @@ const ease = t => t * t * (3 - 2 * t), clamp = v => Math.min(1, Math.max(0, v));
 const lerpA = (a, b, t) => a + (((b - a + Math.PI * 3) % (Math.PI * 2)) - Math.PI) * t;
 
 // ---------- the building ----------
-const items = TOOLS.slice(0, 6);
+const items = ORDER; // shortcut: one corridor with a light per exhibit; past ~10 tools split wings into separate rooms
 const W = 7, H = 4.8, half = W / 2, GAP = 11.5, Z0s = -9;
 const stZ = i => Z0s - i * GAP, stS = i => (i % 2 ? 1 : -1);
 const ZEND = stZ(items.length - 1) - 13, LEN = -ZEND;
@@ -661,6 +678,17 @@ function propVoice(g) { // microphone with sound rings
   g.userData.tick = t => rings.forEach((r, i) => { const k = (t * .6 + i / 3) % 1; r.scale.setScalar(1 + k * 1.6); r.material.opacity = 1 - k; r.rotation.y = Math.PI / 2; });
 }
 items.forEach(exhibit);
+// a neon banner hangs over the corridor where each wing begins
+items.forEach((t, i) => { if (i && wingOf(t) === wingOf(items[i - 1])) return;
+  const n = items.filter(x => wingOf(x) === wingOf(t)).length, z = stZ(i) + 5;
+  const sign = tex(1024, 240, g => { g.fillStyle = '#0d1020'; g.fillRect(0, 0, 1024, 240); g.strokeStyle = '#e7b95a'; g.lineWidth = 8; g.strokeRect(10, 10, 1004, 220);
+    g.textAlign = 'center'; g.textBaseline = 'middle'; g.shadowColor = '#ffb84d'; g.shadowBlur = 24; g.fillStyle = '#ffe2a0';
+    let fs = 96; g.font = font(fs); while (g.measureText(wingOf(t).toUpperCase()).width > 920) g.font = font(fs -= 4);
+    g.fillText(wingOf(t).toUpperCase(), 512, 100); g.shadowBlur = 10; g.font = font(34, 500, 'DM Mono, monospace'); g.fillStyle = '#9fc4ff'; g.shadowColor = '#4c7dff';
+    g.fillText(`WING · ${n} TOOL${n > 1 ? 'S' : ''}`, 512, 186); });
+  add(new THREE.PlaneGeometry(4.2, .98), basic({map: sign}), 0, H - .95, z);
+  for (const x of [-1.6, 1.6]) add(new THREE.CylinderGeometry(.012, .012, .5, 6), canMat, x, H - .23, z);
+  glow('rgba(255,190,90,.35)', 4.5).position.set(0, H - .95, z + .4); });
 for (let i = 0; i < items.length; i++) { const z = stZ(i) - GAP / 2; if (z > ZEND + 6) { const l = new THREE.PointLight(0xffb366, mobile ? 8 : 12, 12, 1.6); l.position.set(0, H - .6, z); S.add(l); } }
 [[-2.9, -4.5, 'palm'], ...items.map((t, i) => [stS(i) * -2.85, stZ(i) - 5, ['flowers', 'monstera', 'tulips', 'lavender', 'palm', 'flowers'][i % 6]]),
  ...items.map((t, i) => [stS(i) * 2.85, stZ(i) - 2.4, ['lavender', 'tulips', 'monstera', 'flowers'][i % 4]]),
@@ -830,11 +858,11 @@ let shown = -1;
 function showCard(i) {
   if (i === shown) return; shown = i;
   if (i < 0) { cardEl.classList.remove('on'); return; }
-  const st = stations[i];
+  const st = stations[i]; cardEl.dataset.key = st.fin ? 'finale' : st.t.key; trackOnce('stop/' + cardEl.dataset.key);
   if (st.fin) cardEl.innerHTML = `<span class="tag gold">NEXT</span><h3>The next free tool</h3><p>A new tool drops every day. Follow so you catch it first, and comment the keyword for the link.</p>
     <span class="st">no sign-up · always free</span><div class="row"><a class="btn red" href="${IG}" target="_blank" rel="noopener">Follow @aixsam.dev</a><a class="sm" href="#tools">see all tools ↓</a></div>`;
   else { const t = st.t, locked = left(t) > 0;
-    cardEl.innerHTML = `<span class="tag ${i ? '' : 'gold'}">${i ? 'TOOL' : 'LATEST'} · ${esc(t.key)}</span><h3>${esc(t.name)}</h3><p>${esc(t.desc.split('. ')[0])}.</p>
+    cardEl.innerHTML = `<span class="tag ${t === TOOLS[0] ? 'gold' : ''}">${t === TOOLS[0] ? 'LATEST' : esc(wingOf(t).toUpperCase())} · ${esc(t.key)}</span><h3>${esc(t.name)}</h3><p>${esc(t.desc.split('. ')[0])}.</p>
     <span class="st">${locked ? `<b>🔒 link unlocks in ${until(left(t))}</b>` : '<b>✓ link unlocked</b>'}</span>
     <div class="row">${locked ? `<a class="btn red" href="${esc(t.reel || IG)}" target="_blank" rel="noopener">Comment "${esc(t.key)}" →</a>` : `<a class="btn red" href="${esc(t.url)}" target="_blank" rel="noopener">Get the link →</a>`}
     ${t.reel ? `<a class="sm" href="${esc(t.reel)}" target="_blank" rel="noopener">watch the reel</a>` : ''}</div>`; }
