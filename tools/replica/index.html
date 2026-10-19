@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to set up Replica skill: step-by-step guide · aixsam.dev</title>
+<meta name="description" content="How to install and use the Replica skill for Claude: 11 skills that clone an app&#x27;s features, test it and launch your own version.">
+<meta name="theme-color" content="#e7b95a">
+<meta property="og:title" content="How to set up Replica skill: step-by-step guide · aixsam.dev">
+<meta property="og:description" content="How to install and use the Replica skill for Claude: 11 skills that clone an app&#x27;s features, test it and launch your own version.">
+<meta property="og:image" content="https://aixsam.dev/img/icon.png">
+<link rel="canonical" href="https://aixsam.dev/tools/replica/">
+<script data-goatcounter="https://aixsamdev.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+<link rel="icon" href="/img/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Fraunces:opsz,wght@9..144,400;9..144,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/tools/guide.css">
+</head>
+<body>
+<header class="top">
+ <a class="brand" href="/"><img src="/img/icon.png" alt=""><span class="tape">aixsam.dev</span></a>
+ <a class="btn gold" href="https://instagram.com/aixsam.dev" target="_blank" rel="noopener">Follow</a>
+</header>
+<main class="wrap">
+<p class="crumb"><a href="/">aixsam.dev</a> / <a href="/tools/">tools</a> / replica</p><section class="hero"><h1><span class="tape">Replica skill</span></h1><p class="lead">11 free Claude skills that study an app, rebuild it, test it, read what its users hate and fix that, then help you launch your own version.</p><div class="meta"><span class="key">Reel keyword: CLONE</span><span>Claude skills</span><span>Free · MIT</span><span>No API key</span></div><div class="row"><a class="btn gold" href="#steps">Start setup ↓</a><a class="btn ghost" href="https://github.com/Jakeschincariol/replica-skill" target="_blank" rel="noopener">Official GitHub repo</a></div></section><section><h2>What you need</h2><ul class="need"><li>Claude with skills (claude.ai, the desktop app or Claude Code).</li><li>Python 3.8 or newer for the helper tools. Nothing to pip install.</li></ul></section><section id="steps"><h2>Setup, step by step<small>copy each command with the button on the right</small></h2><div class="path"><span class="tape">Easiest</span><small>any Claude</small></div><ol class="steps"><li><h3>Paste this into Claude</h3><pre><code>https://github.com/Jakeschincariol/replica-skill
+
+install skill</code></pre></li></ol><div class="path"><span class="tape">Claude Code</span><small></small></div><ol class="steps"><li><h3>Install as a plugin</h3><pre><code>/plugin marketplace add Jakeschincariol/replica-skill
+/plugin install replica-skill@replica-skill</code></pre><p class="tip">As a plugin the commands are named <code>/replica-skill:replica-recon</code> and so on. Want the short <code>/replica-recon</code>? Copy the folders instead:</p><pre><code>git clone https://github.com/Jakeschincariol/replica-skill.git
+cp -r replica-skill/replica-* ~/.claude/skills/</code></pre></li></ol><div class="path"><span class="tape">Everyone</span><small>use it</small></div><ol class="steps"><li><h3>Start with recon</h3><p>Give it the app you want to study:</p><pre><code>/replica-recon https://the-app-you-want-to-study.com</code></pre><p>It maps the screens, flows and data into a <code>replica/</code> folder in your project.</p></li><li><h3>Run the rest in order</h3><p>Each skill reads what the previous one wrote:</p><pre><code>recon → architect → design → build → backend → test → diff → entrepreneur → brand → launch → deploy</code></pre></li></ol></section><section><h2>Try this first</h2><div class="try"><div>/replica-entrepreneur  on an app you&#x27;re only thinking of cloning: it reads real reviews and tells you what users hate</div><div>/replica-diff  to score your clone against the original</div></div></section><section><p class="warn"><b>Heads up:</b> It rebuilds what an app <b>does</b> (features and flows), never what it <b>owns</b>: not its code, logo, copy or content. The skills enforce this, and <code>/replica-brand</code> gives your version its own name and look.</p></section><section><h2>Stuck?</h2><details><summary>No Claude Code?</summary><div><p>Paste any single <code>SKILL.md</code> from the repo at the top of a chat and it works as a mode (without the Python tools).</p></div></details></section><section class="dm"><h2>Still stuck?</h2><p>DM me on Instagram with a screenshot of the error and which step you're on.</p><a class="btn gold" href="https://instagram.com/aixsam.dev" target="_blank" rel="noopener">DM @aixsam.dev</a></section><section><h2>More setup guides</h2><div class="cards"><a class="gcard" href="/tools/moneyturbo/"><span class="k">PRINTER</span><h3>MoneyPrinterTurbo</h3><p>Type one topic and it makes the whole short video for you.</p></a><a class="gcard" href="/tools/linkedin-skills/"><span class="k">LINKEDIN</span><h3>LinkedIn Skills</h3><p>12 free Claude skills that write your LinkedIn posts, comments and replies in your voice, plan your week and fix your profile.</p></a><a class="gcard" href="/tools/ecc/"><span class="k">TEAM</span><h3>ECC (Everything Claude Code)</h3><p>Turns Claude Code into a whole engineering team.</p></a><a class="gcard" href="/tools/graphify/"><span class="k">GRAPH</span><h3>Graphify</h3><p>Turns your whole codebase into a knowledge graph, so Claude Code, Cursor or Codex ask the graph instead of re-reading every file.</p></a><a class="gcard" href="/tools/voicebox/"><span class="k">REPO</span><h3>Voicebox</h3><p>A free AI voice studio on your own computer.</p></a><a class="gcard" href="/tools/dev-team/"><span class="k">DEV</span><h3>Claude Code Dev Team</h3><p>Five free tools that turn Claude Code from one developer into a full team.</p></a></div></section></main>
+<footer><div class="wrap">Tools are made by their own authors; I find them, test them and explain them. Not paid by any of them.
+<nav><a href="/">Home</a><a href="/tools/">All setup guides</a><a href="https://instagram.com/aixsam.dev" target="_blank" rel="noopener">@aixsam.dev</a><a href="https://youtube.com/@aixsamdev" target="_blank" rel="noopener">YouTube</a></nav></div></footer>
+<script src="/tools/guide.js"></script>
+</body>
+</html>
