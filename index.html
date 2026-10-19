@@ -279,6 +279,9 @@ footer{position:relative;z-index:2;background:repeating-linear-gradient(90deg,#2
 // posted = when the reel went live (link stays locked for 3 days after), reel = the reel URL to send people to meanwhile,
 // cover = 540x960 reel cover in img/covers/ (also hung on the 3D gallery wall), guide = its setup page in tools/ (unlocked buttons go there instead of GitHub).
 const TOOLS = window.TOOLS = [
+  {key:"DEV", guide:"/tools/dev-team/", wing:"Claude Code & Skills", name:"Claude Code Dev Team", url:"/tools/dev-team/", posted:"2026-10-20T18:30:00+05:30", cover:"img/covers/dev.webp",
+   desc:"Five free tools that turn Claude Code into a full dev team: Superpowers plans and builds test-first, Context7 pulls the latest library docs, the built-in /code-review finds bugs, /simplify cleans up the code, and gstack by YC CEO Garry Tan adds 23 specialists from CEO review to QA. All free.",
+   tags:["Claude Code","Free","5 tools"]},
   {key:"PRINTER", guide:"/tools/moneyturbo/", wing:"Video AI", name:"MoneyPrinterTurbo", url:"https://github.com/harry0703/MoneyPrinterTurbo", posted:"2026-10-19T18:30:00+05:30", cover:"img/covers/printer.webp",
    desc:"Give it one topic and it makes the whole short video: writes the script, finds matching stock footage (Pexels, Pixabay), adds a voiceover, syncs subtitles, adds background music and renders 9:16, 16:9 or 1:1. Works with GPT, Claude, Gemini, DeepSeek or a free local model via Ollama, and can auto-post to TikTok, Instagram and YouTube Shorts. You add your own AI key and a free Pexels key. Free, open source, MIT.",
    tags:["Video AI","Open source","MIT"]},
@@ -297,7 +300,7 @@ const TOOLS = window.TOOLS = [
   {key:"REPO", guide:"/tools/voicebox/", wing:"Voice AI", name:"Voicebox", url:"https://github.com/jamiepine/voicebox", cover:"img/covers/repo.webp",
    desc:"Free, open-source AI voice studio. Clone a voice from a few seconds of audio, generate speech in 23 languages and dictate into any app, all running locally.",
    tags:["Voice AI","Runs locally","MIT"]},
-];
+].filter(t => !t.posted || Date.parse(t.posted) <= Date.now()); // a tool added ahead of its reel stays hidden until the reel's post time
 // museum wings: tools grouped by category. TOOLS is newest-first, so wings (and tools inside them) come out newest-first too
 const wingOf = t => t.wing || 'More tools';
 const WINGS = [...new Set(TOOLS.map(wingOf))];
@@ -616,7 +619,7 @@ function exhibit(t, i) {
   add(new THREE.BoxGeometry(.72, 1.05, .72), potMat, px, .525, pz);
   add(new THREE.BoxGeometry(.32, .06, .02), gold, px - s * .37, .75, pz, Math.PI / 2 * s);
   const prop = new THREE.Group(); prop.position.set(px, 1.35, pz); S.add(prop); spinners.push(prop);
-  ({GRAPH: propGraph, CLONE: propClone, REPO: propVoice, TEAM: propTeam, LINKEDIN: propTeam, PRINTER: propVideo}[t.key] || propGraph)(prop);
+  ({GRAPH: propGraph, CLONE: propClone, REPO: propVoice, TEAM: propTeam, LINKEDIN: propTeam, DEV: propTeam, PRINTER: propVideo}[t.key] || propGraph)(prop);
 }
 function propVideo(g) { // a phone printing out video frames
   add(new THREE.BoxGeometry(.24, .42, .03), std({color: 0x111114, roughness: .3}), 0, 0, 0, 0, 0, g);
