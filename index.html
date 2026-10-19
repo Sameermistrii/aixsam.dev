@@ -279,6 +279,9 @@ footer{position:relative;z-index:2;background:repeating-linear-gradient(90deg,#2
 // posted = when the reel went live (link stays locked for 3 days after), reel = the reel URL to send people to meanwhile,
 // cover = 540x960 reel cover in img/covers/ (also hung on the 3D gallery wall).
 const TOOLS = window.TOOLS = [
+  {key:"PRINTER", wing:"Video AI", name:"MoneyPrinterTurbo", url:"https://github.com/harry0703/MoneyPrinterTurbo", posted:"2026-10-19T18:30:00+05:30", cover:"img/covers/printer.webp",
+   desc:"Give it one topic and it makes the whole short video: writes the script, finds matching stock footage (Pexels, Pixabay), adds a voiceover, syncs subtitles, adds background music and renders 9:16, 16:9 or 1:1. Works with GPT, Claude, Gemini, DeepSeek or a free local model via Ollama, and can auto-post to TikTok, Instagram and YouTube Shorts. You add your own AI key and a free Pexels key. Free, open source, MIT.",
+   tags:["Video AI","Open source","MIT"]},
   {key:"LINKEDIN", wing:"Claude Code & Skills", name:"LinkedIn Skills", url:"https://github.com/sergebulaev/linkedin-skills", posted:"2026-10-18T18:30:00+05:30", cover:"img/covers/linkedin.webp",
    desc:"12 free Claude skills that run your LinkedIn: write posts with 20 proven hook formulas, draft comments and replies, rewrite your profile and plan your week. A humanizer strips AI patterns and tests drafts against 5 AI detectors. Nothing posts without your approval. Free, open source, MIT.",
    tags:["Claude","Open source","MIT"]},
@@ -410,7 +413,8 @@ const label = (txt, w = 1024, h = 220, size = 120) => tex(w, h, g => { // cream 
   g.fillStyle = '#f3ead6'; g.fillRect(30, 30, w - 60, h - 60);
   g.fillStyle = 'rgba(233,214,160,.85)'; g.save(); g.translate(60, 40); g.rotate(-.45); g.fillRect(-40, -18, 120, 40); g.restore();
   g.save(); g.translate(w - 60, 40); g.rotate(.45); g.fillRect(-80, -18, 120, 40); g.restore();
-  g.fillStyle = '#14110c'; g.font = font(size); g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(txt, w / 2, h / 2 + 6);
+  g.fillStyle = '#14110c'; g.font = font(size); while (g.measureText(txt).width > w - 120) g.font = font(size -= 4); // long names shrink to fit the tape
+  g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(txt, w / 2, h / 2 + 6);
 });
 const ease = t => t * t * (3 - 2 * t), clamp = v => Math.min(1, Math.max(0, v));
 const lerpA = (a, b, t) => a + (((b - a + Math.PI * 3) % (Math.PI * 2)) - Math.PI) * t;
@@ -611,7 +615,15 @@ function exhibit(t, i) {
   add(new THREE.BoxGeometry(.72, 1.05, .72), potMat, px, .525, pz);
   add(new THREE.BoxGeometry(.32, .06, .02), gold, px - s * .37, .75, pz, Math.PI / 2 * s);
   const prop = new THREE.Group(); prop.position.set(px, 1.35, pz); S.add(prop); spinners.push(prop);
-  ({GRAPH: propGraph, CLONE: propClone, REPO: propVoice, TEAM: propTeam, LINKEDIN: propTeam}[t.key] || propGraph)(prop);
+  ({GRAPH: propGraph, CLONE: propClone, REPO: propVoice, TEAM: propTeam, LINKEDIN: propTeam, PRINTER: propVideo}[t.key] || propGraph)(prop);
+}
+function propVideo(g) { // a phone printing out video frames
+  add(new THREE.BoxGeometry(.24, .42, .03), std({color: 0x111114, roughness: .3}), 0, 0, 0, 0, 0, g);
+  add(new THREE.PlaneGeometry(.2, .36), basic({toneMapped: false, map: tex(100, 180, c => { c.fillStyle = '#7a4a2a'; c.fillRect(0, 0, 100, 180);
+    c.fillStyle = '#fff'; c.beginPath(); c.moveTo(38, 70); c.lineTo(68, 90); c.lineTo(38, 110); c.fill(); c.fillStyle = '#3fb950'; c.fillRect(10, 160, 80, 8); })}), 0, 0, .016, 0, 0, g);
+  const frames = [0, 1, 2].map(i => add(new THREE.PlaneGeometry(.12, .2), basic({color: [0xe7b95a, 0x62c4a2, 0xff7b54][i], transparent: true, side: THREE.DoubleSide}), 0, 0, -.02, 0, 0, g));
+  g.userData.tick = t => { g.rotation.y = Math.sin(t * .8) * .5;
+    frames.forEach((f, i) => { const k = (t * .5 + i / 3) % 1; f.position.set(.16 + k * .3, .1 - k * .2, -.02); f.material.opacity = 1 - k; f.rotation.z = -k * .6; }); };
 }
 function propGraph(g) { // a little knowledge graph
   const cols = [0x62c4a2, 0xe7b95a, 0xff7b54, 0x9d7bff, 0x4c7dff], pts = [];
