@@ -214,7 +214,7 @@ footer{position:relative;z-index:2;background:repeating-linear-gradient(90deg,#2
    <h1><span class="tape">I find free AI tools.</span><span class="tape dark">You get the link.</span></h1>
    <div class="burst" aria-hidden="true"><div><b>100%</b>FREE</div></div>
    <p>Every tool from my reels: <b>free</b>, open source, and most of them run on your own computer. Walk the gallery with me, or jump straight to the tools.</p>
-   <div class="note"><b>How to get a link:</b> comment the keyword on the reel and I'll DM it to you. Links unlock here 3 days later.</div>
+   <div class="note"><b>How to get a link:</b> comment the keyword on the reel and I'll DM it to you, or grab it right here.</div>
    <div class="cta"><a class="btn gold" href="#tools">See the tools →</a><a class="btn ghost" href="#how">How it works</a></div>
    <div class="hint">Scroll to walk in ↓</div>
   </div><img class="hero-sam" src="img/sam/wave.webp" alt="Sam, the aixsam.dev mascot, waving"></div>
@@ -242,7 +242,7 @@ footer{position:relative;z-index:2;background:repeating-linear-gradient(90deg,#2
   <div class="steps">
    <div class="step"><b>1</b><h3>Watch the reel</h3><p>One free tool per reel: what it does, why it's worth it, and the catch if there is one.</p><small>under a minute</small></div>
    <div class="step"><b>2</b><h3>Comment the keyword</h3><p>Each reel ends with a keyword like GRAPH. Comment it and the link lands in your DMs automatically.</p><small>instant DM</small></div>
-   <div class="step"><b>3</b><h3>Or grab it here</h3><p>Three days after the reel, the link unlocks on this page for everyone. No sign-up, ever.</p><small>no account · no email</small></div>
+   <div class="step"><b>3</b><h3>Or grab it here</h3><p>Every tool's link is right here on this page, free for everyone. No sign-up, ever.</p><small>no account · no email</small></div>
   </div>
  </div>
 </section>
@@ -253,7 +253,7 @@ footer{position:relative;z-index:2;background:repeating-linear-gradient(90deg,#2
   <div class="faq">
    <div>
     <details><summary>Are these tools really free?</summary><p>Yes. I only cover tools that are free or open source. If a tool has a paid tier or a catch, I say so in the reel.</p></details>
-    <details><summary>Why is the link locked for 3 days?</summary><p>Commenting on the reel helps it reach more people, which keeps these videos coming. Comment the keyword and you get the link right away.</p></details>
+    <details><summary>Do I have to comment to get the link?</summary><p>No, every link is right here. Commenting the keyword on the reel gets it in your DMs too, and it helps the video reach more people, which keeps these coming.</p></details>
     <details><summary>Do I need to know how to code?</summary><p>Some tools are one-click apps, others are for developers. Each one has a <a href="/tools/" style="text-decoration:underline">step-by-step setup guide</a> with every command to copy.</p></details>
    </div>
    <div>
@@ -276,7 +276,7 @@ footer{position:relative;z-index:2;background:repeating-linear-gradient(90deg,#2
 
 <script>
 // Add new tools at the TOP of this list. key = the comment keyword from the reel.
-// posted = when the reel went live (link stays locked for 3 days after), reel = the reel URL to send people to meanwhile,
+// posted = when the reel went live, reel = the reel URL (cover clicks and "watch the reel" go there),
 // cover = 540x960 reel cover in img/covers/ (also hung on the 3D gallery wall), guide = its setup page in tools/ (unlocked buttons go there instead of GitHub).
 const TOOLS = window.TOOLS = [
   {key:"DEV", guide:"/tools/dev-team/", wing:"Claude Code & Skills", name:"Claude Code Dev Team", url:"/tools/dev-team/", posted:"2026-10-19T23:30:00+05:30", cover:"img/covers/dev.webp",
@@ -313,7 +313,8 @@ document.addEventListener('click', e => { const a = e.target.closest('a[target=_
   const key = a.closest('.tool')?.id.slice(2) || a.closest('#card')?.dataset.key || 'site', h = a.href;
   track('click/' + key + '/' + (/instagram\.com\/reel/.test(h) ? 'reel' : /instagram/.test(h) ? 'instagram' : /youtube/.test(h) ? 'youtube' : /\/tools\//.test(h) ? 'guide' : /github/.test(h) ? 'github' : 'other')); });
 const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const LOCK = 3 * 864e5, IG = 'https://instagram.com/aixsam.dev';
+const LOCK = 0, // no waiting period: links are open as soon as a tool is added
+      IG = 'https://instagram.com/aixsam.dev';
 const dest = t => t.guide || t.url, getTxt = t => t.guide ? 'Setup guide →' : 'Get the link →';
 // shortcut: soft lock, the URL is still in the page source; fine since it only nudges people to the reel
 const left = t => t.posted ? Date.parse(t.posted) + LOCK - Date.now() : 0;
