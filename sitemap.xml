@@ -2,6 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://aixsam.dev/</loc></url>
   <url><loc>https://aixsam.dev/tools/</loc></url>
+  <url><loc>https://aixsam.dev/tools/pipeline/</loc></url>
   <url><loc>https://aixsam.dev/tools/claude-code-free/</loc></url>
   <url><loc>https://aixsam.dev/tools/instagram-agent/</loc></url>
   <url><loc>https://aixsam.dev/tools/moneyturbo/</loc></url>

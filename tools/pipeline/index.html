@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How I make reels with code (no camera, no editor): the full pipeline · aixsam.dev</title>
+<meta name="description" content="The pipeline behind every aixsam.dev reel: Claude writes the script, an AI voice reads it, code times every word, a cartoon mascot talks with the voice, and a browser renders a web page into a video. Free starter kit, every command, step by step.">
+<meta name="theme-color" content="#e7b95a">
+<meta property="og:title" content="How I make reels with code (no camera, no editor): the full pipeline · aixsam.dev">
+<meta property="og:description" content="Script → AI voice → word timings → talking mascot → web page → video. Free starter kit and every command.">
+<meta property="og:image" content="https://aixsam.dev/img/icon.png">
+<link rel="canonical" href="https://aixsam.dev/tools/pipeline/">
+<script data-goatcounter="https://aixsamdev.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+<link rel="icon" href="/img/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Fraunces:opsz,wght@9..144,400;9..144,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/tools/guide.css">
+</head>
+<body>
+<header class="top">
+ <a class="brand" href="/"><img src="/img/icon.png" alt=""><span class="tape">aixsam.dev</span></a>
+ <a class="btn gold" href="https://instagram.com/aixsam.dev" target="_blank" rel="noopener">Follow</a>
+</header>
+<main class="wrap">
+<p class="crumb"><a href="/">aixsam.dev</a> / <a href="/tools/">tools</a> / pipeline</p>
+
+<section class="hero"><h1><span class="tape">My reel pipeline</span></h1>
+<p class="lead">I don't film my reels and I don't open a video editor. Claude writes the script, an AI voice reads it, code works out when every word is spoken, a cartoon mascot moves its mouth with the voice, and the whole reel is a web page that a browser turns into a video, frame by frame. This page gives you a free starter kit with the same core and every command to run it. Honest note: I still check the script, the facts and the final video myself. The code does the editing, not the thinking.</p>
+<div class="meta"><span class="key">Reel keyword: PIPELINE</span><span>Python</span><span>ffmpeg</span><span>Free starter kit</span></div>
+<div class="row"><a class="btn gold" href="#steps">Start ↓</a><a class="btn ghost" href="/tools/pipeline/reel-kit.zip" download>Download the kit (.zip)</a></div></section>
+
+<section><h2>How it works</h2>
+<div class="try">
+<div><b>1 · Script.</b> I give Claude the trending reel and the tool's link. It reads the README, checks every number, writes the script. I approve it.</div>
+<div><b>2 · Voice.</b> An AI voice (I use ElevenLabs) reads the script. Code listens back to check no words were changed.</div>
+<div><b>3 · Captions.</b> "Forced alignment" lines the script up with the audio, so every word gets its exact start and end time.</div>
+<div><b>4 · Mascot.</b> Two pictures of the same character: mouth closed and mouth open. The loudness of the voice decides which one shows in each frame.</div>
+<div><b>5 · Animation.</b> The reel is one web page. Cards pop in on the exact word you say ("@code" = when "code" is spoken).</div>
+<div><b>6 · Render.</b> A browser takes a screenshot of every frame (30 a second) and ffmpeg glues them to the voice. Out comes reel.mp4.</div>
+</div></section>
+
+<section><h2>What you need</h2><ul class="need">
+<li>A computer: Mac, Linux, or Windows. Everything runs on your own machine.</li>
+<li><b>Python 3.9+</b> and <b>ffmpeg</b> (installed in step 0).</li>
+<li>A voice: an AI voice (ElevenLabs, or any text-to-speech) or your own voice recorded on your phone. Both work.</li>
+<li>Claude (the free plan is fine) or Claude Code, for the script. Optional: you can write it yourself.</li>
+<li>Your own mascot: two PNG pictures, mouth closed and mouth open (step 4). The kit comes with a simple placeholder face so you can test first.</li>
+<li>Cost: the kit and every tool here are free. ElevenLabs has a free plan with a monthly limit; check its terms before you earn money from the videos.</li>
+</ul></section>
+
+<section id="steps"><h2>Step by step<small>copy each command with the button on the right</small></h2>
+
+<div class="path"><span class="tape">Step 0 · Install</span><small>once, about 5 minutes</small></div>
+<ol class="steps">
+<li><h3>Download the kit</h3><p><a href="/tools/pipeline/reel-kit.zip" download>reel-kit.zip</a> has 6 files: <code>build.py</code>, <code>reel.html</code>, <code>render.py</code>, <code>script.txt</code> and two placeholder mascot pictures. Unzip it into a new folder and open a terminal in that folder.</p></li>
+<li><h3>Install ffmpeg</h3><p>Mac (with <a href="https://brew.sh" target="_blank" rel="noopener">Homebrew</a>):</p><pre><code>brew install ffmpeg</code></pre><p>Linux / WSL:</p><pre><code>sudo apt install -y ffmpeg</code></pre><p>Windows (PowerShell):</p><pre><code>winget install Gyan.FFmpeg</code></pre><p class="tip">Check it worked: <code>ffmpeg -version</code> prints a version. On Windows, open a new terminal first.</p></li>
+<li><h3>Install the Python parts</h3><pre><code>pip install pocketsphinx numpy playwright
+python3 -m playwright install chromium</code></pre><p class="tip">PocketSphinx does the word timing (its English model comes inside the package, nothing else to download). Playwright drives the browser that renders the frames. On Windows, type <code>python</code> instead of <code>python3</code> everywhere on this page.</p></li>
+<li><h3>Test the kit before changing anything</h3><p>The kit comes with a script but no voice. Record yourself reading <code>script.txt</code> on your phone (or make it with any AI voice), put the file in the folder, then:</p><pre><code>ffmpeg -i voice.mp3 -ac 1 -ar 44100 vo.wav
+python3 build.py
+python3 render.py</code></pre><p>You get <code>reel.mp4</code>: captions in sync, the face talks, and cards pop in on "shoot", "edit", "code" and "pipeline". If that works, everything is installed.</p></li>
+</ol>
+
+<div class="path"><span class="tape">Step 1 · Script</span><small>Claude writes, you approve</small></div>
+<ol class="steps">
+<li><h3>Ask Claude for the script</h3><p>Paste this into Claude and fill in the brackets. The rules in it are the ones I use: a hook with a real before → after, short lines, and no made-up numbers.</p><pre><code>Write a 35–45 second Instagram reel script (about 100 words) about [tool / topic].
+Sources: [GitHub link / official page]. Read them first.
+Rules:
+- First sentence = the hook: who, what they do, the result, and a TRUE before → after
+  (example: "I replaced a ₹2,000/month app with a free GitHub repo").
+- Every number must come from the sources. If you can't find it, leave it out.
+- One idea per sentence. Simple words. Language: [English / Hinglish].
+- End with: Comment "[WORD]" and I'll send you the link.
+Then list each fact you used with the place you found it.</code></pre><p class="tip">Check the facts list it gives you. That's the "main approve karta hoon" part, and it's the step you should never skip.</p></li>
+<li><h3>Save it as script.txt</h3><p>Put exactly the words the voice will say into <code>script.txt</code>. Write numbers as words (<code>three</code>, not <code>3</code>) so the timing step can match them. Hinglish is fine: write it in English letters, the way it sounds.</p></li>
+</ol>
+
+<div class="path"><span class="tape">Step 2 · Voice</span><small>AI voice or your own</small></div>
+<ol class="steps">
+<li><h3>Make the voice and convert it</h3><p>Paste <code>script.txt</code> into <a href="https://elevenlabs.io" target="_blank" rel="noopener">ElevenLabs</a> (or record yourself), download the MP3, put it in the folder, and convert it:</p><pre><code>ffmpeg -i voice.mp3 -ac 1 -ar 44100 vo.wav</code></pre><p class="tip">Too slow? Speed it up without changing the pitch: <code>ffmpeg -i voice.mp3 -af atempo=1.15 -ac 1 -ar 44100 vo.wav</code> (1.1–1.2 still sounds natural).</p></li>
+<li><h3>Check the AI didn't change your words</h3><pre><code>python3 build.py check</code></pre><p>It prints what it hears, 5 seconds at a time. AI voices sometimes add or skip words (one of mine added a whole sentence). If a line is different, change <code>script.txt</code> to what was actually said.</p><p class="tip">The listening model is English, so Hindi words come out as English-sounding guesses. Look at the English words and the length of each line; the real test is the next step.</p></li>
+</ol>
+
+<div class="path"><span class="tape">Step 3 · Captions + mouth</span><small>build.py</small></div>
+<ol class="steps">
+<li><h3>Time every word</h3><pre><code>python3 build.py</code></pre><p>It lines your script up with the audio (forced alignment) and writes <code>data.js</code>: the start and end of every word, plus for every frame whether the mouth is open. It prints something like <code>ok: 98 words, 41.2s</code>.</p><p class="tip">If it says <code>matched 90 of 98 words</code>, the script and the voice don't match yet. Run <code>python3 build.py check</code> and fix <code>script.txt</code>.</p></li>
+<li><h3>What's inside build.py</h3><p>You don't need to change it. It's here so you can see there's no magic.</p><details><summary>Show build.py</summary><div><pre><code>"""Turns your voice into timings for the reel.
+  python3 build.py check   -&gt; prints what the recording actually says (catch a voice AI that changed your words)
+  python3 build.py         -&gt; data.js: when every word is spoken + when the mouth is open (30 fps)
+Needs: script.txt (exactly what the voice says, numbers written as words) and vo.wav."""
+import json, re, subprocess, sys
+import numpy as np
+from pocketsphinx import Decoder
+
+FPS = 30
+pcm = subprocess.run(['ffmpeg', '-v', 'error', '-i', 'vo.wav', '-ac', '1', '-ar', '16000', '-f', 's16le', '-'],
+                     capture_output=True, check=True).stdout
+
+if sys.argv[1:] == ['check']:  # free listening, 5 seconds at a time; compare with script.txt by eye
+    d = Decoder(samprate=16000)
+    for i in range(0, len(pcm), 160000):
+        d.start_utt(); d.process_raw(pcm[i:i + 160000], full_utt=True); d.end_utt()
+        print(f'{i // 32000:3d}s', ' '.join(s.word.split('(')[0] for s in d.seg() if s.word[0] not in '&lt;['))
+    sys.exit()
+
+# 1. word timings: force-align the script to the recording
+shown = open('script.txt', encoding='utf-8').read().split()           # words as they appear in captions
+words = [re.sub(r"[^a-z']", '', w.lower()) for w in shown]
+assert all(words), 'write numbers as words in script.txt (3 -&gt; three)'
+G2P = [('chh', 'CH'), ('aa', 'AA'), ('ai', 'EH'), ('au', 'AO'), ('ee', 'IY'), ('oo', 'UW'), ('ei', 'EY'), ('kh', 'K'),
+       ('gh', 'G'), ('ch', 'CH'), ('sh', 'SH'), ('th', 'T'), ('dh', 'D'), ('bh', 'B'), ('ph', 'F'), ('jh', 'JH'),
+       ('a', 'AH'), ('e', 'EY'), ('i', 'IH'), ('o', 'OW'), ('u', 'UH'), ('y', 'Y'), ('k', 'K'), ('g', 'G'), ('j', 'JH'),
+       ('t', 'T'), ('d', 'D'), ('n', 'N'), ('p', 'P'), ('b', 'B'), ('m', 'M'), ('r', 'R'), ('l', 'L'), ('v', 'V'),
+       ('w', 'W'), ('s', 'S'), ('h', 'HH'), ('z', 'Z'), ('f', 'F'), ('c', 'K'), ('q', 'K'), ('x', 'K S')]
+def g2p(w):  # rough spelling -&gt; sounds, for Hindi/Hinglish words and names the English dictionary doesn't know
+    w, out, i = w.replace("'", ''), [], 0
+    while i &lt; len(w):
+        for k, p in G2P:
+            if w.startswith(k, i): out.append(p); i += len(k); break
+        else: i += 1
+    return ' '.join(out)
+d = Decoder(samprate=16000, bestpath=False)
+keys = []
+for w in words:
+    if d.lookup_word(w) is None:
+        if d.lookup_word('x_' + w) is None: d.add_word('x_' + w, g2p(w), True)
+        w = 'x_' + w
+    keys.append(w)
+d.set_align_text(' '.join(keys))
+d.start_utt(); d.process_raw(pcm, full_utt=True); d.end_utt()
+times = [(s.start_frame / 100, (s.end_frame + 1) / 100) for s in d.seg() if s.word not in ('&lt;s&gt;', '&lt;/s&gt;', '&lt;sil&gt;', '(NULL)')]
+assert len(times) == len(words), f'matched {len(times)} of {len(words)} words: run "python3 build.py check" and fix script.txt'
+
+# 2. mouth: open on the loud peak of each syllable, closed in the dips and silences
+a = np.frombuffer(pcm, np.int16).astype(np.float32) / 32768
+hop = 16000 // FPS
+rms = np.array([np.sqrt(np.mean(a[i:i + hop] ** 2)) for i in range(0, len(a), hop)])
+rms /= np.percentile(rms[rms &gt; .01], 90)
+peak = np.array([rms[max(0, i - 3):i + 4].max() for i in range(len(rms))])
+mouth = ''.join('o' if r &gt; .12 and r / (p + 1e-6) &gt; .6 else 'c' for r, p in zip(rms, peak))
+
+data = {'words': [[round(s, 2), round(e, 2), w] for (s, e), w in zip(times, shown)], 'mouth': mouth,
+        'duration': round(len(a) / 16000 + 1, 2)}
+open('data.js', 'w').write('window.DATA=' + json.dumps(data) + ';')
+print(f"ok: {len(words)} words, {data['duration']}s, mouth open {mouth.count('o') * 100 // len(mouth)}% of frames")</code></pre></div></details></li>
+</ol>
+
+<div class="path"><span class="tape">Step 4 · Your mascot</span><small>two pictures</small></div>
+<ol class="steps">
+<li><h3>Make two pictures of the same character</h3><p>Use any image AI (ChatGPT, Gemini…) to make your character: chest up, facing the camera, plain or transparent background. Then ask the same chat: <i>"Same image, change nothing except: mouth open, like talking."</i></p><p>Save them as <code>mascot-closed.png</code> and <code>mascot-open.png</code> (replace the placeholder ones), same size, about 800×800.</p><p class="tip">If the AI moves the whole picture a little, the face will jump. Fix: in any photo editor, copy just the mouth area from the open picture onto the closed one and save that as <code>mascot-open.png</code>. That's what I do. Background not transparent? Remove it with a free background remover first.</p></li>
+</ol>
+
+<div class="path"><span class="tape">Step 5 · Animation</span><small>reel.html</small></div>
+<ol class="steps">
+<li><h3>Add your cards</h3><p>Open <code>reel.html</code> in any text editor. Every card is one line. <code>data-at="@word"</code> = it pops in when that word is spoken, <code>data-out="@word"</code> = it disappears on that word:</p><pre><code>&lt;div class=card data-at="@free" style="top:200px"&gt;💸 ₹0&lt;/div&gt;
+&lt;div class=card data-at="@link" data-out="@comment" style="top:450px;background:#ffd23f"&gt;🔗 github.com/…&lt;/div&gt;</code></pre><p class="tip">Same word twice in the script? <code>@free#2</code> means the second time. Change <code>top</code> to move a card down the screen (the video is 1080×1920). Put any HTML in a card: an <code>&lt;img&gt;</code> of a screenshot works too.</p></li>
+<li><h3>Preview while you work</h3><p>Open <code>reel.html</code> in Chrome, press F12 for the console, and type <code>setT(5)</code> to see the frame at 5 seconds. That's exactly what the render will see.</p></li>
+<li><h3>The full reel.html</h3><details><summary>Show reel.html</summary><div><pre><code>&lt;!doctype html&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta charset="utf-8"&gt;
+&lt;style&gt;
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#111;font-family:Poppins,Arial,sans-serif;color:#fff}
+.card{position:absolute;left:80px;right:80px;padding:40px 50px;border-radius:30px;background:#fff;color:#111;
+  font-size:72px;font-weight:900;border:6px solid #000;box-shadow:12px 12px 0 #000;opacity:0}
+#cap{position:absolute;top:960px;left:40px;right:40px;text-align:center;font-size:84px;font-weight:900;line-height:1.1;
+  -webkit-text-stroke:14px #000;paint-order:stroke fill;z-index:2}
+#cap .now{color:#ffd23f} #cap .later{opacity:.35}
+.sam{position:absolute;left:140px;bottom:-40px;width:800px;display:none}
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+
+&lt;!-- YOUR SCENE. Any element with data-at="@word" pops in when that word is spoken.
+     data-out="@word" hides it again. Same word twice? "@pipeline#2" = the 2nd time. --&gt;
+&lt;div class=card data-at="@shoot" data-out="@whole" style="top:150px;transform:rotate(-3deg)"&gt;🎥 shoot ✗&lt;/div&gt;
+&lt;div class=card data-at="@edit" data-out="@whole" style="top:420px;transform:rotate(2deg)"&gt;✂️ edit ✗&lt;/div&gt;
+&lt;div class=card data-at="@code" data-out="@want" style="top:300px;background:#2fcf6a;font-size:110px;text-align:center"&gt;100% CODE&lt;/div&gt;
+&lt;div class=card data-at="@pipeline#2" style="top:300px;background:#ffd23f;font-size:100px;text-align:center"&gt;comment&lt;br&gt;PIPELINE&lt;/div&gt;
+
+&lt;div id=cap&gt;&lt;/div&gt;
+&lt;img class=sam id=closed src="mascot-closed.png"&gt;&lt;img class=sam id=open src="mascot-open.png"&gt;
+&lt;script src="data.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+const W = DATA.words, FPS = 30;
+const norm = s =&gt; s.toLowerCase().replace(/[^a-z0-9]/g, '');
+function cue(at) {                       // "@word" or "@word#2" -&gt; the second when it's spoken
+  const [w, n] = at.slice(1).split('#');
+  const hit = W.filter(x =&gt; norm(x[2]) === norm(w))[(n || 1) - 1];
+  if (!hit) throw new Error('cue word not in script.txt: ' + at);
+  return hit[0];
+}
+const ITEMS = [...document.querySelectorAll('[data-at]')].map(e =&gt; ({
+  e, at: cue(e.dataset.at), out: e.dataset.out ? cue(e.dataset.out) : 1e9, base: e.style.transform || '' }));
+const CHUNKS = [];                       // captions: 3 words at a time
+for (let i = 0; i &lt; W.length; i += 3) CHUNKS.push(W.slice(i, i + 3));
+
+function setT(t) {                       // draw the frame at time t (seconds)
+  for (const it of ITEMS) {
+    const p = Math.min(1, Math.max(0, (t - it.at) / .25)), back = 1 + 2.7 * Math.pow(p - 1, 3) + 1.7 * Math.pow(p - 1, 2);
+    it.e.style.opacity = t &gt;= it.out ? 0 : Math.min(1, p * 4);
+    it.e.style.transform = it.base + ` scale(${t &lt; it.at ? .5 : .5 + .5 * back})`;
+  }
+  const c = CHUNKS.find((c, i) =&gt; t &gt;= c[0][0] - .05 &amp;&amp; t &lt; (CHUNKS[i + 1] ? CHUNKS[i + 1][0][0] : c[c.length - 1][1] + .5));
+  document.getElementById('cap').innerHTML = c ? c.map(w =&gt;
+    `&lt;span class="${t &lt; w[0] ? 'later' : t &lt; w[1] ? 'now' : ''}"&gt;${w[2]}&lt;/span&gt;`).join(' ') : '';
+  const open = DATA.mouth[Math.floor(t * FPS)] === 'o';
+  document.getElementById('open').style.display = open ? 'block' : 'none';
+  document.getElementById('closed').style.display = open ? 'none' : 'block';
+}
+window.setT = setT; window.DURATION = DATA.duration; setT(0);
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;</code></pre></div></details></li>
+</ol>
+
+<div class="path"><span class="tape">Step 6 · Render</span><small>render.py</small></div>
+<ol class="steps">
+<li><h3>Make the video</h3><pre><code>python3 render.py</code></pre><p>A hidden browser draws every frame (30 per second), ffmpeg glues them to <code>vo.wav</code>, and you get <code>reel.mp4</code> (1080×1920), ready for Instagram, YouTube Shorts and TikTok. A 45-second reel is about 1,350 frames; expect a few minutes.</p><details><summary>Show render.py</summary><div><pre><code>"""python3 render.py -&gt; reel.mp4 (1080x1920, 30 fps). A browser draws every frame of reel.html, ffmpeg glues them + vo.wav."""
+import subprocess
+from pathlib import Path
+from playwright.sync_api import sync_playwright
+
+FPS = 30
+with sync_playwright() as p:
+    browser = p.chromium.launch()
+    page = browser.new_page(viewport={'width': 1080, 'height': 1920})
+    errors = []; page.on('pageerror', lambda e: errors.append(str(e)))
+    page.goto(Path('reel.html').resolve().as_uri()); page.wait_for_load_state('networkidle')
+    assert not errors, errors
+    n = int(page.evaluate('DURATION') * FPS)
+    ff = subprocess.Popen(['ffmpeg', '-v', 'error', '-y', '-f', 'image2pipe', '-c:v', 'mjpeg', '-r', str(FPS), '-i', '-',
+                           '-i', 'vo.wav', '-c:v', 'libx264', '-crf', '18', '-pix_fmt', 'yuv420p', '-af', 'apad', '-c:a', 'aac',
+                           '-b:a', '192k', '-shortest', '-movflags', '+faststart', 'reel.mp4'], stdin=subprocess.PIPE)
+    for i in range(n):
+        page.evaluate(f'setT({i / FPS})')
+        ff.stdin.write(page.screenshot(type='jpeg', quality=92))
+        if i % 150 == 0: print(f'frame {i}/{n}')
+    ff.stdin.close(); ff.wait(); browser.close()
+print('done: reel.mp4')</code></pre></div></details></li>
+<li><h3>Post it</h3><p>Upload reel.mp4, add a trending sound at low volume in the app, and turn on Instagram's AI label (the voice and mascot are AI).</p></li>
+</ol>
+
+<div class="path"><span class="tape">Let Claude Code do the edits</span><small>optional</small></div>
+<ol class="steps">
+<li><h3>Describe the scene, let it write the HTML</h3><p>Open <a href="https://claude.com/claude-code" target="_blank" rel="noopener">Claude Code</a> in the kit folder and ask in plain words:</p><pre><code>Read script.txt and reel.html. Add a card for every key moment in the script:
+pop each one in on the word it belongs to (data-at="@word"), hide it when the
+next one comes (data-out), keep text at least 60px, and nothing below top:900px
+so the captions and mascot stay clear. Then run build.py and render.py.</code></pre></li>
+</ol>
+</section>
+
+<section><h2>What my own reels add on top</h2><ul class="need">
+<li>A half-open mouth between closed and open, and blinks every few seconds (a third and fourth picture).</li>
+<li>Many poses (pointing, thumbs up, shocked) that switch on key words, and a laptop pose with a real screenshot on the screen.</li>
+<li>Sound effects (pop, whoosh, thud) generated from the same cue list, so every card makes a sound on its word.</li>
+<li>Count-ups, typing terminals, crossed-out prices and a different background color per scene.</li>
+<li>Rendering in 3 parts at the same time, which is how a 60-second reel renders in about 3–4 minutes.</li>
+<li>From the same script: a cover, a 10-slide carousel, the caption, and a setup page like this one.</li>
+</ul><p>The kit is the core those are built on. Every one of them is a few more lines in <code>reel.html</code> or <code>build.py</code>, and Claude Code can add them for you.</p></section>
+
+<section><h2>Stuck?</h2>
+<details><summary>"matched 90 of 98 words"</summary><div><p>The words in <code>script.txt</code> and the recording are different: the AI voice added, skipped or changed something, or a number is written as a digit. Run <code>python3 build.py check</code>, find the line, and change <code>script.txt</code> to what was actually said.</p></div></details>
+<details><summary>Captions are a bit early or late</summary><div><p>Usually a word the dictionary doesn't know (a brand name, Hindi words) got squeezed. Write it closer to how it sounds in <code>script.txt</code> (for example <code>eleven labs</code> instead of <code>ElevenLabs</code>), then run <code>build.py</code> again. Clear recordings with no music behind them align best.</p></div></details>
+<details><summary>The mouth flickers too much or barely moves</summary><div><p>In <code>build.py</code>, the line that makes <code>mouth</code> has two numbers: <code>.12</code> (how loud counts as talking) and <code>.6</code> (how close to the loudest point the mouth opens). Raise <code>.6</code> to <code>.7</code> for less flicker, lower it to <code>.5</code> for more movement.</p></div></details>
+<details><summary>"cue word not in script.txt: @word"</summary><div><p>A card in <code>reel.html</code> waits for a word you never say. Check the spelling in <code>data-at</code> against <code>script.txt</code>. Punctuation and capitals don't matter.</p></div></details>
+<details><summary>Playwright: "Executable doesn't exist"</summary><div><p>The browser isn't installed yet. Run <code>python3 -m playwright install chromium</code>.</p></div></details>
+<details><summary>pip install pocketsphinx fails</summary><div><p>Update pip first (<code>python3 -m pip install --upgrade pip</code>) and try again. Still failing on Windows? Use WSL (Linux on Windows) and the Linux commands.</p></div></details>
+<details><summary>Can I use my own recorded voice?</summary><div><p>Yes, it works the same. Record in a quiet room, convert it with the same ffmpeg line, and the mascot talks with your voice.</p></div></details>
+</section>
+
+<section class="dm"><h2>Still stuck?</h2><p>DM me on Instagram with a screenshot of the error and which step you're on.</p><a class="btn gold" href="https://instagram.com/aixsam.dev" target="_blank" rel="noopener">DM @aixsam.dev</a></section>
+
+<section><h2>More setup guides</h2><div class="cards"><a class="gcard" href="/tools/moneyturbo/"><span class="k">PRINTER</span><h3>MoneyPrinterTurbo</h3><p>Give it one topic and it makes the whole short video: script, stock footage, voice, subtitles, music.</p></a><a class="gcard" href="/tools/claude-code-free/"><span class="k">FREE</span><h3>Claude Code for $0</h3><p>Run Claude Code on free models through OpenRouter instead of paying $20 a month.</p></a><a class="gcard" href="/tools/instagram-agent/"><span class="k">INSTAGRAM</span><h3>Instagram Agent Skill</h3><p>13 free Claude skills for your Instagram. Nothing posts without you.</p></a><a class="gcard" href="/tools/dev-team/"><span class="k">DEV</span><h3>Claude Code Dev Team</h3><p>Five free tools that turn Claude Code from one developer into a full team.</p></a></div></section>
+</main>
+<footer><div class="wrap">Tools are made by their own authors; I find them, test them and explain them. Not paid by any of them. The starter kit on this page is mine, free to use.
+<nav><a href="/">Home</a><a href="/tools/">All setup guides</a><a href="https://instagram.com/aixsam.dev" target="_blank" rel="noopener">@aixsam.dev</a><a href="https://youtube.com/@aixsamdev" target="_blank" rel="noopener">YouTube</a></nav></div></footer>
+<script src="/tools/guide.js"></script>
+</body>
+</html>

@@ -279,6 +279,9 @@ footer{position:relative;z-index:2;background:repeating-linear-gradient(90deg,#2
 // posted = when the reel went live, reel = the reel URL (cover clicks and "watch the reel" go there),
 // cover = 540x960 reel cover in img/covers/ (also hung on the 3D gallery wall), guide = its setup page in tools/ (unlocked buttons go there instead of GitHub).
 const TOOLS = window.TOOLS = [
+  {key:"PIPELINE", guide:"/tools/pipeline/", wing:"Video AI", name:"My Reel Pipeline", url:"/tools/pipeline/", posted:"2026-10-22T18:30:00+05:30", cover:"img/covers/pipeline.webp",
+   desc:"How every aixsam.dev reel is made without a camera or a video editor: Claude writes the script, an AI voice reads it, forced alignment times every word for the captions, a cartoon mascot's mouth moves with the voice's loudness, and the reel is a web page a browser renders frame by frame. Free starter kit (3 small Python/HTML files) with every command.",
+   tags:["Python","ffmpeg","Free kit"]},
   {key:"FREE", guide:"/tools/claude-code-free/", wing:"Claude Code & Skills", name:"Claude Code for $0", url:"https://openrouter.ai/docs/cookbook/coding-agents/claude-code-integration", posted:"2026-10-21T18:30:00+05:30", cover:"img/covers/free.webp",
    desc:"Run Claude Code on free models instead of a $20/month plan: point it at OpenRouter and it works with free models like Google's Gemma 4 and NVIDIA's Nemotron. Same agent (reads files, edits code, runs commands), weaker brain than Claude. Free tier: 50 requests a day (1,000 after a one-time $10 top-up); some free hosts log prompts, so keep secrets out.",
    tags:["Claude Code","Free models","OpenRouter"]},
