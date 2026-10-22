@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Reel Pipeline Pro Kit · aixsam.dev</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#e7b95a">
+<link rel="icon" href="/img/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Fraunces:opsz,wght@9..144,400;9..144,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/tools/guide.css">
+</head>
+<body>
+<header class="top">
+ <a class="brand" href="/"><img src="/img/icon.png" alt=""><span class="tape">aixsam.dev</span></a>
+ <a class="btn gold" href="https://instagram.com/aixsam.dev" target="_blank" rel="noopener">Follow</a>
+</header>
+<main class="wrap">
+<section class="hero"><h1><span class="tape">Thank you! 🎉</span></h1>
+<p class="lead">Your Reel Pipeline Pro Kit is ready. <b>Bookmark this page</b>: it's your download link, and it isn't sent anywhere else.</p>
+<div class="row"><a class="btn gold" href="/pro-jxmagfwz/aixsam-reel-pro-kit.zip" download>Download the Pro kit (.zip)</a></div></section>
+
+<section><h2>What's inside</h2><ul class="need">
+<li><b>PROMPT.txt + CLAUDE.md</b>: the one-prompt setup. Claude follows my full workflow from reference reel to finished video.</li>
+<li><b>Talking mascot</b>: closed, half-open and open mouth from the voice, blinks, and pose changes on key words.</li>
+<li><b>Sound effects</b> generated for every card, stamp, count-up and scene change. No audio files needed.</li>
+<li><b>Scene templates</b>: crossed-out price, typing terminal, count-up, stamps, scene colours.</li>
+<li><b>Faster render</b> in parallel parts, <b>test frames</b> to check before rendering, and a <b>cover template</b>.</li>
+<li><b>Caption formula</b> and posting tips (inside CLAUDE.md).</li>
+</ul></section>
+
+<section><h2>Start in 3 steps</h2>
+<ol class="steps">
+<li><h3>Open Claude</h3><p><b>Claude Code</b> (the Code tab in the Claude desktop app) is best: it runs everything on your computer. <b>Claude chat</b> works too: turn on web search and code execution in settings. If its sandbox can't render the video, it gives you the finished folder and the commands to run.</p></li>
+<li><h3>Attach the zip and paste this prompt</h3><p>Attach your mascot pictures too if you have them (mouth closed, mouth open, eyes closed, and any poses). No mascot yet? The kit has a placeholder.</p><pre><code>I uploaded the Reel Pipeline Pro Kit (zip). It's a kit for making vertical reels with code.
+Unzip it, read CLAUDE.md inside, and follow it step by step:
+1. Set up the kit (install what's missing; tell me in one line if something can't run here).
+2. Ask me for the reference reel, the tool link, the language, my comment keyword, my handle and my mascot pictures.
+3. Research the tool from its real sources. Write the script with the 4-part hook, show me the facts with sources, and wait for my approval.
+4. Give me the exact text for my voice tool and wait for my audio file.
+5. Check the voice, time every word, set up my mascot, build the scenes, check test frames, then render reel.mp4 and the cover, and write the caption.
+Never invent a number or a feature. If you can't render here, give me the finished folder as a zip and the commands to run.</code></pre></li>
+<li><h3>Give it the reference reel and the tool link</h3><p>Then approve the script, make the voice (ElevenLabs or your own), upload the audio, and you get reel.mp4, the cover and the caption. Ask for changes in plain words.</p><p class="tip">Read the facts list before you approve the script. Claude is told never to invent numbers, but you're the final check.</p></li>
+</ol></section>
+
+<section><h2>Prefer doing it by hand?</h2><p>Install once, then run these in the kit folder (on Windows type <code>python</code> instead of <code>python3</code>). The full manual is the free guide: <a href="/tools/pipeline/#steps">aixsam.dev/tools/pipeline</a>.</p>
+<pre><code>pip install pocketsphinx numpy playwright
+python3 -m playwright install chromium
+ffmpeg -i voice.mp3 -ac 1 -ar 44100 vo.wav
+python3 build.py check
+python3 build.py
+python3 render.py shots 2,5,9
+python3 render.py
+python3 render.py cover</code></pre></section>
+
+<section class="dm"><h2>Need help?</h2><p>DM me on Instagram with your payment ID and a screenshot of where you're stuck. If it doesn't work for you within 7 days, I'll help you set it up or refund you.</p><a class="btn gold" href="https://instagram.com/aixsam.dev" target="_blank" rel="noopener">DM @aixsam.dev</a></section>
+<p style="opacity:.75;font-size:.92em;margin-top:14px">For your personal use. Please don't resell or re-upload the kit. 🙏</p>
+</main>
+<footer><div class="wrap">Reel Pipeline Pro Kit by @aixsam.dev
+<nav><a href="/">Home</a><a href="/tools/">Setup guides</a><a href="https://instagram.com/aixsam.dev" target="_blank" rel="noopener">@aixsam.dev</a></nav></div></footer>
+<script src="/tools/guide.js"></script>
+</body>
+</html>
