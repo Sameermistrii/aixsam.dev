@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>How I make reels with code (no camera, no editor): the full pipeline · aixsam.dev</title>
-<meta name="description" content="The pipeline behind every aixsam.dev reel: Claude writes the script, an AI voice reads it, code times every word, a cartoon mascot talks with the voice, and a browser renders a web page into a video. Free starter kit, every command, step by step.">
+<meta name="description" content="The pipeline behind every aixsam.dev reel, plus a one-prompt setup for Claude: Claude writes the script, an AI voice reads it, code times every word, a cartoon mascot talks with the voice, and a browser renders a web page into a video. Free starter kit, every command, step by step.">
 <meta name="theme-color" content="#e7b95a">
 <meta property="og:title" content="How I make reels with code (no camera, no editor): the full pipeline · aixsam.dev">
 <meta property="og:description" content="Script → AI voice → word timings → talking mascot → web page → video. Free starter kit and every command.">
@@ -27,7 +27,7 @@
 <section class="hero"><h1><span class="tape">My reel pipeline</span></h1>
 <p class="lead">I don't film my reels and I don't open a video editor. Claude writes the script, an AI voice reads it, code works out when every word is spoken, a cartoon mascot moves its mouth with the voice, and the whole reel is a web page that a browser turns into a video, frame by frame. This page gives you a free starter kit with the same core and every command to run it. Honest note: I still check the script, the facts and the final video myself. The code does the editing, not the thinking.</p>
 <div class="meta"><span class="key">Reel keyword: PIPELINE</span><span>Python</span><span>ffmpeg</span><span>Free starter kit</span></div>
-<div class="row"><a class="btn gold" href="#steps">Start ↓</a><a class="btn ghost" href="/tools/pipeline/reel-kit.zip" download>Download the kit (.zip)</a></div></section>
+<div class="row"><a class="btn gold" href="#one-prompt">One-prompt setup ↓</a><a class="btn ghost" href="#steps">Step by step ↓</a><a class="btn ghost" href="/tools/pipeline/reel-kit.zip" download>Download the kit (.zip)</a></div></section>
 
 <section><h2>How it works</h2>
 <div class="try">
@@ -48,11 +48,38 @@
 <li>Cost: the kit and every tool here are free. ElevenLabs has a free plan with a monthly limit; check its terms before you earn money from the videos.</li>
 </ul></section>
 
+<section id="one-prompt"><h2>Easiest: one prompt, Claude does it all<small>no coding needed</small></h2>
+<p>Don't want to run the steps yourself? Give Claude the kit and one prompt. It sets everything up, then works exactly like I do: you give it the reference reel and the tool link, it researches and writes the script, you approve it and record the voice, and it times, animates and renders the reel.</p>
+<div class="path"><span class="tape">Where to run it</span><small>pick one</small></div>
+<ul class="need">
+<li><b>Claude Code</b> (best): the Code tab in the Claude desktop app, or <code>claude</code> in a terminal, opened in the unzipped kit folder. It runs everything on your computer and gives you <code>reel.mp4</code>. It reads the kit's instructions file (<code>CLAUDE.md</code>) by itself.</li>
+<li><b>Claude chat</b> (claude.ai in the browser, or the desktop app): upload the zip. Turn on web search and code execution / file creation in settings if they're off. Claude does the research, script, word timing and animation; if its sandbox can't run the video render, it hands you the finished folder and you run two commands (Step 0 installs, then <code>python3 build.py</code> and <code>python3 render.py</code>).</li>
+</ul>
+<ol class="steps">
+<li><h3>Download the kit and open Claude</h3><p>Download <a href="/tools/pipeline/reel-kit.zip" download>reel-kit.zip</a>. Start a new chat and attach the zip. Got your own mascot? Attach its two pictures too (mouth closed, mouth open; see step 4 below).</p></li>
+<li><h3>Paste this prompt</h3><pre><code>I uploaded reel-kit.zip: a kit for making vertical reels (1080x1920) with code.
+Unzip it, read CLAUDE.md inside, and follow it step by step:
+1. Set up the kit (install what's missing; tell me if something can't run here).
+2. Ask me for the reference reel (transcript, video or screenshots), the tool link,
+   the language, my comment keyword and my handle.
+3. Research the tool from its real sources, write the script and show me the facts
+   with sources. Wait for my approval.
+4. Give me the exact text for my voice tool, wait for my MP3, then check it,
+   time every word, build the scenes, check test frames, render reel.mp4
+   and write the caption.
+Never invent a number or a feature. If you can't render here, give me the
+finished folder as a zip and the two commands to run.</code></pre></li>
+<li><h3>Give it what it asks for</h3><p>Claude asks for the same things I start every reel with:</p><p>🎬 The <b>reference reel</b>: paste its transcript, or upload the video or screenshots.<br>🔗 The <b>tool link</b>: the GitHub repo or official page.<br>🗣️ The <b>language</b> (English / Hinglish), your <b>comment keyword</b> and your handle.</p></li>
+<li><h3>Approve the script, then send the voice</h3><p>Claude shows the script with every fact and where it found it. Edit or approve it. Then paste the text into ElevenLabs (or record yourself), download the MP3 and upload it to the chat.</p><p class="tip">Read the facts list before you approve. Claude is told never to invent numbers, but you are the last check, just like I am for my reels.</p></li>
+<li><h3>Get your reel</h3><p>Claude checks the voice didn't change any words, times every word, builds the scenes, checks test frames, and gives you <code>reel.mp4</code> plus the caption with hashtags. Want changes? Just say so: "make the hook card bigger", "add the GitHub stars on the second beat".</p></li>
+</ol>
+</section>
+
 <section id="steps"><h2>Step by step<small>copy each command with the button on the right</small></h2>
 
 <div class="path"><span class="tape">Step 0 · Install</span><small>once, about 5 minutes</small></div>
 <ol class="steps">
-<li><h3>Download the kit</h3><p><a href="/tools/pipeline/reel-kit.zip" download>reel-kit.zip</a> has 6 files: <code>build.py</code>, <code>reel.html</code>, <code>render.py</code>, <code>script.txt</code> and two placeholder mascot pictures. Unzip it into a new folder and open a terminal in that folder.</p></li>
+<li><h3>Download the kit</h3><p><a href="/tools/pipeline/reel-kit.zip" download>reel-kit.zip</a> has 7 files: <code>build.py</code>, <code>reel.html</code>, <code>render.py</code>, <code>script.txt</code>, two placeholder mascot pictures, and <code>CLAUDE.md</code> (the instructions Claude follows in the one-prompt setup). Unzip it into a new folder and open a terminal in that folder.</p></li>
 <li><h3>Install ffmpeg</h3><p>Mac (with <a href="https://brew.sh" target="_blank" rel="noopener">Homebrew</a>):</p><pre><code>brew install ffmpeg</code></pre><p>Linux / WSL:</p><pre><code>sudo apt install -y ffmpeg</code></pre><p>Windows (PowerShell):</p><pre><code>winget install Gyan.FFmpeg</code></pre><p class="tip">Check it worked: <code>ffmpeg -version</code> prints a version. On Windows, open a new terminal first.</p></li>
 <li><h3>Install the Python parts</h3><pre><code>pip install pocketsphinx numpy playwright
 python3 -m playwright install chromium</code></pre><p class="tip">PocketSphinx does the word timing (its English model comes inside the package, nothing else to download). Playwright drives the browser that renders the frames. On Windows, type <code>python</code> instead of <code>python3</code> everywhere on this page.</p></li>
@@ -210,7 +237,9 @@ window.setT = setT; window.DURATION = DATA.duration; setT(0);
 
 <div class="path"><span class="tape">Step 6 · Render</span><small>render.py</small></div>
 <ol class="steps">
-<li><h3>Make the video</h3><pre><code>python3 render.py</code></pre><p>A hidden browser draws every frame (30 per second), ffmpeg glues them to <code>vo.wav</code>, and you get <code>reel.mp4</code> (1080×1920), ready for Instagram, YouTube Shorts and TikTok. A 45-second reel is about 1,350 frames; expect a few minutes.</p><details><summary>Show render.py</summary><div><pre><code>"""python3 render.py -&gt; reel.mp4 (1080x1920, 30 fps). A browser draws every frame of reel.html, ffmpeg glues them + vo.wav."""
+<li><h3>Make the video</h3><pre><code>python3 render.py</code></pre><p>A hidden browser draws every frame (30 per second), ffmpeg glues them to <code>vo.wav</code>, and you get <code>reel.mp4</code> (1080×1920), ready for Instagram, YouTube Shorts and TikTok. A 45-second reel is about 1,350 frames; expect a few minutes.</p><details><summary>Show render.py</summary><div><pre><code>"""python3 render.py -&gt; reel.mp4 (1080x1920, 30 fps). A browser draws every frame of reel.html, ffmpeg glues them + vo.wav.
+   python3 render.py shots 2,5,9 -&gt; shot_2.0.jpg ... test frames to check before the full render."""
+import sys
 import subprocess
 from pathlib import Path
 from playwright.sync_api import sync_playwright
@@ -222,6 +251,10 @@ with sync_playwright() as p:
     errors = []; page.on('pageerror', lambda e: errors.append(str(e)))
     page.goto(Path('reel.html').resolve().as_uri()); page.wait_for_load_state('networkidle')
     assert not errors, errors
+    if sys.argv[1:2] == ['shots']:
+        for t in sys.argv[2].split(','):
+            page.evaluate(f'setT({t})'); page.screenshot(path=f'shot_{float(t):.1f}.jpg', type='jpeg', quality=85)
+        browser.close(); sys.exit('saved test frames')
     n = int(page.evaluate('DURATION') * FPS)
     ff = subprocess.Popen(['ffmpeg', '-v', 'error', '-y', '-f', 'image2pipe', '-c:v', 'mjpeg', '-r', str(FPS), '-i', '-',
                            '-i', 'vo.wav', '-c:v', 'libx264', '-crf', '18', '-pix_fmt', 'yuv420p', '-af', 'apad', '-c:a', 'aac',
