@@ -280,6 +280,9 @@ footer{position:relative;z-index:2;background:repeating-linear-gradient(90deg,#2
 // posted = when the reel went live, reel = the reel URL (cover clicks and "watch the reel" go there),
 // cover = 540x960 reel cover in img/covers/ (also hung on the 3D gallery wall), guide = its setup page in tools/ (unlocked buttons go there instead of GitHub).
 const TOOLS = window.TOOLS = [
+  {key:"CONTENT", guide:"/tools/content/", wing:"Video AI", name:"3 repos that make content", url:"/tools/content/", posted:"2026-10-23T18:30:00+05:30", cover:"img/covers/content.webp",
+   desc:"No voice artist, designer or editor: GPT-SoVITS speaks in your own voice from a ~5-second sample (English, Japanese, Korean, Chinese, Cantonese; no Hindi yet), ComfyUI makes images and AI video offline on your own computer (wants a good graphics card), and OpenCut is a free open-source CapCut alternative in your browser (early beta). All free, open source.",
+   tags:["Voice","Images + video","Editing"]},
   {key:"PIPELINE", guide:"/tools/pipeline/", wing:"Video AI", name:"My Reel Pipeline", url:"/tools/pipeline/", posted:"2026-10-22T12:15:00+05:30", cover:"img/covers/pipeline.webp",
    desc:"How every aixsam.dev reel is made without a camera or a video editor: Claude writes the script, an AI voice reads it, forced alignment times every word for the captions, a cartoon mascot's mouth moves with the voice's loudness, and the reel is a web page a browser renders frame by frame. Free starter kit (3 small Python/HTML files) with every command.",
    tags:["Python","ffmpeg","Free kit"]},
