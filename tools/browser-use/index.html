@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to set up browser-use: step-by-step guide · aixsam.dev</title>
+<meta name="description" content="Set up browser-use, the free open-source AI agent that uses a real browser by itself: install, a free local model with Ollama, copy-paste code, and what to watch out for.">
+<meta name="theme-color" content="#e7b95a">
+<meta property="og:title" content="How to set up browser-use: step-by-step guide · aixsam.dev">
+<meta property="og:description" content="Set up browser-use, the free open-source AI browser agent: install, free local model, copy-paste code.">
+<meta property="og:image" content="https://aixsam.dev/img/icon.png">
+<link rel="canonical" href="https://aixsam.dev/tools/browser-use/">
+<script data-goatcounter="https://aixsamdev.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+<link rel="icon" href="/img/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Fraunces:opsz,wght@9..144,400;9..144,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/tools/guide.css">
+</head>
+<body>
+<header class="top">
+ <a class="brand" href="/"><img src="/img/icon.png" alt=""><span class="tape">aixsam.dev</span></a>
+ <a class="btn gold" href="https://instagram.com/aixsam.dev" target="_blank" rel="noopener">Follow</a>
+</header>
+<main class="wrap">
+<p class="crumb"><a href="/">aixsam.dev</a> / <a href="/tools/">tools</a> / browser-use</p><section class="hero"><h1><span class="tape">browser-use</span></h1><p class="lead">Give an AI a real browser and one line of instructions: it opens websites, reads them, clicks, types and fills forms by itself. Free, open source, MIT.</p><div class="meta"><span class="key">Reel keyword: BROWSER</span><span>Python</span><span>Free library</span><span>MIT</span></div><div class="row"><a class="btn gold" href="#steps">Start setup ↓</a></div></section><section><h2>What you need</h2><ul class="need"><li><a href="https://www.python.org/downloads/">Python 3.11 or newer</a> and <a href="https://docs.astral.sh/uv/getting-started/installation/">uv</a> (or plain pip).</li><li>An AI model: a <b>free local one</b> with <a href="https://ollama.com/">Ollama</a> (needs a decent computer), or a paid API key such as OpenAI.</li><li>About 10 minutes. You'll copy one small Python file.</li></ul></section><section id="steps"><h2>Setup, step by step<small>copy each command with the button on the right</small></h2><div class="path"><span class="tape">01 · Install</span><small>browser-use</small></div><ol class="steps"><li><h3>Make a project and add browser-use</h3><p>In a new, empty folder:</p><pre><code>uv init --python 3.12
+uv add browser-use</code></pre><p>No uv? <code>pip install browser-use</code> works too.</p></li></ol><div class="path"><span class="tape">02 · The brain</span><small>pick one</small></div><ol class="steps"><li><h3>Free: a local model with Ollama</h3><p>Install <a href="https://ollama.com/">Ollama</a>, start it, and download a model (about 4.9 GB):</p><pre><code>ollama serve</code></pre><p>Then in a second terminal:</p><pre><code>ollama pull llama3.1:8b</code></pre><p>It runs on your own computer, so speed depends on your hardware.</p></li><li><h3>Or: a paid API key</h3><p>Make a file called <code>.env</code> in the folder:</p><pre><code>OPENAI_API_KEY=your-key</code></pre><p>You pay OpenAI for what you use. Claude and Gemini work too.</p></li></ol><div class="path"><span class="tape">03 · Your first agent</span><small>agent.py</small></div><ol class="steps"><li><h3>Save this as agent.py</h3><p>This version uses the free Ollama model from step 2:</p><pre><code>import asyncio
+from browser_use import Agent, ChatOllama
+
+async def main():
+    llm = ChatOllama(model="llama3.1:8b")
+    agent = Agent(task="Find the number of stars of the browser-use repo", llm=llm)
+    history = await agent.run()
+    print(history.final_result())
+
+asyncio.run(main())</code></pre><p>Using an OpenAI key instead? Swap the import and model line for the ones in the <a href="https://github.com/browser-use/browser-use#quickstart">README quickstart</a>.</p></li><li><h3>Run it</h3><pre><code>uv run agent.py</code></pre><p>A browser opens, the agent looks up the repo and prints the answer.</p></li><li><h3>Give it your own task</h3><p>Change the <code>task="..."</code> line to anything you'd tell a person, for example the README's own: <b>Fill in this job application with my resume and information.</b></p></li></ol></section><section><p class="warn"><b>Heads up:</b> it clicks real buttons on real websites. Watch it the first few times, keep it away from banking, payments and passwords, and check every form before it's submitted. The library is free; Browser Use Cloud and paid model providers charge per use, and you don't need either.</p></section><section><h2>Stuck?</h2><details><summary>The local model does strange things</summary><div><p>Small local models sometimes return actions in the wrong format. Try a bigger model in Ollama, or give the task in very clear, simple steps.</p></div></details><details><summary>Install fails</summary><div><p>browser-use needs Python 3.11 or newer. Check with <code>python --version</code>; with uv, <code>uv init --python 3.12</code> sets the right one for you.</p></div></details><details><summary>Is it really free?</summary><div><p>The library is free and MIT. A local Ollama model is free too. GPT, Claude, Gemini and Browser Use's own models and cloud browsers are paid per use.</p></div></details></section><section class="dm"><h2>Still stuck?</h2><p>DM me on Instagram with a screenshot of the error and which step you're on.</p><a class="btn gold" href="https://instagram.com/aixsam.dev" target="_blank" rel="noopener">DM @aixsam.dev</a></section><section><h2>More setup guides</h2><div class="cards"><a class="gcard" href="/tools/content/"><span class="k">CONTENT</span><h3>3 repos that make content</h3><p>Your voice, images and AI video, and editing, all free.</p></a><a class="gcard" href="/tools/moneyturbo/"><span class="k">PRINTER</span><h3>MoneyPrinterTurbo</h3><p>Type one topic and it makes the whole short video for you.</p></a><a class="gcard" href="/tools/dev-team/"><span class="k">DEV</span><h3>Claude Code Dev Team</h3><p>Five free tools that turn Claude Code into a full team.</p></a></div></section></main>
+<footer><div class="wrap">Tools are made by their own authors; I find them, test them and explain them. Not paid by any of them.
+<nav><a href="/">Home</a><a href="/tools/">All setup guides</a><a href="https://instagram.com/aixsam.dev" target="_blank" rel="noopener">@aixsam.dev</a><a href="https://youtube.com/@aixsamdev" target="_blank" rel="noopener">YouTube</a></nav></div></footer>
+<script src="/tools/guide.js"></script>
+</body>
+</html>
