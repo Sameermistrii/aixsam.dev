@@ -215,7 +215,8 @@ footer{position:relative;z-index:2;background:repeating-linear-gradient(90deg,#2
    <div class="burst" aria-hidden="true"><div><b>100%</b>FREE</div></div>
    <p>Every tool from my reels: <b>free</b>, open source, and most of them run on your own computer. Walk the gallery with me, or jump straight to the tools.</p>
    <div class="note"><b>How to get a link:</b> comment the keyword on the reel and I'll DM it to you, or grab it right here.</div>
-   <div class="cta"><a class="btn gold" href="#tools">See the tools →</a><a class="btn ghost" href="#how">How it works</a></div>
+   <div class="cta" id="picks"></div>
+   <div class="cta" style="margin-top:12px"><a class="btn ghost" href="#tools">See all tools →</a><a class="btn ghost" href="#how">How it works</a></div>
    <div class="hint">Scroll to walk in ↓</div>
   </div><img class="hero-sam" src="img/sam/wave.webp" alt="Sam, the aixsam.dev mascot, waving"></div>
  </section>
@@ -291,7 +292,7 @@ const TOOLS = window.TOOLS = [
   {key:"DEV", guide:"/tools/dev-team/", wing:"Claude Code & Skills", name:"Claude Code Dev Team", url:"/tools/dev-team/", posted:"2026-10-19T23:30:00+05:30", cover:"img/covers/dev.webp",
    desc:"Five free tools that turn Claude Code into a full dev team: Superpowers plans and builds test-first, Context7 pulls the latest library docs, the built-in /code-review finds bugs, /simplify cleans up the code, and gstack by YC CEO Garry Tan adds 23 specialists from CEO review to QA. All free.",
    tags:["Claude Code","Free","5 tools"]},
-  {key:"PRINTER", guide:"/tools/moneyturbo/", wing:"Video AI", name:"MoneyPrinterTurbo", url:"https://github.com/harry0703/MoneyPrinterTurbo", posted:"2026-10-19T18:30:00+05:30", cover:"img/covers/printer.webp",
+  {key:"PRINTER", hot:true, guide:"/tools/moneyturbo/", wing:"Video AI", name:"MoneyPrinterTurbo", url:"https://github.com/harry0703/MoneyPrinterTurbo", posted:"2026-10-19T18:30:00+05:30", cover:"img/covers/printer.webp",
    desc:"Give it one topic and it makes the whole short video: writes the script, finds matching stock footage (Pexels, Pixabay), adds a voiceover, syncs subtitles, adds background music and renders 9:16, 16:9 or 1:1. Works with GPT, Claude, Gemini, DeepSeek or a free local model via Ollama, and can auto-post to TikTok, Instagram and YouTube Shorts. You add your own AI key and a free Pexels key. Free, open source, MIT.",
    tags:["Video AI","Open source","MIT"]},
   {key:"LINKEDIN", guide:"/tools/linkedin-skills/", wing:"Claude Code & Skills", name:"LinkedIn Skills", url:"https://github.com/sergebulaev/linkedin-skills", posted:"2026-10-18T18:30:00+05:30", cover:"img/covers/linkedin.webp",
@@ -363,6 +364,10 @@ document.getElementById('track').innerHTML = [...words, ...words, ...words, ...w
 
 // sticky bar: latest tool, shown once the visitor is past the hero
 const L = TOOLS[0], sticky = document.getElementById('sticky'), sb = document.getElementById('stickyBtn');
+// hero: the latest reel's tool, plus any hot:true tool (an older reel still bringing visitors), one tap from the top
+document.getElementById('picks').innerHTML = [L, ...TOOLS.filter(t => t.hot && t !== L)].map(t =>
+  `<a class="btn ${t === L ? 'gold' : 'ghost'}" href="${esc(left(t) > 0 ? (t.reel || IG) : dest(t))}" data-k="${esc(t.key)}">${t === L ? 'New' : '🔥 Most watched'}: ${esc(t.name)} →</a>`).join('');
+document.getElementById('picks').addEventListener('click', e => { const a = e.target.closest('a'); if (a) track('hero/' + a.dataset.k); });
 document.getElementById('stickyTxt').innerHTML = `Latest: ${esc(L.name)}<small>comment "${esc(L.key)}" on the reel</small>`;
 sb.href = left(L) > 0 ? (L.reel || IG) : dest(L);
 const walkEl = document.getElementById('walk'); // sticky bar only after the gallery walk, so it never covers the cards
