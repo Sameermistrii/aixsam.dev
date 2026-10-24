@@ -36,12 +36,15 @@ for f in sorted(glob.glob('tools/*/index.html')):
            'datePublished': git_date(f, first=True), 'dateModified': git_date(f)}
     if repo:
         art['about'] = {'@type': 'SoftwareSourceCode', 'name': name, 'codeRepository': repo.group(1)}
+    faqs = re.findall(r'<details><summary>(.*?)</summary><div><p>(.*?)</p></div></details>', s.split('<section class="faq2">', 1)[1].split('</section>', 1)[0]) if '<section class="faq2">' in s else []
+    faq = {'@type': 'FAQPage', 'mainEntity': [{'@type': 'Question', 'name': html.unescape(re.sub(r'<[^>]+>', '', q)),
+           'acceptedAnswer': {'@type': 'Answer', 'text': html.unescape(re.sub(r'<[^>]+>', '', a_))}} for q, a_ in faqs]}
     crumbs = {'@type': 'BreadcrumbList', 'itemListElement': [
         {'@type': 'ListItem', 'position': 1, 'name': 'aixsam.dev', 'item': SITE + '/'},
         {'@type': 'ListItem', 'position': 2, 'name': 'Setup guides', 'item': SITE + '/tools/'},
         {'@type': 'ListItem', 'position': 3, 'name': name, 'item': url}]}
     block = ('<script type="application/ld+json" id="seo">' +
-             json.dumps({'@context': 'https://schema.org', '@graph': [art, crumbs]}, ensure_ascii=False) + '</script>')
+             json.dumps({'@context': 'https://schema.org', '@graph': [art, crumbs] + ([faq] if faqs else [])}, ensure_ascii=False) + '</script>')
     s = re.sub(r'<script type="application/ld\+json" id="seo">.*?</script>\n?', '', s, flags=re.S)
     s = s.replace('</head>', block + '\n</head>', 1)
     s = re.sub(r'<meta property="og:image" content="[^"]*">', f'<meta property="og:image" content="{cover}">', s)
