@@ -187,6 +187,23 @@ C['pipeline'] = dict(
          ("Does it work for Hindi or Hinglish?", "Yes. The kit's aligner handles Hinglish written in English letters, which is how I make my Hinglish reels.")])
 
 
+C['freellmapi'] = dict(
+    about=["<b>FreeLLMAPI</b> is a free, open-source (MIT) app by Tashfeen Ahmed that collects the free plans of 34 AI providers (Google Gemini, Groq, Mistral, OpenRouter, Cerebras and more) and puts them behind <b>one</b> OpenAI-compatible key that runs on your own computer.",
+           "On its own, each free plan is small: a few million tokens a month or a few thousand requests a day. Stacked together, the README puts them at roughly <b>7.4 billion tokens a month</b> across 635 free model endpoints, if you add every provider. Your app sends a request to one address, and the router picks a free model that still has room; on a rate limit it moves to the next one by itself.",
+           "Your provider keys are stored encrypted on your machine, and your apps only ever see a single <code>freellmapi-</code> key. The core app is free; an optional $19/year premium only gets new models into the catalog sooner."],
+    can=[("One key for many AIs", "add free keys from as many providers as you like; your apps use one."),
+         ("Auto switch", "a model hits its free limit (a 429 error), and it retries the next model in your chain."),
+         ("Works with your apps", "anything that takes an OpenAI base URL, plus Claude Code, Cursor, Cline, Codex CLI and Aider."),
+         ("Dashboard", "manage keys, drag the fallback order, try prompts in a playground and see your monthly token budget."),
+         ("Desktop app", "Mac and Windows, lives in the tray, no account or password to set up."),
+         ("More than chat", "embeddings, images and speech go through the same key where a free provider offers them.")],
+    faq=[("Is FreeLLMAPI really free?", "The app is free and MIT licensed, and the tokens come from each provider's own free plan. A $19/year premium is optional; it only gets new models sooner (free installs get them about 30 days later)."),
+         ("Do I get GPT-4 or Claude for free?", "No. The newest paid GPT and Claude models aren't among the free providers. You get open and fast models like Gemini, Llama, Qwen, DeepSeek and Mistral. Claude Code can still run on top of your free pool."),
+         ("Will I really get 7.4 billion tokens?", "Only if you add a key from every provider. Start with 2 or 3 and you'll have less; each provider's limits can also change without notice."),
+         ("Can I use it for my business?", "The project says it's for personal experimentation and learning, not production. Free plans have no guarantee, and each provider's terms still apply. Swap in a paid API before you ship anything real."),
+         ("Are my keys safe?", "They stay on your computer, encrypted, and are decrypted only in memory per request. Never paste them in a video, screenshot or public file.")])
+
+
 def block(slug, d):
     s = open(f'tools/{slug}/index.html', encoding='utf-8').read()
     key = re.search(r'Reel keyword: ([A-Z]+)', s)
