@@ -204,6 +204,23 @@ C['freellmapi'] = dict(
          ("Are my keys safe?", "They stay on your computer, encrypted, and are decrypted only in memory per request. Never paste them in a video, screenshot or public file.")])
 
 
+C['cleanyourtv'] = dict(
+    about=["<b>CleanYourTV</b> is a free, open-source (MIT) project by GitHub user Gathin23 that cleans up Android TV and Google TV sets over Wi-Fi. It switches off the maker's ad services, sponsored rows, tracking and preloaded junk apps, then installs a small home screen that looks like an Apple TV's.",
+           "It started when the author's parents' Mi TV showed an ad before they could reach Netflix. He cleaned it with Claude Code, posted the before and after, and within days people had added their own TVs: the README lists <b>316 tested models from 89 brands</b>. It was the #1 trending repo on GitHub for the week of 19–25 October 2026.",
+           "Apps are switched off with Android's own <code>pm disable-user</code>, never uninstalled, and a backup is made first, so <b>one command puts everything back</b>. No root, no cable, and the firmware isn't touched."],
+    can=[("Switch off the ads", "the ad services, sponsored rows and \"Discover\" nags on the home screen."),
+         ("Cut the tracking", "analytics and telemetry apps that phone home, and preloaded apps you never asked for."),
+         ("A new home screen", "a pitch-black, Apple TV-style home with a dock of your 4 favourite apps and the rest in a grid."),
+         ("Keep the useful bits", "Inputs (HDMI), Wi-Fi and Settings buttons, a clock screensaver, and the remote's Input and YouTube buttons."),
+         ("Ask before it touches anything", "the agent checks which apps you use, and whether to keep the voice assistant, Chromecast and updates."),
+         ("Undo in one line", "<code>tools/restore.sh</code> switches back on exactly what was switched off and brings the old home screen back.")],
+    faq=[("Is CleanYourTV free?", "Yes. It's open source under the MIT licence. The laptop way needs an AI coding agent such as Claude Code, which may need its own plan; the phone app is free."),
+         ("Does it work on Samsung or LG TVs?", "No. Samsung uses Tizen and LG uses webOS, not Android. It works on Android TV and Google TV sets, and partly on Amazon Fire TV (ads and tracking off, but no new home screen)."),
+         ("Does it remove YouTube ads?", "No. It cleans the TV's own home screen and system apps. Ads inside apps like YouTube come from the app itself and stay."),
+         ("Can it break my TV?", "Nothing is flashed, rooted or deleted, so the firmware is safe. The risk is switching off something the TV needs, which can get it stuck. Go in small batches, keep the backup, and the TV's Settings → Apps page can switch apps back on. A factory reset is the last resort."),
+         ("Is leaving USB debugging on a security risk?", "Your TV only trusts the computer you allowed, but switch USB debugging off when you're done anyway. The new home screen keeps working without it."),
+         ("Will Netflix, Prime Video and Hotstar still update?", "Yes. The Play Store is left alone, so your streaming apps keep updating as usual.")])
+
 def block(slug, d):
     s = open(f'tools/{slug}/index.html', encoding='utf-8').read()
     key = re.search(r'Reel keyword: ([A-Z]+)', s)

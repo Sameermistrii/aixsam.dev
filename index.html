@@ -280,6 +280,9 @@ footer{position:relative;z-index:2;background:repeating-linear-gradient(90deg,#2
 // posted = when the reel went live, reel = the reel URL (cover clicks and "watch the reel" go there),
 // cover = 540x960 reel cover in img/covers/ (also hung on the 3D gallery wall), guide = its setup page in tools/ (unlocked buttons go there instead of GitHub).
 const TOOLS = window.TOOLS = [
+  {key:"TV", guide:"/tools/cleanyourtv/", wing:"Home & TV", name:"CleanYourTV", url:"https://github.com/Gathin23/cleanyourtv", posted:"2026-10-27T09:30:00+05:30", cover:"img/covers/tv.webp",
+   desc:"Switches off the ads, sponsored rows, tracking and junk apps on your Android TV or Google TV, then gives you a clean Apple TV-style home screen. Over Wi-Fi with an AI agent like Claude Code (~15 min) or a free community phone app (~5 min). Nothing deleted, one-line restore. Not for Samsung or LG; YouTube ads stay.",
+   tags:["Android TV","Open source","MIT"]},
   {key:"TOKENS", guide:"/tools/freellmapi/", wing:"AI APIs", name:"FreeLLMAPI", url:"https://github.com/tashfeenahmed/freellmapi", posted:"2026-10-25T18:30:00+05:30", cover:"img/covers/tokens.webp",
    desc:"One key for the free plans of 34 AI providers (Gemini, Groq, Mistral, OpenRouter and more), running on your own computer. When one model hits its free limit it switches to the next by itself. Up to ~7.4B tokens a month if you add every provider. No newest GPT or Claude; personal projects only.",
    tags:["Mac & Windows","Open source","MIT"]},
