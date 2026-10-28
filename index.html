@@ -280,6 +280,9 @@ footer{position:relative;z-index:2;background:repeating-linear-gradient(90deg,#2
 // posted = when the reel went live, reel = the reel URL (cover clicks and "watch the reel" go there),
 // cover = 540x960 reel cover in img/covers/ (also hung on the 3D gallery wall), guide = its setup page in tools/ (unlocked buttons go there instead of GitHub).
 const TOOLS = window.TOOLS = [
+  {key:"FACE", guide:"/tools/digital-human/", wing:"Video AI", name:"Digital Human Koubo", url:"https://github.com/andyhuo520/digital-human-koubo", posted:"2026-10-29T09:30:00+05:30", cover:"img/covers/face.webp",
+   desc:"A free Claude Code skill: one photo + one sentence becomes a talking-head video with an AI presenter, no camera. It writes the script, makes the face talk (Grok Video on Renoise), checks every clip against the script with whisper and edits it with captions and YouTuber-style packaging. The skill is MIT; the video credits are paid (the README's 27-sec ad cost 482 credits). Text behind the presenter needs a Mac.",
+   tags:["Claude Code","Open source","MIT"]},
   {key:"WIFI", guide:"/tools/net-merge/", wing:"Internet", name:"net-merge", url:"https://github.com/rohit267/net-merge", posted:"2026-10-28T09:30:00+05:30", cover:"img/covers/wifi.webp",
    desc:"Uses your Wi-Fi, Ethernet and your phone's hotspot or USB tethering at the same time on Windows, Mac and Linux (Android app in beta, no root). Apps that open many connections, like Steam, browsers and download managers, spread over every link: in the README test, ~121 Mbit/s alone became 232-303 Mbit/s. One single download stays on one link, it won't run next to a VPN app, and the phone's mobile data gets used.",
    tags:["Win · Mac · Linux","Open source","MIT"]},

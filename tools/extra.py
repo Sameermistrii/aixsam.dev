@@ -238,6 +238,24 @@ C['net-merge'] = dict(
          ("Will it use my mobile data?", "Yes. When a phone is one of the links, part of your traffic goes over its mobile data. Quit net-merge when you don't want that, or cap the phone's speed from the menu."),
          ("Is it safe?", "It needs admin rights once to add a virtual network adapter. When it stops (even after a crash) it removes its adapter and routes and your network goes back to normal. The apps aren't code-signed yet, so Windows and macOS warn on first launch.")])
 
+C['digital-human'] = dict(
+    about=["<b>Digital Human Koubo</b> is a free, open-source (MIT) agent skill by Berryxia (GitHub user andyhuo520) that turns one photo and one sentence into a finished talking-head video. \"Koubo\" (口播) is Chinese for a talk-to-camera video. It was built with Claude Code and also works with Codex and other agents that can load skills, connect an MCP server and run commands.",
+           "Your agent writes the script in segments of up to 15 seconds, generates each one as a lip-synced clip of a fixed AI presenter with <b>Grok Video 1.5</b> on <b>Renoise</b>, checks every clip, evens out the voice across clips, and edits the video in Remotion with captions and YouTuber-style packaging. The skill is free; the clips cost Renoise credits.",
+           "The README's demo, a 27-second livestream ad with no real presenter, cost <b>482 credits</b> from one sentence. Every demo is labelled as performed by an AI digital human."],
+    can=[("Same presenter every time", "a fixed face, outfit and voice description in <code>persona.json</code>, placed into any scene (studio, shop, classroom) before she talks."),
+         ("Asks before it spends", "quotes segments, seconds, credits and your balance, waits for your yes, and makes segment 1 for you to check first."),
+         ("Checks its own clips", "whisper transcribes each clip and compares it with the script; 4 frames per clip are inspected and clips with burned-in subtitles are re-shot."),
+         ("One voice", "spectral matching, de-essing and a shared room sound make 30 separate clips sound like one recording."),
+         ("5 edit styles, 48 packaging tricks", "measured frame by frame on 25 creator videos (MrBeast, MKBHD, Mark Rober, Vox, Kurzgesagt and more)."),
+         ("Text behind the presenter", "big words or prices between the background and the person (needs a Mac)."),
+         ("6 languages tested", "English, Japanese, Korean, French, Spanish and Arabic.")],
+    faq=[("Is Digital Human Koubo free?", "The skill is free and open source (MIT). The talking clips are generated on Renoise, which costs credits: the README's 27-second ad used 482 credits and 4–6 minute tutorials about 3,250–3,400."),
+         ("Can I use my own face?", "Yes: give your agent a front-facing photo of you, let it make a 4-view reference sheet (about 23 credits) and save it as the presenter. Only use your own face or one you have permission to use."),
+         ("Does it work without Claude Code?", "Codex works with the same scripts. Agents that can only chat and use MCP (like the Claude app) can plan, quote and generate the clips, but the editing steps need an agent that runs commands on your computer."),
+         ("Does it work on Windows?", "Yes, everything except text behind the presenter, which uses Apple Vision and needs a Mac."),
+         ("Can I use my own voice?", "The default is Grok's own voice, which lip-syncs best. The skill also supports Xiaomi MiMo TTS for a designed or cloned voice (clone only your own or one you have permission for); a swapped voice is about 100 ms off the lips."),
+         ("Does it copy MrBeast's or MKBHD's videos?", "No. It learned editing patterns (cuts, on-screen text, sound) by measuring 25 creator videos frame by frame. It never uses a real creator's face, voice, set or lines.")])
+
 def block(slug, d):
     s = open(f'tools/{slug}/index.html', encoding='utf-8').read()
     key = re.search(r'Reel keyword: ([A-Z]+)', s)
