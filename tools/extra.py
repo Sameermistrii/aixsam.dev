@@ -221,6 +221,23 @@ C['cleanyourtv'] = dict(
          ("Is leaving USB debugging on a security risk?", "Your TV only trusts the computer you allowed, but switch USB debugging off when you're done anyway. The new home screen keeps working without it."),
          ("Will Netflix, Prime Video and Hotstar still update?", "Yes. The Play Store is left alone, so your streaming apps keep updating as usual.")])
 
+C['net-merge'] = dict(
+    about=["<b>net-merge</b> is a free, open-source (MIT) tool by GitHub user rohit267 that uses all your internet connections at once: Wi-Fi, Ethernet, mobile data and a phone's USB tethering or hotspot. It runs on Windows, macOS and Linux, with a beta app for Android. No account, no server and no VPN service.",
+           "It works <b>per connection</b>: every new connection an app opens goes to one of your links, faster links get more of them, and a link with no internet gets none. So apps that open many connections at once (Steam, browsers, updates, download managers) spread over all your links, while one single download stays on one link.",
+           "In the README's own test, with Wi-Fi + an Android USB tether + an iPhone hotspot and 9 downloads at once, it reached <b>232–303 Mbit/s</b>, against about 121 Mbit/s for the fastest connection alone. It uses about 0.18 CPU cores per 100 Mbit/s, and if it crashes your internet keeps working."],
+    can=[("Use every link", "Wi-Fi, Ethernet, a second Wi-Fi, and a phone over USB tethering or Personal Hotspot, all at once."),
+         ("Work for every app", "TCP and UDP, IPv4 and IPv6, with no proxy to set up in each app."),
+         ("Balance by speed", "faster links get more connections; a link with no internet gets none until it works again."),
+         ("Pause by itself", "it waits when fewer than two connections work, and starts again when the second one comes back."),
+         ("Cap a connection", "limit one link (say, your phone) to 1–100 Mbit/s from the menu, or any speed with <code>net-merge limit</code>."),
+         ("Android too", "a beta app uses Wi-Fi and mobile data together, without root.")],
+    faq=[("Is net-merge free?", "Yes. It's open source under the MIT licence, with no account. The author also sells a separate upgraded app, RoutEngine; you don't need it for net-merge."),
+         ("Will one big download get faster?", "Not on its own: one connection always uses one link. Turn on parallel downloading in Chrome, Edge or Brave, or use a download manager, so the file is fetched over several connections."),
+         ("Does Wi-Fi + Ethernet on the same router help?", "No. Both go through the same internet line, so the total stays the same. You need connections with their own path, like home Wi-Fi plus a phone on mobile data."),
+         ("Does it work with a VPN?", "Not with a VPN app on the computer: the VPN sends everything through itself, so nothing gets shared. Set up the VPN on your routers instead. On Android it can't run next to another VPN app."),
+         ("Will it use my mobile data?", "Yes. When a phone is one of the links, part of your traffic goes over its mobile data. Quit net-merge when you don't want that, or cap the phone's speed from the menu."),
+         ("Is it safe?", "It needs admin rights once to add a virtual network adapter. When it stops (even after a crash) it removes its adapter and routes and your network goes back to normal. The apps aren't code-signed yet, so Windows and macOS warn on first launch.")])
+
 def block(slug, d):
     s = open(f'tools/{slug}/index.html', encoding='utf-8').read()
     key = re.search(r'Reel keyword: ([A-Z]+)', s)
