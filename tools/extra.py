@@ -256,6 +256,23 @@ C['digital-human'] = dict(
          ("Can I use my own voice?", "The default is Grok's own voice, which lip-syncs best. The skill also supports Xiaomi MiMo TTS for a designed or cloned voice (clone only your own or one you have permission for); a swapped voice is about 100 ms off the lips."),
          ("Does it copy MrBeast's or MKBHD's videos?", "No. It learned editing patterns (cuts, on-screen text, sound) by measuring 25 creator videos frame by frame. It never uses a real creator's face, voice, set or lines.")])
 
+C['digup'] = dict(
+    about=["<b>DigUp</b> is a free, open-source (MIT) app by GitHub user ARahim3 that searches the files on your computer by <b>what's in them</b>: photos, PDFs, documents, recordings, videos and, if you turn it on, code. It runs on Mac, with Windows and Linux in beta. No account, no telemetry.",
+           "It's built on Google DeepMind's <b>EmbeddingGemma 2</b>, an open AI model (740M parameters, 100+ languages) that puts text, images, audio and video in one shared space, so the words \"a dog on the beach\" land next to a photo of a dog on a beach. DigUp runs it on your computer with llama.cpp.",
+           "Exact words count too: invoice numbers, error codes and names are matched as written, so one search gets both the meaning and the exact string. Nothing you index leaves your computer; it only goes online to download the model once and to check for updates (you can turn that off)."],
+    can=[("Find photos", "by what they show: \"a dog on the beach\", or a screenshot by its error text (Mac)."),
+         ("Open PDFs at the page", "\"the clause about pets in the lease\" opens page 4. Scanned PDFs too, up to 5,000 pages a file."),
+         ("Jump into videos", "\"zebra in a video\" opens the clip at the moment the zebra shows up."),
+         ("Search recordings", "podcasts and voice notes of any length: \"where they talk about sleep\" jumps to that minute."),
+         ("Cross languages", "an English search can find a note written in Bengali, Arabic or 100+ other languages."),
+         ("Search your code", "opt-in: <code>code: retry a failed call with backoff</code> opens the function in your editor.")],
+    faq=[("Is DigUp free?", "Yes. It's open source under the MIT licence, with no account and no paid plan. The author takes optional donations."),
+         ("Does it upload my files?", "No. Everything is indexed and searched on your computer. It goes online only to download the AI model once and to check for updates, and that check sends nothing about your files."),
+         ("How is it different from Spotlight or Windows Search?", "Those find files by name, text and metadata. DigUp also finds them by what they show or say, and takes you to the page or moment. They work fine side by side."),
+         ("Why is the download 865 MB?", "That's the AI model: the text part (310 MB) and the image and audio parts (555 MB). The app itself is about 20 MB on a Mac."),
+         ("Will it slow my computer down?", "Only the first scan is heavy. After that it reads new files only, and the model runs in a separate process that quits when it's done."),
+         ("Does it work on an Intel Mac?", "No. The Mac app needs Apple Silicon (M1 or newer) and macOS 14 or later.")])
+
 def block(slug, d):
     s = open(f'tools/{slug}/index.html', encoding='utf-8').read()
     key = re.search(r'Reel keyword: ([A-Z]+)', s)
