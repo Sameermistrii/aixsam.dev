@@ -280,6 +280,9 @@ footer{position:relative;z-index:2;background:repeating-linear-gradient(90deg,#2
 // posted = when the reel went live, reel = the reel URL (cover clicks and "watch the reel" go there),
 // cover = 540x960 reel cover in img/covers/ (also hung on the 3D gallery wall), guide = its setup page in tools/ (unlocked buttons go there instead of GitHub).
 const TOOLS = window.TOOLS = [
+  {key:"FIGMA", guide:"/tools/figcraft/", wing:"Design", name:"FigCraft", url:"https://github.com/storytold/figcraft", posted:"2026-10-31T09:30:00+05:30", cover:"img/covers/figma.webp",
+   desc:"Design app screens the way you would in Figma, for $0: frames, auto layout, components and variants, clickable prototypes and a Dev Mode that turns a design into React code. A native app that works offline with no account, and every button is a command an AI agent can use over MCP. Still in alpha (about 49% of the way, by its own estimate); not made by Figma.",
+   tags:["Mac · Win · Linux","Open source","MIT / Apache"]},
   {key:"SEARCH", guide:"/tools/digup/", wing:"Files & Search", name:"DigUp", url:"https://github.com/ARahim3/DigUp", posted:"2026-10-30T09:30:00+05:30", cover:"img/covers/search.webp",
    desc:"Search your computer by what's inside your files: type \"a dog on the beach\" and it finds the photo, \"the clause about pets in the lease\" opens the PDF at page 4, \"zebra in a video\" opens the video at that moment. Runs on your computer with Google DeepMind's EmbeddingGemma 2 model, no account, no uploads. Mac (Apple Silicon), Windows and Linux in beta; 865 MB model download once.",
    tags:["Mac · Win β · Linux β","Open source","MIT"]},

@@ -273,6 +273,23 @@ C['digup'] = dict(
          ("Will it slow my computer down?", "Only the first scan is heavy. After that it reads new files only, and the model runs in a separate process that quits when it's done."),
          ("Does it work on an Intel Mac?", "No. The Mac app needs Apple Silicon (M1 or newer) and macOS 14 or later.")])
 
+C['figcraft'] = dict(
+    about=["<b>FigCraft</b> is a free, open-source app for interface design and prototyping by the ArtCraft team, licensed MIT or Apache-2.0. If you know Figma you'll feel at home: frames, auto layout, components and variants, styles and variables, vector networks, prototypes and a Dev Mode for handing designs to developers.",
+           "It's a native app written from scratch in Rust, not a website in a wrapper, so it opens fast and works offline. Your designs are plain <code>.figcraft</code> files on your own disk, with no account and no telemetry. It's a clean-room rebuild from public documentation; it contains no Figma code and isn't made by Figma.",
+           "The part that stands out: every menu item, tool and drag is one of 400+ commands, and the same commands run from the app, the command line or an <b>MCP server</b>, so an AI agent like Claude Code can design screens for you. It's in <b>alpha</b>, about half way to replacing paid tools by its own estimate, and it reached 3,600+ GitHub stars in its first three weeks."],
+    can=[("Auto layout", "in both directions, with wrap and grid, padding, gaps and Hug / Fill / Fixed sizing."),
+         ("Components and variants", "main components, instances with overrides, variant sets and an Assets panel."),
+         ("Prototypes", "connections, Smart Animate-style transitions, variables with if/else and a presentation view."),
+         ("Dev Mode", "measurements, annotations and code for the selected layer: CSS, HTML, React, Vue, SwiftUI or Compose."),
+         ("AI agents over MCP", "<code>figcraft-cli mcp</code> lets Claude Code or Cursor build and edit designs through the same commands you click."),
+         ("Boards and live sessions", "a whiteboard file type with stickies and voting, and (in preview) editing one file together with cursors.")],
+    faq=[("Is FigCraft free?", "Yes. It's open source under MIT or Apache-2.0, with no account, no paid plan and installers for every platform."),
+         ("Is it the same as Figma?", "No. It's an independent app that works in a familiar way, rebuilt from public documentation. It isn't made by Figma, and by its own estimate it's about 49% of the way to replacing paid design tools."),
+         ("Can I open my Figma files?", "It opens <code>.fig</code> files best effort, and designs exported as Figma REST API JSON with their prototypes and variables. Check imported files carefully while it's in alpha."),
+         ("Does it work in the browser?", "There's a WebAssembly build of the whole app, but you host it yourself; there's no public website to just open. For most people the desktop app is the easy way."),
+         ("Can I work with my team?", "Live sessions are a preview: share a file over your local network or through a server and edit together with cursors. There are no accounts yet, and the default public server stores shared files unencrypted, so run your own server for private work."),
+         ("Which computers does it run on?", "macOS (one universal build), Windows (x64, x86, arm64), Linux (deb, rpm, AppImage, Flatpak), FreeBSD, and a self-hosted web build.")])
+
 def block(slug, d):
     s = open(f'tools/{slug}/index.html', encoding='utf-8').read()
     key = re.search(r'Reel keyword: ([A-Z]+)', s)
