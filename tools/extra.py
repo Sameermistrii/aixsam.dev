@@ -6,7 +6,7 @@ import glob, os, re
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.chdir(ROOT)
-REELS = {'clone': 'https://www.instagram.com/reel/Deg1itXTSUr/', 'graph': 'https://www.instagram.com/reel/DeivnmwTSTG/'}
+REELS = {}  # old reel posts were on the banned accounts; add new links here
 
 C = {}
 C['replica'] = dict(
@@ -299,7 +299,7 @@ def block(slug, d):
     if d['about'] or d['can']:
         fig = ''
         if key and os.path.exists(f'img/covers/{key}.webp'):
-            href = REELS.get(key, 'https://instagram.com/aixsam.dev')
+            href = REELS.get(key, 'https://instagram.com/aixsamdev')
             fig = (f'<figure class="reelfig"><a href="{href}" target="_blank" rel="noopener"><img src="/img/covers/{key}.webp" '
                    f'alt="{name} reel cover by aixsam.dev" width="540" height="960" loading="lazy"></a>'
                    f'<figcaption>{"Watch the reel" if key in REELS else "From the reel"} · keyword {key.upper()}</figcaption></figure>')
